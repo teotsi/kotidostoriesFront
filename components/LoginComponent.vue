@@ -8,7 +8,7 @@
          id="container">
       <Form cls="sign-up-container" msg="Sign up"/>
       <Form cls="sign-in-container" msg="Sign in"/>
-      <OverlayComponent v-on:toggle-class="rightPanelActive=!rightPanelActive"/>
+      <OverlayComponent v-on:toggle-class="rightPanelActive =!rightPanelActive"/>
     </div>
   </div>
 </template>
