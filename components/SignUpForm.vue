@@ -6,7 +6,7 @@
 
             <input type="text" placeholder="Name"/>
             <input type="email" placeholder="Email"/>
-            <input type="password" placeholder="Password"/>
+            <input type="password" placeholder="Password" style="margin-bottom:25px;"/>
             <ButtonComponent  :msg="msg" :is-ghost=false />
         </form>
     </div>

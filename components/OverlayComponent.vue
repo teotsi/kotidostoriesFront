@@ -3,13 +3,13 @@
         <div class="overlay">
             <div class="overlay-panel overlay-left">
                 <h1>Hello There!</h1>
-                <p>Enter your personal details and start your journey with us</p>
-                <ButtonComponent v-on:click.native="$emit('toggle-class')" is-ghost msg="Sign up" id="signUp" />
+                <p style="margin:10px;">If you already have an account then just sign back in</p>
+                <ButtonComponent v-on:click.native="$emit('toggle-class')" is-ghost msg="Sign in" id="signUp" />
             </div>
             <div class="overlay-panel overlay-right">
                 <h1>Good to have you back!</h1>
-                <p>To keep connected with us please login with your personal info</p>
-                <ButtonComponent v-on:click.native="$emit('toggle-class')" is-ghost msg="Sign in" id="signIn"/>
+                <p style="margin:10px;">If you don't have an account, go make one... it's free! </p>
+                <ButtonComponent v-on:click.native="$emit('toggle-class')" is-ghost msg="Sign up" id="signIn"/>
             </div>
 
         </div>
