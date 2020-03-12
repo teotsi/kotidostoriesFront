@@ -2,10 +2,22 @@
   <div>
     <header>
       <a href="#"><h1>Unfold</h1></a>
+      <ModalComponent></ModalComponent>
     </header>
     <nuxt /></div>
 
 </template>
+
+<script>
+  import ModalComponent from "../components/ModalComponent"
+
+export default {
+  components:{
+    ModalComponent
+  }
+
+}
+</script>
 
 <style>
   @import url('https://fonts.googleapis.com/css?family=Montserrat:400,800');
