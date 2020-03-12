@@ -3,37 +3,74 @@
 </template>
 
 <script>
-  import Logo from '~/components/Logo.vue'
-  import LoginComponent from "../components/LoginComponent";
+  import LoginComponent from "@/components/LoginComponent";
 
   export default {
     components: {
       LoginComponent,
-      Logo
     }
   }
 </script>
-
 <style>
-  .title {
-    font-family: 'Quicksand', 'Source Sans Pro', -apple-system, BlinkMacSystemFont,
-    'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-    display: block;
-    font-weight: 300;
-    font-size: 100px;
-    color: #35495e;
-    letter-spacing: 1px;
+  @import url('https://fonts.googleapis.com/css?family=Montserrat:400,800');
+
+  @media only screen and (max-width: 600px) {
+    .container {
+      width: 50%;
+      height: 50%;
+    }
+
+    .container {
+      position: absolute;
+      top: 20%;
+      left: 0%;
+      right: 0%;
+    }
   }
 
-  .subtitle {
-    font-weight: 300;
-    font-size: 42px;
-    color: #526488;
-    word-spacing: 5px;
-    padding-bottom: 15px;
+  header {
+    background: linear-gradient(35deg, #CCFFFF, #FFCCCC);
+    padding: 20px 10px;
+
   }
 
-  .links {
-    padding-top: 15px;
+  body {
+    background: #f6f5f7;
+    /* */
+    font-family: 'Montserrat', sans-serif;
+    /* height: 100vh;*/
+    margin: 0px;
+  }
+
+  h1 {
+    font-weight: bold;
+    margin: 0;
+    color: black;
+  }
+
+  h2 {
+    text-align: center;
+    color: black;
+  }
+
+  p {
+    font-size: 14px;
+    font-weight: 100;
+    line-height: 20px;
+    letter-spacing: 0.5px;
+    margin: 20px 0 30px;
+    color: black;
+    padding: 25px;
+  }
+
+  span {
+    font-size: 12px;
+  }
+
+  a {
+    color: #333;
+    font-size: 14px;
+    text-decoration: none;
+    margin: 15px 0;
   }
 </style>

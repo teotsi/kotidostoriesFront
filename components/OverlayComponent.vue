@@ -71,7 +71,20 @@
         transform: translateX(0);
         transition: transform 0.6s ease-in-out;
     }
-
+    .overlay-panel h1{
+      font-weight: bold;
+      color: black;
+      margin: 0px;
+    }
+    .overlay-panel p{
+      ont-size: 14px;
+      font-weight: 100;
+      line-height: 20px;
+      letter-spacing: 0.5px;
+      color: black;
+      margin: 20px 0px 30px;
+      padding: 25px;
+    }
     .overlay-left {
         transform: translateX(-20%);
 

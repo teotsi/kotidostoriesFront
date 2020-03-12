@@ -1,27 +1,25 @@
 <template>
   <div id="login">
-    <header>
-      <a href="#"><h1>Unfold</h1></a>
-    </header>
     <div class="container"
          v-bind:class="{'right-panel-active':rightPanelActive}"
          id="container">
-      <Form cls="sign-up-container" msg="Sign up"/>
-      <Form cls="sign-in-container" msg="Sign in"/>
+      <SignInForm cls="sign-in-container" msg="Sign in"/>
+      <SignUpForm cls="sign-up-container" msg="Sign up"/>
       <OverlayComponent v-on:toggle-class="rightPanelActive =!rightPanelActive"/>
     </div>
   </div>
 </template>
 
 <script>
-  import Form from "./Form";
   import OverlayComponent from "./OverlayComponent";
-
+  import SignUpForm from "./SignUpForm";
+import SignInForm from "./SignInForm";
   export default {
     name: 'LoginComponent',
     components: {
+      SignUpForm,
       OverlayComponent,
-      Form
+      SignInForm
     },
     data: function () {
       return {
@@ -32,12 +30,8 @@
   }
 </script>
 
-<style>
-  @import url('https://fonts.googleapis.com/css?family=Montserrat:400,800');
+<style scoped>
 
-  #login {
-    font-family: 'Montserrat', sans-serif;
-  }
 
   @media only screen and (max-width: 600px) {
     .container {
@@ -72,6 +66,18 @@
     min-height: 480px;
   }
 
+  .sign-up-container {
+    left: 0;
+    width: 50%;
+    opacity: 0;
+    z-index: 1;
+  }
+
+  .sign-in-container {
+    left: 0;
+    width: 50%;
+    z-index: 2;
+  }
 
   body {
     background: #f6f5f7;
@@ -112,5 +118,26 @@
     margin: 15px 0;
   }
 
+  .container.right-panel-active .sign-up-container {
+    transform: translateX(100%);
+    opacity: 1;
+    z-index: 5;
+    animation: show 0.6s;
+  }
 
+  @keyframes show {
+    0%, 49.99% {
+      opacity: 0;
+      z-index: 1;
+    }
+
+    50%, 100% {
+      opacity: 1;
+      z-index: 5;
+    }
+  }
+
+  .container.right-panel-active .sign-in-container {
+    transform: translateX(100%);
+  }
 </style>
