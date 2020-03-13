@@ -17,7 +17,7 @@
 </template>
 
 <script>
-    import ButtonComponent from "./ButtonComponent";
+    import ButtonComponent from "@/components/Login_SignUp/ButtonComponent";
 
     export default {
         name: "OverlayComponent",

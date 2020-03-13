@@ -9,7 +9,7 @@
 </template>
 
 <script>
-  import ModalComponent from "../components/ModalComponent"
+  import ModalComponent from "../components/Preview/ModalComponent"
 
 export default {
   components:{
