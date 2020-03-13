@@ -1,12 +1,11 @@
 <template>
     <div class="form-container"
          :class="cls">
-        <form action="#">
+        <form @submit="onSubmit">
             <h1>Create Account</h1>
-
-            <input type="text" placeholder="Name"/>
-            <input type="email" placeholder="Email"/>
-            <input type="password" placeholder="Password" style="margin-bottom:25px;"/>
+            <input type="text" v-model="form.username" placeholder="Username"/>
+            <input type="email" v-model="form.email" placeholder="Email"/>
+            <input type="password" placeholder="Password" v-model="form.password" style="margin-bottom:25px;"/>
             <ButtonComponent  :msg="msg" :is-ghost=false />
         </form>
     </div>
@@ -20,10 +19,22 @@
         components: {
             ButtonComponent
         },
+      methods:{
+          onSubmit: function () {
+            alert(JSON.stringify(this.form))
+          }
+      },
         props: {
             cls: String,
             msg: String
+        },
+      data() {
+        return {
+          form: {
+          }
         }
+      },
+
     }
 </script>
 
