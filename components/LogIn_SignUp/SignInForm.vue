@@ -1,10 +1,10 @@
 <template>
   <div class="form-container"
        :class="cls">
-    <form action="#">
+    <form @submit="onSubmit">
       <h1>Sign in</h1>
-      <input type="email" placeholder="Email"/>
-      <input type="password" placeholder="Password"/>
+      <input type="email" v-model="form.email" placeholder="Email"/>
+      <input type="password" v-model="form.password" placeholder="Password"/>
       <a href="#">Forgot your password?</a>
       <ButtonComponent :msg="msg" :is-ghost="false"/>
     </form>
@@ -22,6 +22,16 @@
     props: {
       cls: String,
       msg: String
+    },
+    methods: {
+      onSubmit: function () {
+        alert(JSON.stringify(this.form))
+      }
+    },
+    data() {
+      return {
+        form: {}
+      }
     }
   }
 </script>

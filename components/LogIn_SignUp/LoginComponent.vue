@@ -11,9 +11,9 @@
 </template>
 
 <script>
-  import OverlayComponent from "./OverlayComponent";
-  import SignUpForm from "./SignUpForm";
-import SignInForm from "./SignInForm";
+  import OverlayComponent from "@/components/Login_SignUp/OverlayComponent";
+  import SignUpForm from "@/components/Login_SignUp/SignUpForm";
+  import SignInForm from "@/components/Login_SignUp/SignInForm";
   export default {
     name: 'LoginComponent',
     components: {
