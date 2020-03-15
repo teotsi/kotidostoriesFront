@@ -1,41 +1,52 @@
 <template>
-    <div class="form-container"
-         :class="cls">
-        <form @submit="onSubmit">
-            <h1>Create Account</h1>
-            <input type="text" v-model="form.username" placeholder="Username"/>
-            <input type="email" v-model="form.email" placeholder="Email"/>
-            <input type="password" placeholder="Password" v-model="form.password" style="margin-bottom:25px;"/>
-            <ButtonComponent  :msg="msg" :is-ghost=false />
-        </form>
-    </div>
+  <div class="form-container"
+       :class="cls">
+    <form @submit="onSubmit($event)">
+      <h1>Create Account</h1>
+      <input type="text" v-model="form.username" placeholder="Username"/>
+      <input type="email" v-model="form.email" placeholder="Email"/>
+      <input type="password" placeholder="Password" v-model="form.password" style="margin-bottom:25px;"/>
+      <ButtonComponent :msg="msg" :is-ghost="false"/>
+    </form>
+  </div>
 </template>
 
 <script>
-    import ButtonComponent from "./ButtonComponent";
+  import ButtonComponent from "./ButtonComponent";
+  import axios from "axios";
 
-    export default {
-        name: "SignUpForm",
-        components: {
-            ButtonComponent
-        },
-      methods:{
-          onSubmit: function () {
-            alert(JSON.stringify(this.form))
-          }
-      },
-        props: {
-            cls: String,
-            msg: String
-        },
-      data() {
-        return {
-          form: {
-          }
+  export default {
+    name: "SignUpForm",
+    components: {
+      ButtonComponent
+    },
+    methods: {
+      onSubmit: function (event) {
+        if (event) {
+          event.preventDefault()
         }
-      },
+        axios.post('http://localhost:5000/register', this.form)
+          .then(function (response) {
+            console.log(response)
+            return response
+          })
+          .catch(function (error) {
+            console.log(error)
+          })
 
-    }
+      }
+    },
+    props: {
+      cls: String,
+      msg: String
+    },
+    data() {
+      return {
+        form: {}
+      }
+    },
+
+  }
 </script>
 
 <style scoped>
@@ -49,6 +60,7 @@
     height: 100%;
     text-align: center;
   }
+
   .form-container {
     position: absolute;
     top: 0;
@@ -65,8 +77,8 @@
     border-radius: 20px;
   }
 
-  textarea:focus, input:focus{
-    outline:none;
+  textarea:focus, input:focus {
+    outline: none;
   }
 
 </style>

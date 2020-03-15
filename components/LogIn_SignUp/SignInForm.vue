@@ -1,10 +1,11 @@
 <template>
   <div class="form-container"
        :class="cls">
-    <form @submit="onSubmit">
+    <form @submit="onSubmit($event)">
       <h1>Sign in</h1>
       <input type="email" v-model="form.email" placeholder="Email"/>
       <input type="password" v-model="form.password" placeholder="Password"/>
+      <b-form-radio v-model="form.remember_me" value="true">Remember me?</b-form-radio>
       <a href="#">Forgot your password?</a>
       <ButtonComponent :msg="msg" :is-ghost="false"/>
     </form>
@@ -13,6 +14,7 @@
 
 <script>
   import ButtonComponent from "./ButtonComponent";
+  import axios from "axios";
 
   export default {
     name: "SignInForm",
@@ -24,13 +26,29 @@
       msg: String
     },
     methods: {
-      onSubmit: function () {
-        alert(JSON.stringify(this.form))
+      onSubmit: function (event) {
+        if (event) {
+          event.preventDefault();
+        }
+        axios.post('http://localhost:5000/login', this.form)
+          .then(function (response) {
+            console.log(response)
+          })
+      },
+      onTest: function () {
+        axios.post('http://localhost:5000/user/ttt/posts', this.form)
+          .then(function (response) {
+            console.log(response)
+          })
       }
     },
     data() {
       return {
-        form: {}
+        form: {
+          email: null,
+          password: null,
+          remember_me: false
+        }
       }
     }
   }
