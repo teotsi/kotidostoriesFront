@@ -2,22 +2,10 @@
   <div>
     <header>
       <a href="#"><h1>Unfold</h1></a>
-      <ModalComponent></ModalComponent>
     </header>
     <nuxt /></div>
 
 </template>
-
-<script>
-  import ModalComponent from "../components/Preview/ModalComponent"
-
-export default {
-  components:{
-    ModalComponent
-  }
-
-}
-</script>
 
 <style>
   @import url('https://fonts.googleapis.com/css?family=Montserrat:400,800');
@@ -32,4 +20,16 @@ export default {
   -webkit-font-smoothing: antialiased;
   box-sizing: border-box;
 }
+
+  header {
+    background: linear-gradient(35deg, #CCFFFF, #FFCCCC);
+    padding: 20px 10px;
+
+  }
+
+  h1 {
+    font-weight: bold;
+    margin: 0;
+    color: black;
+  }
 </style>

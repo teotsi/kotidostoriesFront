@@ -14,10 +14,14 @@
     "test:e2e": "cross-env TEST=e2e ava ./test/e2e/**/*"
   },
   "dependencies": {
-    "@nuxtjs/axios": "^5.9.5",
+
     "bootstrap": "^4.1.3",
     "bootstrap-vue": "^2.0.0",
+    "node-sass": "^4.13.1",
     "nuxt": "^2.0.0",
+    "sass-loader": "^8.0.2",
+    "tiptap": "^1.26.6",
+    "tiptap-extensions": "^1.28.6"
     "axios": "latest"
   },
   "devDependencies": {

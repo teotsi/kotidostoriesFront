@@ -68,7 +68,6 @@ export default {
 </script>
 
 <style scoped>
-
 .btn-nick{
     color: cyan;
     background-color: black;

@@ -1,15 +1,18 @@
 <template>
   <div>
+    <ModalComponent></ModalComponent>
     <LoginComponent></LoginComponent>
   </div>
 </template>
 
 <script>
   import LoginComponent from "@/components/Login_SignUp/LoginComponent";
+  import ModalComponent from "../components/Preview/ModalComponent"
 
   export default {
     components: {
       LoginComponent,
+      ModalComponent
     }
   }
 </script>
