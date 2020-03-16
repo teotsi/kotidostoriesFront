@@ -1,5 +1,5 @@
 <template>
-  <button v-bind:class="{ghost:isGhost}" :id="id">{{msg}}</button>
+  <button v-bind:class="{ghost:isGhost}" :id="id"><span>{{msg}}</span></button>
 </template>
 
 <script>
@@ -28,6 +28,10 @@
     transition: transform 80ms ease-in;
   }
 
+  span{
+    font-size: 15px;
+    font-weight: bold;
+  }
   button:active {
     transform: scale(0.95);
   }

@@ -2,8 +2,8 @@
   <div>
     <header>
       <a href="#"><h1>Unfold</h1></a>
-      <ModalComponent></ModalComponent>
     </header>
+    <ModalComponent></ModalComponent>
     <nuxt /></div>
 
 </template>
