@@ -8,7 +8,7 @@
       <b-form-radio v-model="form.remember_me" value="true">Remember me?</b-form-radio>
       <a href="#">Forgot your password?</a>
       <ButtonComponent :msg="msg" :is-ghost="false"/>
-      <b-button @click="onTest">Post post</b-button>
+      <b-button @click="onTest">Post</b-button>
     </form>
   </div>
 </template>
@@ -31,22 +31,34 @@
         if (event) {
           event.preventDefault();
         }
-        axios.post('http://localhost:5000/login/', this.form,{withCredentials: true})
-          .then(function (response) {
+        this.$auth.loginWith('local', {
+          data: this.form
+        }).then(function (response) {
             console.log(response)
-          })
+          }
+        ).catch(function (error) {
+          console.log("error!")
+          console.log(error)
+        })
       },
       onTest: function () {
-        axios.post('http://localhost:5000/user/test/posts/', {
-          "title":"Whoooa",
-          "content":"Cooool",
-          "preview":"THis is it"
-        },{withCredentials: true})
+        axios.post('http://localhost:5000/user/tester/posts/', {
+          'title': 'hey',
+          'content': 'cool',
+          'preview': 'heyyy'
+        }, {withCredentials: true})
           .then(function (response) {
             console.log(response)
           })
       }
-    },
+      // axios.post('http://localhost:5000/login/', this.form, {withCredentials: true})
+      //   .then(function (response) {
+      //     console.log(response)
+      //   }).catch(function (error) {
+      //   console.log(error)
+      // })
+    }
+    ,
     data() {
       return {
         form: {

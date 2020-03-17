@@ -25,7 +25,7 @@
         if (event) {
           event.preventDefault()
         }
-        axios.post('http://localhost:5000/register', this.form)
+        axios.post('http://localhost:5000/register', this.form, {withCredentials: true})
           .then(function (response) {
             console.log(response)
             return response
@@ -42,7 +42,12 @@
     },
     data() {
       return {
-        form: {}
+        form: {
+          username: null,
+          email: null,
+          password: null,
+          remember_me: false
+        }
       }
     },
 
