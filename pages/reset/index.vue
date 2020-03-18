@@ -1,28 +1,69 @@
 <template>
-  <div class="container">
-    <custom-form :has-password="false"
-                 v-on:submit-reset="resetEmail"
-                 id="reset"
-                 msg="Send reset email"></custom-form>
+  <div>
+    <div v-if="!token" class="container">
+      <custom-form :has-password="false"
+                   id="reset"
+                   msg="Send reset email"
+                   v-on:submit-reset="resetEmail"></custom-form>
+    </div>
+    <div v-else="check">
+
+    </div>
+    <b-alert
+      :show="dismissCountDown"
+      @dismiss-count-down="countDownChanged"
+      @dismissed="dismissCountDown=0"
+      dismissible
+      variant="warning"
+    >
+      Check your inbox and click the password reset link. It is only valid for {{minutesLeft}} more minutes.
+      <b-progress
+        variant="warning"
+        :max="dismissSecs"
+        :value="dismissCountDown"
+        height="4px"
+      ></b-progress>
+    </b-alert>
+
   </div>
 </template>
 
 <script>
   import CustomForm from "../../components/LogIn_SignUp/CustomForm";
   import axios from "axios";
+  import reset from "../../middleware/email/reset";
 
   export default {
     name: "index.vue",
     components: {
       CustomForm
     },
+    middleware:{
+      middleware: reset
+    },
     methods: {
       resetEmail: function (form) {
-        console.log(form)
+        console.log(form);
         axios.post('http://localhost:5000/reset', form)
-          .then(function (response) {
-            console.log(response)
+          .then(() => {
+            this.showAlert()
           })
+      },
+      countDownChanged(dismissCountDown) {
+        this.dismissCountDown = dismissCountDown;
+        this.minutesLeft = parseInt(dismissCountDown / 60);
+      },
+      showAlert() {
+        this.dismissCountDown = this.dismissSecs
+      },
+    },
+    data: function () {
+      return {
+        showPrompt: false,
+        dismissSecs: 1799,
+        dismissCountDown: 0,
+        minutesLeft: 0,
+        token: this.$route.query.token
       }
     }
   }
