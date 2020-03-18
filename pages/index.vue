@@ -1,7 +1,7 @@
 <template>
   <div>
     <transition name="fade">
-      <LoginComponent v-if="!this.$auth.loggedIn"></LoginComponent>
+      <login-component v-if="!this.$auth.loggedIn"></login-component>
       <div v-else>
         <!-- replace this with actual stories/previews-->
         <div :key="post.id" v-for="post in this.$auth.user.posts">

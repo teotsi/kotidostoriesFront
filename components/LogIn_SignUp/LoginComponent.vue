@@ -1,25 +1,53 @@
 <template>
   <div id="login">
     <div class="container"
-         v-bind:class="{'right-panel-active':rightPanelActive}"
-         id="container">
-      <SignInForm cls="sign-in-container" msg="Sign in"/>
-      <SignUpForm cls="sign-up-container" msg="Sign up"/>
-      <OverlayComponent v-on:toggle-class="rightPanelActive =!rightPanelActive"/>
+         id="container"
+         v-bind:class="{'right-panel-active':rightPanelActive}">
+      <custom-form v-on:submit-log-in="logIn" id="log-in" cls="sign-in-container" msg="Sign in"/>
+      <custom-form v-on:submit-register="register" id="register" :has-name="true" cls="sign-up-container" msg="Sign up"/>
+      <overlay-component v-on:toggle-class="rightPanelActive =!rightPanelActive"/>
     </div>
   </div>
 </template>
 
 <script>
-  import OverlayComponent from "@/components/Login_SignUp/OverlayComponent";
-  import SignUpForm from "@/components/Login_SignUp/SignUpForm";
-  import SignInForm from "@/components/Login_SignUp/SignInForm";
+  import OverlayComponent from "@/components/LogIn_SignUp/OverlayComponent";
+  import CustomForm from "@/components/LogIn_SignUp/CustomForm";
+  import axios from "axios";
+
   export default {
     name: 'LoginComponent',
     components: {
-      SignUpForm,
+      CustomForm,
       OverlayComponent,
-      SignInForm
+    },
+    methods: {
+      logIn: function (form) {
+        this.$auth.loginWith('local', {
+          data: form
+        }).then(function (response) {
+            console.log(response)
+          }
+        ).catch(function (error) {
+          console.log("error!");
+          console.log(error)
+        })
+      },
+      register: function (form) {
+
+        axios.post('http://localhost:5000/register', form, {withCredentials: true})
+          .then(() => {
+            this.$auth.loginWith('local', {
+              data: form
+            }).then(function (response) {
+              console.log(response)
+            })
+          })
+          .catch(function (error) {
+            console.log(error)
+          })
+
+      }
     },
     data: function () {
       return {

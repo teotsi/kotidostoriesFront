@@ -9,8 +9,7 @@
       msg: String,
       isGhost: Boolean,
       id: String
-    },
-    methods: {}
+    }
   }
 </script>
 
