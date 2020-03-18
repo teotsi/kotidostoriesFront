@@ -35,12 +35,6 @@
       }
     },
     methods: {
-
-      onSubmit: function (event) {
-        if (event) {
-          event.preventDefault();
-        }
-      }
     },
     data() {
       return {
