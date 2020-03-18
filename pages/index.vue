@@ -1,19 +1,31 @@
 <template>
   <div>
-    <ModalComponent></ModalComponent>
-    <LoginComponent></LoginComponent>
+    <transition name="fade">
+      <LoginComponent v-if="!this.$auth.loggedIn"></LoginComponent>
+      <div v-else>
+        <!-- replace this with actual stories/previews-->
+        <div :key="post.id" v-for="post in this.$auth.user.posts">
+          <h1>{{post.title}}</h1>
+          <p>{{post.content}}</p>
+          <p>{{post.date}}</p>
+          <br>
+        </div>
+      </div>
+    </transition>
   </div>
 </template>
 
 <script>
   import LoginComponent from "@/components/Login_SignUp/LoginComponent";
   import ModalComponent from "../components/Preview/ModalComponent"
+  import axios from "axios";
 
   export default {
     components: {
       LoginComponent,
       ModalComponent
-    }
+    },
+    methods: {}
   }
 </script>
 <style>
@@ -77,5 +89,11 @@
     font-size: 14px;
     text-decoration: none;
     margin: 15px 0;
+  }
+  .fade-enter-active, .fade-leave-active {
+    transition: opacity .5s;
+  }
+  .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+    opacity: 0;
   }
 </style>

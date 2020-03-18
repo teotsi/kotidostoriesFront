@@ -37,8 +37,8 @@ export default {
     // Doc: https://bootstrap-vue.js.org
     'bootstrap-vue/nuxt',
     '@nuxtjs/auth',
-    '@nuxtjs/axios'
-
+    '@nuxtjs/axios',
+    'nuxt-fontawesome',
   ],
   axios: {
     baseURL: 'http://localhost:5000/',
@@ -68,6 +68,11 @@ export default {
             method: 'get',
             withCredentials: true,
             propertyName: 'user'
+          },
+          logout: {
+            url: 'logout/',
+            method: 'get',
+            withCredentials: true
           }
         },
         tokenRequired: false,
@@ -80,6 +85,15 @@ export default {
         httpOnly: true
       }
     }
+  },
+  fontawesome: {
+    imports: [
+      //import whole set
+      {
+        set: '@fortawesome/free-solid-svg-icons',
+        icons: ['fas']
+      }
+    ]
   }
 
 }

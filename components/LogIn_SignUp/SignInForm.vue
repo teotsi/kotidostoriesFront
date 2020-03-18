@@ -1,13 +1,14 @@
 <template>
-  <div class="form-container"
-       :class="cls">
+  <div :class="cls"
+       class="form-container">
     <form @submit="onSubmit($event)">
       <h1>Sign in</h1>
-      <input type="email" v-model="form.email" placeholder="Email"/>
-      <input type="password" v-model="form.password" placeholder="Password"/>
+      <b-input placeholder="Email" type="email" v-model="form.email"/>
+      <b-input placeholder="Password" type="password" v-model="form.password"/>
+
       <b-form-radio v-model="form.remember_me" value="true">Remember me?</b-form-radio>
       <a href="#">Forgot your password?</a>
-      <ButtonComponent :msg="msg" :is-ghost="false"/>
+      <ButtonComponent :is-ghost="false" :msg="msg"/>
       <b-button @click="onTest">Post</b-button>
     </form>
   </div>
@@ -37,7 +38,7 @@
             console.log(response)
           }
         ).catch(function (error) {
-          console.log("error!")
+          console.log("error!");
           console.log(error)
         })
       },

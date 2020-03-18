@@ -1,12 +1,12 @@
 <template>
-  <div class="form-container"
-       :class="cls">
+  <div :class="cls"
+       class="form-container">
     <form @submit="onSubmit($event)">
       <h1>Create Account</h1>
-      <input type="text" v-model="form.username" placeholder="Username"/>
-      <input type="email" v-model="form.email" placeholder="Email"/>
-      <input type="password" placeholder="Password" v-model="form.password" style="margin-bottom:25px;"/>
-      <ButtonComponent :msg="msg" :is-ghost="false"/>
+      <input placeholder="Username" type="text" v-model="form.username"/>
+      <input placeholder="Email" type="email" v-model="form.email"/>
+      <input placeholder="Password" style="margin-bottom:25px;" type="password" v-model="form.password"/>
+      <ButtonComponent :is-ghost="false" :msg="msg"/>
     </form>
   </div>
 </template>
@@ -26,9 +26,12 @@
           event.preventDefault()
         }
         axios.post('http://localhost:5000/register', this.form, {withCredentials: true})
-          .then(function (response) {
-            console.log(response)
-            return response
+          .then(() => {
+            this.$auth.loginWith('local', {
+              data: this.form
+            }).then(function (response) {
+              console.log(response)
+            })
           })
           .catch(function (error) {
             console.log(error)
