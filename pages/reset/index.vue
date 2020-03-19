@@ -1,12 +1,12 @@
 <template>
   <div>
-    <div v-if="!token" class="container">
+    <div class="container" v-if="!$store.state.token">
       <custom-form :has-password="false"
                    id="reset"
                    msg="Send reset email"
-                   v-on:submit-reset="resetEmail"></custom-form>
+                   v-on:submit-reset="resetEmail" ></custom-form>
     </div>
-    <div v-else="check">
+    <div v-else>
 
     </div>
     <b-alert
@@ -18,10 +18,10 @@
     >
       Check your inbox and click the password reset link. It is only valid for {{minutesLeft}} more minutes.
       <b-progress
-        variant="warning"
         :max="dismissSecs"
         :value="dismissCountDown"
         height="4px"
+        variant="warning"
       ></b-progress>
     </b-alert>
 
@@ -31,16 +31,13 @@
 <script>
   import CustomForm from "../../components/LogIn_SignUp/CustomForm";
   import axios from "axios";
-  import reset from "../../middleware/email/reset";
 
   export default {
     name: "index.vue",
     components: {
       CustomForm
     },
-    middleware:{
-      middleware: reset
-    },
+    middleware: 'resetEmail',
     methods: {
       resetEmail: function (form) {
         console.log(form);
