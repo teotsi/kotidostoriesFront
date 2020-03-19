@@ -1,13 +1,20 @@
 <template>
   <div>
-    <div class="container" v-if="!$store.state.token">
+    <div class="container" v-if="!token">
       <custom-form :has-password="false"
                    id="reset"
                    msg="Send reset email"
                    v-on:submit-reset="resetEmail" ></custom-form>
     </div>
-    <div v-else>
-
+    <div v-else-if="validToken" class="container">
+      <custom-form :has-password="false"
+                   :new-pass="true"
+                   id="new-pass"
+                   msg="Reset your password"
+                   v-on:submit-new-pass="setPass" ></custom-form>
+    </div>
+    <div v-else class="container">
+      <p>invalid token or link or whatever</p>
     </div>
     <b-alert
       :show="dismissCountDown"
@@ -39,6 +46,10 @@
     },
     middleware: 'resetEmail',
     methods: {
+      setPass: function(form){
+        console.log(form);
+        axios.p
+      },
       resetEmail: function (form) {
         console.log(form);
         axios.post('http://localhost:5000/reset', form)
@@ -60,7 +71,8 @@
         dismissSecs: 1799,
         dismissCountDown: 0,
         minutesLeft: 0,
-        token: this.$route.query.token
+        token: this.$route.query.token,
+        validToken: this.$store.validToken,
       }
     }
   }
