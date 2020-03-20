@@ -4,16 +4,16 @@
       <custom-form :has-password="false"
                    id="reset"
                    msg="Send reset email"
-                   v-on:submit-reset="resetEmail" ></custom-form>
+                   v-on:submit-reset="resetEmail"></custom-form>
     </div>
-    <div v-else-if="validToken" class="container">
-      <custom-form :has-password="false"
+    <div class="container" v-else-if="validToken">
+      <custom-form :has-email="false"
                    :new-pass="true"
                    id="new-pass"
                    msg="Reset your password"
-                   v-on:submit-new-pass="setPass" ></custom-form>
+                   v-on:submit-new-pass="setPass"></custom-form>
     </div>
-    <div v-else class="container">
+    <div class="container" v-else>
       <p>invalid token or link or whatever</p>
     </div>
     <b-alert
@@ -37,22 +37,23 @@
 
 <script>
   import CustomForm from "../../components/LogIn_SignUp/CustomForm";
-  import axios from "axios";
+  import axios from "@nuxtjs/axios";
+  import Axios from "axios";
 
   export default {
     name: "index.vue",
     components: {
       CustomForm
     },
-    middleware: 'resetEmail',
+    // middleware: 'resetEmail' ,
     methods: {
-      setPass: function(form){
-        console.log(form);
-        axios.p
+      setPass: function (form) {
+        console.log('setPass');
+        Axios.post('http://localhost:5000/resetPass/', {'form': form, 'token': this.token})
       },
       resetEmail: function (form) {
         console.log(form);
-        axios.post('http://localhost:5000/reset', form)
+        Axios.post('http://localhost:5000/reset', form)
           .then(() => {
             this.showAlert()
           })
@@ -64,6 +65,7 @@
       showAlert() {
         this.dismissCountDown = this.dismissSecs
       },
+
     },
     data: function () {
       return {
@@ -72,8 +74,12 @@
         dismissCountDown: 0,
         minutesLeft: 0,
         token: this.$route.query.token,
-        validToken: this.$store.validToken,
       }
+    },
+    async asyncData({query, $axios}) {
+      const response = await $axios.$post('http://localhost:5000/verifyToken/',
+        {'token': query.token}, {errorHandle: false});
+      return {validToken: response.status}
     }
   }
 </script>

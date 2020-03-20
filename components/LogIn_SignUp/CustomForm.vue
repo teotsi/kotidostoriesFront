@@ -4,9 +4,10 @@
     <form @submit="$emit('submit-'+id, form)" v-on:submit.prevent>
       <h1>{{msg}}</h1>
       <b-input placeholder="Username" type="text" v-if="hasName" v-model="form.username"/>
-      <b-input placeholder="Email" type="email"  v-if="hasEmail" v-model="form.email"/>
-      <b-input :placeholder="newPass ? 'Enter new password':'Password'" type="password"
-               v-if="newPass" v-model="form.password"/>
+      <b-input placeholder="Email" type="email" v-if="hasEmail" v-model="form.email"/>
+      <b-input  :placeholder="newPass ? 'Enter new password':'Password'"
+               type="password" v-if="hasPassword"
+               v-model="form.password"/>
       <b-input placeholder="Confirm new password" type="password" v-if="newPass"/>
       <b-form-radio v-if="id==='log-in'" v-model="form.remember_me" value="true">Remember me?</b-form-radio>
       <a href="#" v-if="id==='log-in'">Forgot your password?</a>
@@ -37,7 +38,7 @@
       },
       hasEmail: {
         type: Boolean,
-        default: false
+        default: true
       },
       newPass: {
         type: Boolean,
@@ -50,7 +51,8 @@
         form: {
           email: null,
           password: null,
-          remember_me: false
+          remember_me: false,
+          username: null
         }
       }
     }
