@@ -1,25 +1,64 @@
 <template>
   <div id="login">
-    <div class="container"
-         v-bind:class="{'right-panel-active':rightPanelActive}"
-         id="container">
-      <SignInForm cls="sign-in-container" msg="Sign in"/>
-      <SignUpForm cls="sign-up-container" msg="Sign up"/>
-      <OverlayComponent v-on:toggle-class="rightPanelActive =!rightPanelActive"/>
+    <div id="back">
     </div>
+    <div class="intro-content">
+      <div class="container"
+           id="container"
+           v-bind:class="{'right-panel-active':rightPanelActive}">
+        <custom-form cls="sign-in-container" id="log-in" msg="Sign in" v-on:submit-log-in="logIn"/>
+        <custom-form :has-name="true" cls="sign-up-container" id="register" msg="Sign up"
+                     v-on:submit-register="register"/>
+        <overlay-component v-on:toggle-class="rightPanelActive =!rightPanelActive"/>
+<!--        <p style="position:absolute;right: 100%; z-index: 10">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore-->
+<!--          magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo-->
+<!--          consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla-->
+<!--          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est-->
+<!--          laborum.</p>-->
+      </div>
+    </div>
+
   </div>
 </template>
 
 <script>
-  import OverlayComponent from "@/components/Login_SignUp/OverlayComponent";
-  import SignUpForm from "@/components/Login_SignUp/SignUpForm";
-  import SignInForm from "@/components/Login_SignUp/SignInForm";
+  import OverlayComponent from "@/components/LogIn_SignUp/OverlayComponent";
+  import CustomForm from "@/components/LogIn_SignUp/CustomForm";
+  import axios from "axios";
+
   export default {
     name: 'LoginComponent',
     components: {
-      SignUpForm,
+      CustomForm,
       OverlayComponent,
-      SignInForm
+    },
+    methods: {
+      logIn: function (form) {
+        this.$auth.loginWith('local', {
+          data: form
+        }).then(function (response) {
+            console.log(response)
+          }
+        ).catch(function (error) {
+          console.log("error!");
+          console.log(error)
+        })
+      },
+      register: function (form) {
+
+        axios.post('http://localhost:5000/register', form, {withCredentials: true})
+          .then(() => {
+            this.$auth.loginWith('local', {
+              data: form
+            }).then(function (response) {
+              console.log(response)
+            })
+          })
+          .catch(function (error) {
+            console.log(error)
+          })
+
+      }
     },
     data: function () {
       return {
@@ -32,6 +71,16 @@
 
 <style scoped>
 
+  #login {
+    overflow: hidden;
+  }
+
+  #back {
+    height: 100vh;
+    background-image: url("../../assets/login-bg.jpg");
+    filter: blur(2px) brightness(60%);
+    transform: scale(1.01);
+  }
 
   @media only screen and (max-width: 600px) {
     .container {
@@ -40,17 +89,16 @@
     }
 
     .container {
-      position: absolute;
-      top: 20%;
       left: 0%;
       right: 0%;
     }
   }
 
-  header {
-    background: linear-gradient(35deg, #CCFFFF, #FFCCCC);
-    padding: 20px 10px;
-  }
+
+  /*header {*/
+  /*  background: linear-gradient(35deg, #CCFFFF, #FFCCCC);*/
+  /*  padding: 20px 10px;*/
+  /*}*/
 
   .container {
     background-color: #fff;
@@ -70,34 +118,17 @@
     left: 0;
     width: 50%;
     opacity: 0;
-    z-index: 1;
+    z-index: 2;
   }
 
   .sign-in-container {
     left: 0;
     width: 50%;
-    z-index: 2;
+    z-index: 3;
   }
 
-  body {
-    background: #f6f5f7;
-    /* */
-    /* height: 100vh;*/
-    margin: 0px;
-  }
 
-  h1 {
-    font-weight: bold;
-    margin: 0;
-    color: black;
-  }
-
-  h2 {
-    text-align: center;
-    color: black;
-  }
-
-  p {
+  .container p {
     font-size: 14px;
     font-weight: 100;
     line-height: 20px;
@@ -107,33 +138,22 @@
     padding: 25px;
   }
 
-  span {
-    font-size: 12px;
-  }
-
-  a {
-    color: #333;
-    font-size: 14px;
-    text-decoration: none;
-    margin: 15px 0;
-  }
-
   .container.right-panel-active .sign-up-container {
     transform: translateX(100%);
     opacity: 1;
-    z-index: 5;
+    z-index: 6;
     animation: show 0.6s;
   }
 
   @keyframes show {
     0%, 49.99% {
       opacity: 0;
-      z-index: 1;
+      z-index: 2;
     }
 
     50%, 100% {
       opacity: 1;
-      z-index: 5;
+      z-index: 6;
     }
   }
 

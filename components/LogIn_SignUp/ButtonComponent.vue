@@ -1,5 +1,5 @@
 <template>
-  <button v-bind:class="{ghost:isGhost}" :id="id">{{msg}}</button>
+  <button :disabled="disable" :id="id" v-bind:class="{ghost:isGhost}">{{msg}}</button>
 </template>
 
 <script>
@@ -8,9 +8,12 @@
     props: {
       msg: String,
       isGhost: Boolean,
-      id: String
-    },
-    methods: {}
+      id: String,
+      disable: {
+        type: Boolean,
+        default: false
+      }
+    }
   }
 </script>
 

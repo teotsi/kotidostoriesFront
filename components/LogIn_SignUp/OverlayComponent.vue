@@ -4,12 +4,12 @@
             <div class="overlay-panel overlay-left">
                 <h1>Hello There!</h1>
                 <p style="margin:10px;">If you already have an account then just sign back in</p>
-                <ButtonComponent v-on:click.native="$emit('toggle-class')" is-ghost msg="Sign in" id="signUp" />
+                <button-component v-on:click.native="$emit('toggle-class')" is-ghost msg="Sign in" id="signUp" />
             </div>
             <div class="overlay-panel overlay-right">
                 <h1>Good to have you back!</h1>
                 <p style="margin:10px;">If you don't have an account, go make one... it's free! </p>
-                <ButtonComponent v-on:click.native="$emit('toggle-class')" is-ghost msg="Sign up" id="signIn"/>
+                <button-component v-on:click.native="$emit('toggle-class')" is-ghost msg="Sign up" id="signIn"/>
             </div>
 
         </div>
@@ -17,7 +17,7 @@
 </template>
 
 <script>
-    import ButtonComponent from "@/components/Login_SignUp/ButtonComponent";
+    import ButtonComponent from "@/components/LogIn_SignUp/ButtonComponent";
 
     export default {
         name: "OverlayComponent",

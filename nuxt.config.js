@@ -94,6 +94,6 @@ export default {
         icons: ['fas']
       }
     ]
-  }
+  },
 
 }
