@@ -1,15 +1,15 @@
 <template>
-  <div>
-    <header>
-      <a href="#"><h1>Unfold</h1></a>
-        <b-button @click="$auth.logout()" v-if="this.$auth.loggedIn">Logout</b-button>
-    </header>
+  <div class="content">
+    <b-navbar class="custom-nav" fixed="top" >
+      <nuxt-link to="/" style="text-decoration:none"><h1 style="color: white; font-size: 40px;">Unfold</h1></nuxt-link>
+      <b-button @click="$auth.logout()" v-if="this.$auth.loggedIn">Logout</b-button>
+    </b-navbar>
     <nuxt/>
   </div>
 
 </template>
 
-<style>
+<style >
   @import url('https://fonts.googleapis.com/css?family=Montserrat:400,800');
 
   * {
@@ -23,16 +23,9 @@
     box-sizing: border-box;
   }
 
-  header {
-    background: linear-gradient(35deg, #CCFFFF, #FFCCCC);
-    padding: 20px 10px;
-
+  .custom-nav {
+    height: 50px;
   }
 
-  h1 {
-    font-weight: bold;
-    margin: 0;
-    color: black;
-  }
 
 </style>

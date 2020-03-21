@@ -16,22 +16,36 @@
     <div class="container" v-else>
       <p>invalid token or link or whatever</p>
     </div>
-    <b-alert
-      :show="dismissCountDown"
-      @dismiss-count-down="countDownChanged"
-      @dismissed="dismissCountDown=0"
-      dismissible
-      variant="warning"
+    <b-alert :show="dismissCountDown"
+             @dismiss-count-down="countDownChanged"
+             @dismissed="dismissCountDown=0"
+             dismissible
+             v-if="!token"
+             variant="warning"
     >
       Check your inbox and click the password reset link. It is only valid for {{minutesLeft}} more minutes.
       <b-progress
-        :max="dismissSecs"
+        :max="resetDismissSecs"
         :value="dismissCountDown"
         height="4px"
         variant="warning"
       ></b-progress>
     </b-alert>
-
+    <b-alert :show="dismissCountDown"
+             @dismiss-count-down="countDownChanged"
+             @dismissed="dismissCountDown=0"
+             dismissible
+             v-else
+             variant="success"
+    >
+      Redirecting you to home page in {{dismissCountDown}}...
+      <b-progress
+        :max="redirectDismissSecs"
+        :value="dismissCountDown"
+        height="4px"
+        variant="warning"
+      ></b-progress>
+    </b-alert>
   </div>
 </template>
 
@@ -50,37 +64,48 @@
       setPass: function (form) {
         console.log('setPass');
         Axios.post('http://localhost:5000/resetPass/', {'form': form, 'token': this.token})
+          .then(() => {
+            this.redirectAlert()
+          })
       },
       resetEmail: function (form) {
         console.log(form);
         Axios.post('http://localhost:5000/reset', form)
           .then(() => {
-            this.showAlert()
+            this.emailAlert()
           })
       },
       countDownChanged(dismissCountDown) {
         this.dismissCountDown = dismissCountDown;
         this.minutesLeft = parseInt(dismissCountDown / 60);
+        if (this.token) {
+          if (this.dismissCountDown === 0) {
+            this.$router.push('/')
+          }
+        }
       },
-      showAlert() {
-        this.dismissCountDown = this.dismissSecs
+      emailAlert() {
+        this.dismissCountDown = this.resetDismissSecs
       },
-
+      redirectAlert() {
+        this.dismissCountDown = this.redirectDismissSecs
+      }
     },
     data: function () {
       return {
         showPrompt: false,
-        dismissSecs: 1799,
+        resetDismissSecs: 1799,
         dismissCountDown: 0,
         minutesLeft: 0,
         token: this.$route.query.token,
+        redirectDismissSecs: 5,
       }
     },
     async asyncData({query, $axios}) {
       const response = await $axios.$post('http://localhost:5000/verifyToken/',
         {'token': query.token}, {errorHandle: false});
       return {validToken: response.status}
-    }
+    },
   }
 </script>
 <style scoped>

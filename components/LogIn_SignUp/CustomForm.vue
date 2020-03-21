@@ -5,15 +5,17 @@
       <h1>{{msg}}</h1>
       <b-input placeholder="Username" type="text" v-if="hasName" v-model="form.username"/>
       <b-input placeholder="Email" type="email" v-if="hasEmail" v-model="form.email"/>
-      <b-input  :placeholder="newPass ? 'Enter new password':'Password'"
+      <b-input :placeholder="newPass ? 'Enter new password':'Password'"
                type="password" v-if="hasPassword"
                v-model="form.password"/>
-      <b-input placeholder="Confirm new password" type="password" v-if="newPass"/>
+      <b-input :state="this.matchingPass?null:false" placeholder="Confirm new password" type="password" v-if="newPass"
+               v-model="form.confirm_password"/>
       <b-form-radio v-if="id==='log-in'" v-model="form.remember_me" value="true">Remember me?</b-form-radio>
-      <a href="#" v-if="id==='log-in'">Forgot your password?</a>
-      <button-component :is-ghost="false" :msg="msg" @click="$emit('button-clickz')"/>
+      <nuxt-link to="reset" v-if="id==='log-in'">Forgot your password?</nuxt-link>
+      <button-component :is-ghost="false" :msg="msg" @click="$emit('button-clickz')" :disabled="!this.matchingPass"/>
     </form>
   </div>
+
 </template>
 
 <script>
@@ -52,7 +54,20 @@
           email: null,
           password: null,
           remember_me: false,
-          username: null
+          username: null,
+          confirm_password: null
+        }
+      }
+    },
+    computed: {
+      matchingPass() {
+        if (!this.newPass) {
+          return true
+        }
+        if (this.form.password === this.form.confirm_password) {
+          return true
+        } else {
+          return false
         }
       }
     }
