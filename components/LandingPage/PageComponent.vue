@@ -15,7 +15,7 @@
                 </div>
                 <div class="content-footer">
                   <b-icon icon="person-fill" class="user-small-img"></b-icon>
-                  <span style="font-size: 16px;color: #fff;">Christos Charma</span>
+                  <span style="font-size: 16px;color: #fff;">Christaras Charma</span>
                   <span class="pull-right">
           <a href="#" data-toggle="tooltip" data-placement="left" title="Comments"><i class="fa fa-comments">
             <a title="Tokyoship / CC BY-SA (https://creativecommons.org/licenses/by-sa/3.0)"
