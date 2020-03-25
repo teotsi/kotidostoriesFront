@@ -3,11 +3,22 @@
     <b-navbar class="custom-nav" fixed="top" >
       <nuxt-link to="/" style="text-decoration:none"><h1 style="color: white; font-size: 40px;">Unfold</h1></nuxt-link>
       <b-button @click="$auth.logout()" v-if="this.$auth.loggedIn">Logout</b-button>
+      <profile class="prof-icon" v-if="this.$auth.loggedIn"></profile>
     </b-navbar>
     <nuxt/>
   </div>
 
 </template>
+
+<script>
+  import profile from "../components/LandingPage/profile";
+
+  export default {
+    components: {
+      profile,
+    }
+  }
+</script>
 
 <style >
   @import url('https://fonts.googleapis.com/css?family=Montserrat:400,800');
@@ -25,6 +36,10 @@
 
   .custom-nav {
     height: 50px;
+  }
+
+  .prof-icon {
+    align: right;
   }
 
 

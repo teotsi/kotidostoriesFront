@@ -5,6 +5,7 @@
       <div class="landing-post-content">
         <h1>{{title}}</h1>
         <p>{{preview}}</p>
+        <p>{{content}}</p>
       </div>
     </article>
   </nuxt-link>
@@ -57,7 +58,6 @@
     text-align: center;
     padding: 1rem;
   }
-
   @media (min-width: 35rem) {
     .landing-post{
       width: 25rem;

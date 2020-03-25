@@ -1,8 +1,8 @@
 <template>
   <div>
-    <h1>{{title}}</h1>
-    <p>{{preview}}</p>
-    <p>{{user_id}}</p>
+<!--    <h1>{{title}}</h1>-->
+<!--    <p>{{preview}}</p>-->
+<!--    <p>{{user_id}}</p>-->
   </div>
 </template>
 
