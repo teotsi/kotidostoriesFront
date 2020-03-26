@@ -4,15 +4,6 @@
       <login-component v-if="!this.$auth.loggedIn"></login-component>
       <section id="posts" v-else>
       <PageComponent/>
-<!--        <LandingPosts-->
-<!--          v-for="post in this.$auth.user.posts"-->
-<!--          :key="post.id"-->
-<!--          :title="post.title"-->
-<!--          :user="post.user"-->
-<!--          :preview="post.preview"-->
-<!--          :date="post.date"-->
-<!--          :id="post.id"-->
-<!--          :content="post.content"/>-->
       </section>
     </transition>
   </div>
@@ -21,7 +12,6 @@
 <script>
   import LoginComponent from "@/components/Login_SignUp/LoginComponent";
   import ModalComponent from "../components/Preview/ModalComponent";
-  import LandingPosts from "@/components/Posts/LandingPosts";
   import PageComponent from "@/components/LandingPage/PageComponent";
   import axios from "axios";
 
@@ -29,7 +19,6 @@
     components: {
       LoginComponent,
       ModalComponent,
-      LandingPosts,
       PageComponent
     },
     methods: {}
