@@ -1,5 +1,4 @@
 <template>
-  <body>
   <section id="blog-section">
     <div class="container">
       <div class="row">
@@ -36,7 +35,6 @@
     </div>
 
   </section>
-  </body>
 </template>
 
 <script>
