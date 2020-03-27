@@ -54,38 +54,7 @@
     margin-bottom: 80px;
   }
 
-  .content-title {
-    padding: 5px;
-    background-color: #fff;
-  }
-
-  .content-title h3 a {
-    color: #34495E;
-    text-decoration: none;
-    transition: 0.5s;
-  }
-
-  .content-title h3 a:hover {
-    color: #F39C12;
-  }
-
-  .content-footer {
-    background-color: #16A085;
-    padding: 10px;
-    position: relative;
-  }
-
-  .content-footer span a {
-    color: #fff;
-    display: inline-block;
-    padding: 6px 5px;
-    text-decoration: none;
-    transition: 0.5s;
-  }
-
-  .content-footer span a:hover {
-    color: #F39C12;
-  }
+ 
 
   aside {
     margin-top: 30px;
