@@ -1,26 +1,30 @@
 <template>
-  <div class="col-lg-6 col-md-6">
-    <aside>
-    <b-img src="https://picsum.photos/300/150/?image=41" fluid-grow class="img-responsive"/>
-    <div class="content-title">
-      <h2>{{title}}</h2>
-    </div>
-    <div class="content-preview">
-      <p>{{preview}}</p>
-    </div>
-    <div class="content-footer">
-      <b-icon icon="person-fill" class="user-small-img"></b-icon>
-      <span style="font-size: 16px;color: #fff;">{{user}}</span>
-      <span class="pull-right">
-        <a href="#" data-toggle="tooltip" data-placement="left" title="Comments">
-          <font-awesome-icon :icon="['far', 'comments']" />30</a>
-        <a href="#" data-toggle="tooltip" data-placement="right" title="Loved">
-           <font-awesome-icon :icon="['far', 'heart']" />
-           20</a>
-        </span>
-    </div>
-    </aside>
-  </div>
+  <nuxt-link class="col-lg-6 col-md-6" :to="id">
+    <article>
+      <div>
+        <aside>
+          <b-img src="https://picsum.photos/300/150/?image=41" fluid-grow class="img-responsive"/>
+          <div class="content-title">
+            <h2>{{title}}</h2>
+          </div>
+          <div class="content-preview">
+            <p>{{preview}}</p>
+          </div>
+          <div class="content-footer">
+            <b-icon icon="person-fill" class="user-small-img"></b-icon>
+            <span style="font-size: 16px;color: #fff;">{{user}}</span>
+            <span class="pull-right">
+              <a href="#" data-toggle="tooltip" data-placement="left" title="Comments">
+                <font-awesome-icon :icon="['far', 'comments']" />30</a>
+              <a href="#" data-toggle="tooltip" data-placement="right" title="Loved">
+                 <font-awesome-icon :icon="['far', 'heart']" />
+                 20</a>
+              </span>
+          </div>
+        </aside>
+      </div>
+    </article>
+  </nuxt-link>
 </template>
 
 <script>
@@ -55,6 +59,11 @@
 </script>
 
 <style scoped>
+
+  a{
+    text-decoration: none;
+    color: black;
+  }
 
   aside {
     margin-top: 30px;

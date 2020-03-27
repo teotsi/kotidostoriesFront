@@ -91,6 +91,10 @@ export default {
       {
         set: '@fortawesome/free-regular-svg-icons',
         icons: ['far']
+      },
+      {
+        set: '@fortawesome/free-solid-svg-icons',
+        icons: ['fas']
       }
     ],
   }
