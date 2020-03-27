@@ -1,13 +1,23 @@
 <template>
   <div class="content">
     <b-navbar class="custom-nav" fixed="top" >
-      <nuxt-link to="/" style="text-decoration:none"><h1 style="color: white; font-size: 40px;">Unfold</h1></nuxt-link>
-      <b-button @click="$auth.logout()" v-if="this.$auth.loggedIn">Logout</b-button>
+      <navbar id="nav" v-if="this.$auth.loggedIn"/>
+      <nuxt-link v-if="!this.$auth.loggedIn" to="/" style="text-decoration:none"><h1 style="color: white; font-size: 40px;">Unfold</h1></nuxt-link>
     </b-navbar>
     <nuxt/>
   </div>
 
 </template>
+
+<script>
+  import navbar from "../components/NavigationBar/navbar";
+
+  export default {
+    components: {
+      navbar
+    }
+  }
+</script>
 
 <style >
   @import url('https://fonts.googleapis.com/css?family=Montserrat:400,800');
@@ -24,8 +34,7 @@
   }
 
   .custom-nav {
-    height: 50px;
+    padding: 0px;
   }
-
 
 </style>

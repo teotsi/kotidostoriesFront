@@ -2,28 +2,24 @@
   <div>
     <transition name="fade">
       <login-component v-if="!this.$auth.loggedIn"></login-component>
-      <div v-else>
-        <!-- replace this with actual stories/previews-->
-        <div :key="post.id" v-for="post in this.$auth.user.posts">
-          <h1>{{post.title}}</h1>
-          <p>{{post.content}}</p>
-          <p>{{post.date}}</p>
-          <br>
-        </div>
-      </div>
+      <section id="posts" v-else>
+      <PageComponent/>
+      </section>
     </transition>
   </div>
 </template>
 
 <script>
   import LoginComponent from "@/components/Login_SignUp/LoginComponent";
-  import ModalComponent from "../components/Preview/ModalComponent"
+  import ModalComponent from "../components/Preview/ModalComponent";
+  import PageComponent from "@/components/LandingPage/PageComponent";
   import axios from "axios";
 
   export default {
     components: {
       LoginComponent,
-      ModalComponent
+      ModalComponent,
+      PageComponent
     },
     methods: {}
   }
@@ -36,6 +32,20 @@
   /*  padding: 20px 10px;*/
 
   /*}*/
+  #posts {
+    padding-top: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  @media (min-width: 35rem) {
+    #posts {
+      flex-direction: row;
+    }
+
+  }
 
   body {
     background: #f6f5f7;

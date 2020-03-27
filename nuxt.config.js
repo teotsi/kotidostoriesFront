@@ -88,12 +88,14 @@ export default {
   },
   fontawesome: {
     imports: [
-      //import whole set
+      {
+        set: '@fortawesome/free-regular-svg-icons',
+        icons: ['far']
+      },
       {
         set: '@fortawesome/free-solid-svg-icons',
         icons: ['fas']
       }
-    ]
-  },
-
+    ],
+  }
 }

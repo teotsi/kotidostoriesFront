@@ -1,166 +1,167 @@
 <template xmlns="http://www.w3.org/1999/html">
-  <div class="editor">
-    <div>
-      <p align="center"><b>
-        Write your story!
-      </b>
-      </p>
-    </div>
-    <editor-menu-bar :editor="editor" v-slot="{ commands, isActive }">
-      <div class="menubar">
-
-        <b-button
-          :class="{ 'is-active': isActive.bold() }"
-          variant="white"
-          @click="commands.bold"
-          class="menubar__button"
-          id="boldB"
-        >
-        </b-button>
-
-        <b-button
-          :class="{ 'is-active': isActive.italic() }"
-          variant="white"
-          @click="commands.italic"
-          class="menubar__button"
-          id="italic"
-        >
-        </b-button>
-
-        <b-button
-          :class="{ 'is-active': isActive.strike() }"
-          variant="white"
-          @click="commands.strike"
-          class="menubar__button"
-          id="strike"
-        >
-        </b-button>
-
-        <b-button
-          :class="{ 'is-active': isActive.underline() }"
-          variant="white"
-          @click="commands.underline"
-          class="menubar__button"
-          id="underline"
-        >
-        </b-button>
-
-        <b-button
-          :class="{ 'is-active': isActive.code() }"
-          @click="commands.code"
-          variant="white"
-          class="menubar__button"
-          id="code"
-        >
-        </b-button>
-
-        <b-button
-          :class="{ 'is-active': isActive.paragraph() }"
-          @click="commands.paragraph"
-          variant="white"
-          class="menubar__button"
-          id="paragraph"
-        >
-        </b-button>
-
-        <b-button
-          :class="{ 'is-active': isActive.heading({ level: 1 }) }"
-          @click="commands.heading({ level: 1 })"
-          variant="white"
-          class="menubar__button"
-        >
-          H1
-        </b-button>
-
-        <b-button
-          :class="{ 'is-active': isActive.heading({ level: 2 }) }"
-          @click="commands.heading({ level: 2 })"
-          variant="white"
-          class="menubar__button"
-        >
-          H2
-        </b-button>
-
-        <b-button
-          :class="{ 'is-active': isActive.heading({ level: 3 }) }"
-          @click="commands.heading({ level: 3 })"
-          variant="white"
-          class="menubar__button"
-        >
-          H3
-        </b-button>
-
-        <b-button
-          :class="{ 'is-active': isActive.bullet_list() }"
-          @click="commands.bullet_list"
-          variant="white"
-          class="menubar__button"
-          id="bullet_list"
-        >
-        </b-button>
-
-        <b-button
-          :class="{ 'is-active': isActive.ordered_list() }"
-          @click="commands.ordered_list"
-          variant="white"
-          class="menubar__button"
-          id="order_list"
-        >
-        </b-button>
-
-        <b-button
-          :class="{ 'is-active': isActive.blockquote() }"
-          @click="commands.blockquote"
-          variant="white"
-          class="menubar__button"
-          id="blockquote"
-        >
-        </b-button>
-
-        <b-button
-          :class="{ 'is-active': isActive.code_block() }"
-          @click="commands.code_block"
-          variant="white"
-          class="menubar__button"
-          id="code_block"
-        >
-        </b-button>
-
-        <b-button
-          @click="commands.horizontal_rule"
-          class="menubar__button"
-          variant="white"
-          id="horizontal"
-        >
-        </b-button>
-
-        <b-button
-          @click="commands.undo"
-          class="menubar__button"
-          variant="white"
-          id="undo"
-        >
-        </b-button>
-
-        <b-button
-          @click="commands.redo"
-          class="menubar__button"
-          variant="white"
-          id="redo"
-        >
-        </b-button>
-
+  <section id="editoPage">
+    <div class="editor">
+      <div>
+        <p align="center"><b>
+          Write your story!
+        </b>
+        </p>
       </div>
-    </editor-menu-bar>
+      <editor-menu-bar :editor="editor" v-slot="{ commands, isActive }">
+        <div class="menubar">
 
-    <editor-content :editor="editor" class="editor__content"/>
-    <div class="save__buttons">
-      <b-button variant="outline-danger">Cancel</b-button>
-      <b-button>Publish</b-button>
-      <b-button id="buttonSave">Save</b-button>
+          <b-button
+            :class="{ 'is-active': isActive.bold() }"
+            variant="white"
+            @click="commands.bold"
+            class="menubar__button"
+            id="boldB"
+          >
+          </b-button>
+
+          <b-button
+            :class="{ 'is-active': isActive.italic() }"
+            variant="white"
+            @click="commands.italic"
+            class="menubar__button"
+            id="italic"
+          >
+          </b-button>
+
+          <b-button
+            :class="{ 'is-active': isActive.strike() }"
+            variant="white"
+            @click="commands.strike"
+            class="menubar__button"
+            id="strike"
+          >
+          </b-button>
+
+          <b-button
+            :class="{ 'is-active': isActive.underline() }"
+            variant="white"
+            @click="commands.underline"
+            class="menubar__button"
+            id="underline"
+          >
+          </b-button>
+
+          <b-button
+            :class="{ 'is-active': isActive.code() }"
+            @click="commands.code"
+            variant="white"
+            class="menubar__button"
+            id="code"
+          >
+          </b-button>
+
+          <b-button
+            :class="{ 'is-active': isActive.paragraph() }"
+            @click="commands.paragraph"
+            variant="white"
+            class="menubar__button"
+            id="paragraph"
+          >
+          </b-button>
+
+          <b-button
+            :class="{ 'is-active': isActive.heading({ level: 1 }) }"
+            @click="commands.heading({ level: 1 })"
+            variant="white"
+            class="menubar__button"
+          >
+            H1
+          </b-button>
+
+          <b-button
+            :class="{ 'is-active': isActive.heading({ level: 2 }) }"
+            @click="commands.heading({ level: 2 })"
+            variant="white"
+            class="menubar__button"
+          >
+            H2
+          </b-button>
+
+          <b-button
+            :class="{ 'is-active': isActive.heading({ level: 3 }) }"
+            @click="commands.heading({ level: 3 })"
+            variant="white"
+            class="menubar__button"
+          >
+            H3
+          </b-button>
+
+          <b-button
+            :class="{ 'is-active': isActive.bullet_list() }"
+            @click="commands.bullet_list"
+            variant="white"
+            class="menubar__button"
+            id="bullet_list"
+          >
+          </b-button>
+
+          <b-button
+            :class="{ 'is-active': isActive.ordered_list() }"
+            @click="commands.ordered_list"
+            variant="white"
+            class="menubar__button"
+            id="order_list"
+          >
+          </b-button>
+
+          <b-button
+            :class="{ 'is-active': isActive.blockquote() }"
+            @click="commands.blockquote"
+            variant="white"
+            class="menubar__button"
+            id="blockquote"
+          >
+          </b-button>
+
+          <b-button
+            :class="{ 'is-active': isActive.code_block() }"
+            @click="commands.code_block"
+            variant="white"
+            class="menubar__button"
+            id="code_block"
+          >
+          </b-button>
+
+          <b-button
+            @click="commands.horizontal_rule"
+            class="menubar__button"
+            variant="white"
+            id="horizontal"
+          >
+          </b-button>
+
+          <b-button
+            @click="commands.undo"
+            class="menubar__button"
+            variant="white"
+            id="undo"
+          >
+          </b-button>
+
+          <b-button
+            @click="commands.redo"
+            class="menubar__button"
+            variant="white"
+            id="redo"
+          >
+          </b-button>
+
+        </div>
+      </editor-menu-bar>
+
+      <editor-content :editor="editor" class="editor__content"/>
+      <div class="save__buttons">
+        <b-button variant="outline-danger">Cancel</b-button>
+        <b-button>Publish</b-button>
+        <b-button id="buttonSave">Save</b-button>
+      </div>
     </div>
-  </div>
-
+  </section>
 </template>
 
 <script>
@@ -249,6 +250,14 @@
   $color-black: #000000;
   $color-white: #ffffff;
   $color-grey: #dddddd;
+
+  #editoPage{
+    padding-top: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
 
   #boldB{
     background-image: url("../../assets/images/icons/bold.svg");
