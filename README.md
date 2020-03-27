@@ -2,6 +2,8 @@
 
 > Frontend stories with Vue and Nuxt
 
+[![Build Status](https://travis-ci.com/teotsi/kotidostoriesFront.svg?token=fryzzCEs33gMM5e386ed&branch=master)](https://travis-ci.com/teotsi/kotidostoriesFront)
+
 ## Build Setup
 
 ``` bash
