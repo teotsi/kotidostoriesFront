@@ -12,7 +12,10 @@
               :preview="post.preview"
               :date="post.date"
               :id="post.id"
-              :content="post.content"/>
+              :content="post.content"
+              :img="'http://localhost:5000/'+post.img"
+              :comments="post.comments.length"
+              :reactions="post.reactions.length"/>
 
           </div>
         </div>
@@ -47,14 +50,14 @@
 </script>
 
 <style scoped>
-  
+
 
   #blog-section {
     margin-top: 40px;
     margin-bottom: 80px;
   }
 
- 
+
 
   /*recent-post-col////////////////////*/
   .widget-sidebar {

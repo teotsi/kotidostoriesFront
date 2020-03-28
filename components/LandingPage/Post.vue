@@ -1,9 +1,9 @@
 <template>
-  <nuxt-link class="col-lg-6 col-md-6" :to="id">
+  <nuxt-link :to="id" class="col-lg-6 col-md-6">
     <article>
       <div>
         <aside>
-          <b-img src="https://picsum.photos/300/150/?image=41" fluid-grow class="img-responsive"/>
+          <b-img :src="img" class="img-responsive" fluid-grow/>
           <div class="content-title">
             <h2>{{title}}</h2>
           </div>
@@ -11,14 +11,14 @@
             <p>{{preview}}</p>
           </div>
           <div class="content-footer">
-            <b-icon icon="person-fill" class="user-small-img"></b-icon>
+            <b-icon class="user-small-img" icon="person-fill"></b-icon>
             <span style="font-size: 16px;color: #fff;">{{user}}</span>
             <span class="pull-right">
-              <a href="#" data-toggle="tooltip" data-placement="left" title="Comments">
-                <font-awesome-icon :icon="['far', 'comments']" />30</a>
-              <a href="#" data-toggle="tooltip" data-placement="right" title="Loved">
-                 <font-awesome-icon :icon="['far', 'heart']" />
-                 20</a>
+              <a data-placement="left" data-toggle="tooltip" href="#" title="Comments">
+                <font-awesome-icon :icon="['far', 'comments']"/>{{comments}}</a>
+              <a data-placement="right" data-toggle="tooltip" href="#" title="Loved">
+                 <font-awesome-icon :icon="['far', 'heart']"/>
+                 {{reactions}}</a>
               </span>
           </div>
         </aside>
@@ -53,14 +53,20 @@
       user: {
         type: String,
         required: true
-      }
+      },
+      img: {
+        type: String,
+        default: 'http://localhost:5000/post/default.png'
+      },
+      comments: String,
+      reactions: String,
     }
   }
 </script>
 
 <style scoped>
 
-  a{
+  a {
     text-decoration: none;
     color: black;
   }
@@ -95,7 +101,7 @@
     position: relative;
   }
 
-  .pull-right{
+  .pull-right {
     float: right;
   }
 </style>
