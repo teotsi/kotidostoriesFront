@@ -1,6 +1,5 @@
 <template>
-  <div :class="cls"
-       class="form-container">
+  <div :class="[{'form-container':cls},cls]">
     <form @submit="$emit('submit-'+id, form)" v-on:submit.prevent>
       <h1>{{msg}}</h1>
       <b-input placeholder="Username" type="text" v-if="hasName" v-model="form.username"/>
@@ -8,11 +7,11 @@
       <b-input :placeholder="newPass ? 'Enter new password':'Password'"
                type="password" v-if="hasPassword"
                v-model="form.password"/>
-      <b-input :state="this.matchingPass?null:false" placeholder="Confirm new password" type="password" v-if="newPass"
+      <b-input :state="this.matchingPass?null:false" placeholder="Confirm password" type="password" v-if="newPass"
                v-model="form.confirm_password"/>
       <b-form-radio v-if="id==='log-in'" v-model="form.remember_me" value="true">Remember me?</b-form-radio>
       <nuxt-link to="reset" v-if="id==='log-in'">Forgot your password?</nuxt-link>
-      <button-component :is-ghost="false" :msg="msg" @click="$emit('button-clickz')" :disabled="!this.matchingPass"/>
+      <button-component :disabled="!this.matchingPass" :is-ghost="false" :msg="msg" @click="$emit('button-clickz')"/>
     </form>
   </div>
 
@@ -75,7 +74,7 @@
 </script>
 
 <style scoped>
-  form {
+  .form-container form {
     background-color: #FFFFFF;
     display: flex;
     align-items: center;
