@@ -58,8 +58,8 @@
         type: String,
         default: 'http://localhost:5000/post/default.png'
       },
-      comments: String,
-      reactions: String,
+      comments: Number,
+      reactions: Number,
     }
   }
 </script>

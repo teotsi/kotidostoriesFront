@@ -2,7 +2,15 @@
   <div :class="[{'form-container':cls},cls]">
     <form @submit="$emit('submit-'+id, form)" v-on:submit.prevent>
       <h1>{{msg}}</h1>
-      <b-input placeholder="Username" type="text" v-if="hasName" v-model="form.username"/>
+      <b-form-input :state="valid_username" @change="checkUsername" id="username" placeholder="Username" type="text"
+                    v-if="hasName"
+                    v-model="form.username"/>
+      <b-form-invalid-feedback id="username-feedback">
+        Username is taken!
+      </b-form-invalid-feedback>
+      <b-form-valid-feedback id="username-feedback">
+        Username is available
+      </b-form-valid-feedback>
       <b-input placeholder="Email" type="email" v-if="hasEmail" v-model="form.email"/>
       <b-input :placeholder="newPass ? 'Enter new password':'Password'"
                type="password" v-if="hasPassword"
@@ -46,7 +54,17 @@
         default: false
       },
     },
-    methods: {},
+    methods: {
+      checkUsername() {
+        this.$axios.$get('checkUsername/' + this.form.username)
+          .then(() => {
+              this.valid_username = true
+            }
+          ).catch(() => {
+          this.valid_username = false
+        })
+      }
+    },
     data() {
       return {
         form: {
@@ -55,7 +73,9 @@
           remember_me: false,
           username: null,
           confirm_password: null
-        }
+        },
+        valid_username: null,
+
       }
     },
     computed: {

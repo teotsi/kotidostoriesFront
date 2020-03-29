@@ -25,7 +25,7 @@ export default {
   /*
   ** Plugins to load before mounting the App
   */
-  plugins: [],
+  plugins: ['~/plugins/authUtils.js'],
   /*
   ** Nuxt.js dev-modules
   */

@@ -1,8 +1,9 @@
 <template>
   <div class="content">
-    <b-navbar class="custom-nav" fixed="top" >
+    <b-navbar class="custom-nav" fixed="top">
       <navbar id="nav" v-if="this.$auth.loggedIn"/>
-      <nuxt-link v-if="!this.$auth.loggedIn" to="/" style="text-decoration:none"><h1 style="color: white; font-size: 40px;">Unfold</h1></nuxt-link>
+      <nuxt-link style="text-decoration:none" to="/" v-if="!this.$auth.loggedIn"><h1
+        style="color: white; font-size: 40px;">Unfold</h1></nuxt-link>
     </b-navbar>
     <nuxt/>
   </div>
@@ -19,7 +20,7 @@
   }
 </script>
 
-<style >
+<style>
   @import url('https://fonts.googleapis.com/css?family=Montserrat:400,800');
 
   * {
@@ -36,5 +37,7 @@
   .custom-nav {
     padding: 0px;
   }
+
+
 
 </style>
