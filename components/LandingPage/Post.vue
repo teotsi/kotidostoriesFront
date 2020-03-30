@@ -1,9 +1,9 @@
 <template>
-  <nuxt-link :to="id" class="col-lg-6 col-md-6">
-    <article>
-      <div>
-        <aside>
-          <b-img :src="img" class="img-responsive" fluid-grow/>
+  <nuxt-link id="link" :to="id" class="col-lg-4 col-md-4">
+    <article id="article">
+      <div id="div">
+        <aside id="aside">
+          <b-img :src="img" class="post-img" fluid-grow/>
           <div class="content-title">
             <h2>{{title}}</h2>
           </div>
@@ -65,6 +65,11 @@
 </script>
 
 <style scoped>
+
+  .post-img {
+    height:250px;
+    object-fit:cover;
+  }
 
   a {
     text-decoration: none;

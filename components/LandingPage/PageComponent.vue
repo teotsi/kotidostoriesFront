@@ -1,11 +1,10 @@
 <template>
   <section id="blog-section">
-    <div class="container">
       <div class="row">
-        <div class="col-lg-8">
+        <div class="col-lg-10">
           <div class="row">
             <client-only>
-              <Post
+              <Post id="post"
                 v-for="post in this.$auth.user.posts"
                 :key="post.id"
                 :title="post.title"
@@ -20,14 +19,14 @@
             </client-only>
           </div>
         </div>
-        <div class="col-lg-4">
+        <div class="col-lg-2">
 
           <!--=====================
                  CATEGORIES
             ======================-->
           <div class="widget-sidebar">
-            <h2 class="title-widget-sidebar">// CATEGORIES</h2>
-            <button class="categories-btn">Love</button>
+            <h2 class="title-widget-sidebar">CATEGORIES</h2>
+            <button class="categories-btn">Love </button>
             <button class="categories-btn">Horror</button>
             <button class="categories-btn">Funny</button>
             <button class="categories-btn">Poems</button>
@@ -37,7 +36,7 @@
           </div>
         </div>
       </div>
-    </div>
+
 
   </section>
 </template>
@@ -57,9 +56,8 @@
   #blog-section {
     margin-top: 40px;
     margin-bottom: 80px;
+    width: 100%;
   }
-
-
 
   /*recent-post-col////////////////////*/
   .widget-sidebar {
@@ -77,7 +75,7 @@
   }
 
   .title-widget-sidebar:after {
-    border-bottom: 2px solid #f1c40f;
+    border-bottom: 2px solid #950ca0;
     width: 150px;
     display: block;
     position: absolute;
@@ -87,7 +85,7 @@
   /*categories//////////////////////*/
 
   .categories-btn {
-    background-color: #F39C12;
+    background-color: #950ca0;
     margin-top: 30px;
     color: #fff;
     cursor: pointer;
@@ -102,7 +100,6 @@
   }
 
   .categories-btn:after {
-    content: '\25BA';
     color: #fff;
     font-weight: bold;
     float: right;
@@ -110,21 +107,7 @@
   }
 
   .categories-btn:hover {
-    background-color: #16A085;
+    background-color: #a03f7a;
     color: #fff;
-  }
-
-  .form-control {
-    border-radius: 0px;
-  }
-
-  .btn-warning {
-    border-radius: 0px;
-    background-color: #F39C12;
-    margin-top: 15px;
-  }
-
-  .input-group-addon {
-    border-radius: 0px;
   }
 </style>
