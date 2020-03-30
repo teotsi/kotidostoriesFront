@@ -4,23 +4,22 @@
       <div class="row">
         <div class="col-lg-8">
           <div class="row">
-            <Post
-              v-for="post in this.$auth.user.posts"
-              :key="post.id"
-              :title="post.title"
-              :user="post.user.username"
-              :preview="post.preview"
-              :date="post.date"
-              :id="post.id"
-              :content="post.content"
-              :img="'http://localhost:5000/'+post.img"
-              :comments="post.comments.length"
-              :reactions="post.reactions.length"/>
-
+            <client-only>
+              <Post
+                v-for="post in this.$auth.user.posts"
+                :key="post.id"
+                :title="post.title"
+                :user="post.user.username"
+                :preview="post.preview"
+                :date="post.date"
+                :id="post.id"
+                :content="post.content"
+                :img="'http://localhost:5000/'+post.img"
+                :comments="post.comments.length"
+                :reactions="post.reactions.length"/>
+            </client-only>
           </div>
         </div>
-
-        <!--           // RECENT POST===========-->
         <div class="col-lg-4">
 
           <!--=====================
@@ -28,9 +27,12 @@
             ======================-->
           <div class="widget-sidebar">
             <h2 class="title-widget-sidebar">// CATEGORIES</h2>
-            <button class="categories-btn">Romantic</button>
+            <button class="categories-btn">Love</button>
             <button class="categories-btn">Horror</button>
-            <button class="categories-btn">Action</button>
+            <button class="categories-btn">Funny</button>
+            <button class="categories-btn">Poems</button>
+            <button class="categories-btn">Sci-fi</button>
+            <button class="categories-btn">Mystery</button>
             <button class="categories-btn">Poems</button>
           </div>
         </div>
