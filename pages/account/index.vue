@@ -14,7 +14,7 @@
 
         </right-hand-content>
         <right-hand-content v-if="active==='overview'">
-          <div id="dash-container">
+          <div class="overview-content">
             <img :src="'http://localhost:5000/'+this.$auth.user.img" alt="¿Donde esta tu foto?" id="profile-pic">
 
             <div id="dash-content">
@@ -29,21 +29,72 @@
 
         </right-hand-content>
         <right-hand-content v-if="active==='privacy'">
-
+          <h4>Change Username</h4>
           <b-form-group
-            :invalid-feedback="this.$feedback(valid_username)"
+            :invalid-feedback="this.currentFeedback"
             :state="valid_username"
-            :valid-feedback="this.$feedback(valid_username)"
+            :valid-feedback="this.feedback.valid"
             description="Every time you change your username, a database admin quits"
             id="fieldset-1"
             label="Enter a new username"
             label-for="input-1"
           >
-            <b-input :state="valid_username" @change="checkUsername" id="new-username"
+            <b-input :state="valid_username" @update="checkUsername" class="account-input" id="new-username"
                      placeholder="Enter your new username" v-model="new_username"
             />
+
           </b-form-group>
+          <hr/>
+          <div class="rename">
+            <h4>Personal details</h4>
+            <b-form inline>
+              <div class="d-flex flex-column account-input" id="label-div">
+                <label for="inline-form-input-name">First Name</label>
+
+                <b-input
+                  class="mb-2 mr-sm-2 mb-sm-0 account-input "
+                  id="inline-form-input-name"
+                  placeholder="Enter your name"
+                  v-model="form.first_name"
+                ></b-input>
+              </div>
+              <div class="d-flex flex-column account-input">
+                <label for="inline-form-input-lastname">Last Name</label>
+                <b-input
+                  class="mb-2 mr-sm-2 mb-sm-0 account-input"
+                  id="inline-form-input-lastname"
+                  placeholder="Enter your last name"
+                  v-model="form.last_name"
+                ></b-input>
+              </div>
+
+            </b-form>
+            <hr/>
+            <h4>Change Password</h4>
+            <label for="new-password">New password</label>
+            <b-input
+              class="account-input"
+              id="new-password"
+              placeholder="Enter your new password"
+              type="password"
+              v-model="form.password"
+            ></b-input>
+
+            <label for="confirm-password">Confirm new password</label>
+            <b-input
+              :state="this.matchingPass?null:false"
+              @update=""
+              class="account-input"
+              id="confirm-password"
+              placeholder="Confirm password"
+              type="password"
+              v-model="confirm_password"
+            ></b-input>
+          </div>
+          <b-button :disabled="!validInputs" @click="submitForm">Change username</b-button>
+
         </right-hand-content>
+
 
         <right-hand-content v-if="active==='self_posts'">
           <div class="col-lg-8">
@@ -90,13 +141,31 @@
         console.log("active")
       },
       checkUsername() {
+        if (this.new_username === this.$auth.user.username) {
+          this.valid_username = null;
+          return;
+        } else if (this.new_username.length < 2 || this.new_username.includes(' ')) {
+          this.currentFeedback = this.feedback.invalid;
+          this.valid_username = false;
+          return;
+        }
         this.$axios.$get('checkUsername/' + this.new_username)
           .then(() => {
-              this.valid_username = true
+              this.valid_username = true;
             }
           ).catch(() => {
-          this.valid_username = false
+          this.currentFeedback = this.feedback.taken;
+          this.valid_username = false;
         })
+      },
+      submitForm() {
+        let form = this.form
+        for (let attr in form) {
+          if (form[attr] === null || form[attr] === undefined) {
+            delete form[attr];
+          }
+        }
+        this.$axios.$put('user/' + this.$auth.user.username + "/", form, {withCredentials: true});
       }
     },
     data() {
@@ -121,20 +190,36 @@
           },
         ],
         valid_username: null,
-        new_username: "this.$auth.user.username"
+        new_username: this.$auth.user.username,
+        feedback: {
+          invalid: "Username must be at least 2 characters long, whitespace is not allowed",
+          valid: "Username is available!",
+          taken: "Username is taken!",
+        },
+        form: {
+          username: null,
+          first_name: null,
+          last_name: null,
+          password: null
+        },
+        currentFeedback: null,
+        new_password: null,
+        confirm_password: null
       }
     },
-    // computed: {
-    //   feedback() {
-    //     if (this.valid_username === true) {
-    //       return 'Username is available'
-    //     } else if (this.valid_username === false) {
-    //       return 'Username is taken'
-    //     } else {
-    //       return ''
-    //     }
-    //   }
-    // }
+    computed: {
+      matchingPass() {
+        return this.form.password === this.confirm_password;
+      },
+      validInputs() {
+        console.log("input");
+        if (this.valid_username === null) {
+          return this.matchingPass;
+        } else if (this.valid_username) {
+          return this.matchingPass;
+        }
+      }
+    }
   }
 </script>
 
@@ -162,9 +247,6 @@
     margin: 0;
   }
 
-  form {
-    background-color: #7F828B;
-  }
 
   #sidebar-wrapper {
     min-height: 100vh;
@@ -218,5 +300,9 @@
     }
   }
 
+  .account-input {
+    border-radius: 50px;
+    padding-top: 6px;
+  }
 
 </style>

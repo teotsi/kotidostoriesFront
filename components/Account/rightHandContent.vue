@@ -11,7 +11,9 @@
 </script>
 
 <style scoped>
-div{
-  display: inline-block;
-}
+  .overview-content .rename div {
+    display: inline-block;
+  }
+
+
 </style>
