@@ -91,7 +91,7 @@
               v-model="confirm_password"
             ></b-input>
           </div>
-          <b-button :disabled="!validInputs" @click="submitForm">Change username</b-button>
+          <b-button :disabled="!validInputs" @click="submitForm">Save settings</b-button>
 
         </right-hand-content>
 

@@ -8,7 +8,7 @@
             <h2>{{title}}</h2>
           </div>
           <div class="content-preview">
-            <p>{{preview}}</p>
+            <p>{{truncate(preview)}}</p>
           </div>
           <div class="content-footer">
             <b-icon class="user-small-img" icon="person-fill"></b-icon>
@@ -60,6 +60,14 @@
       },
       comments: Number,
       reactions: Number,
+    },
+    methods: {
+      truncate(str) {
+        if (str.length > 70) {
+          str = str.substring(0, 70) + '...'
+        }
+        return str;
+      }
     }
   }
 </script>
