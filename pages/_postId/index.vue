@@ -2,7 +2,7 @@
   <div>
     <h1>Hey</h1>
         <h1>{{title}}</h1>
-    <!--    <p>{{preview}}</p>-->
+    <div v-html="content"></div>
     <!--    <p>{{user_id}}</p>-->
   </div>
 </template>
@@ -14,7 +14,9 @@
     asyncData({params}) {
       return axios.get(`http://localhost:5000/post/${params.postId}`)
         .then((res) => {
-          return {title: res.data.title}
+          return {title: res.data.title,
+                  content: res.data.content,
+          }
         })
 
     }

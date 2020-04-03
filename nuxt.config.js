@@ -24,11 +24,21 @@ export default {
   /*
   ** Global CSS
   */
-  css: [],
+  css: [
+    // ...
+    'quill/dist/quill.core.css',
+    // for snow theme
+    'quill/dist/quill.snow.css',
+    // for bubble theme
+    'quill/dist/quill.bubble.css'
+    // ...
+  ],
   /*
   ** Plugins to load before mounting the App
   */
-  plugins: ['~/plugins/authUtils.js'],
+  plugins: ['~/plugins/authUtils.js',
+    { src: '~plugins/nuxt-quill-plugin', ssr: false }
+  ],
   /*
   ** Nuxt.js dev-modules
   */
