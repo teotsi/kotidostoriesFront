@@ -15,15 +15,17 @@
         </right-hand-content>
         <right-hand-content v-if="active==='overview'">
           <div class="overview-content">
-            <img :src="'http://localhost:5000/'+this.$auth.user.img" alt="¿Donde esta tu foto?" id="profile-pic">
+            <div class="overlay-content pic-container">
+              <img @click="uploadPhoto" :src="'http://localhost:5000/'+this.$auth.user.img" alt="¿Donde esta tu foto?" class="profile-pic">
+              <input type="file" id="my_file" style="display: none;" />
 
-            <div id="dash-content">
-              <p>Posts: {{this.$auth.user.posts.length}}</p>
-              <p>Comments:{{this.$auth.user.comments.length}} </p>
-              <p>Followers:{{this.$auth.user
-                .followers.length}} </p>
             </div>
-
+          </div>
+          <div id="dash-content">
+            <p>Posts: {{this.$auth.user.posts.length}}</p>
+            <p>Comments:{{this.$auth.user.comments.length}} </p>
+            <p>Followers:{{this.$auth.user
+              .followers.length}} </p>
           </div>
 
 
@@ -159,7 +161,7 @@
         })
       },
       submitForm() {
-        let form = this.form
+        let form = this.form;
         for (let attr in form) {
           if (form[attr] === null || form[attr] === undefined) {
             delete form[attr];
@@ -224,13 +226,22 @@
 </script>
 
 <style scoped>
-  #profile-pic {
+  .pic-container{
+    position: relative;
+    transition: .5s ease;
+
+  }
+  .profile-pic {
     width: 200px;
     height: 200px;
-    border: solid white;
     box-shadow: gray 0px 0px 10px;
     border-radius: 50%;
     object-fit: cover;
+
+  }
+  .profile-pic:hover{
+    filter:brightness(50%);
+    cursor: pointer;
   }
 
   #dash-content {
@@ -303,6 +314,36 @@
   .account-input {
     border-radius: 50px;
     padding-top: 6px;
+  }
+
+  #change-text {
+    color: white;
+    opacity: 1;
+  }
+
+  .overlay {
+    width: 200px;
+    height: 200px;
+    position: absolute;
+    transition: .5s ease;
+    opacity: 0;
+    top: 50%;
+    left: 13.5%;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    text-align: center;
+  }
+  .overlay p{
+    margin-top: 80px;
+  }
+
+
+  .overlay-content:hover .overlay {
+    opacity: 1;
+  }
+  .overlay-content:hover .overlay p{
+    opacity: 1;
   }
 
 </style>
