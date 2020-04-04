@@ -160,4 +160,7 @@
   .container.right-panel-active .sign-in-container {
     transform: translateX(100%);
   }
+  span {
+    font-size: 12px;
+  }
 </style>

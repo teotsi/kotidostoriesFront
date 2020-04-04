@@ -69,9 +69,7 @@
   }
 
 
-  span {
-    font-size: 12px;
-  }
+
 
   a {
     color: #333;
