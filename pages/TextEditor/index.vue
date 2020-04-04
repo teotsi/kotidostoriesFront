@@ -15,7 +15,8 @@ import editor from '../../components/editor';
 export default {
   components: {
     editor
-  }
+  },
+  middleware:'redirectLogin'
 }
 </script>
 
