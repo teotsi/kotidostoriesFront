@@ -63,8 +63,8 @@
     },
     methods: {
       truncate(str) {
-        if (str.length > 70) {
-          str = str.substring(0, 70) + '...'
+        if (str.length > 110) {
+          str = str.substring(0, 110) + '...'
         }
         return str;
       }
@@ -77,6 +77,11 @@
   .post-img {
     height:250px;
     object-fit:cover;
+  }
+
+  .content-preview{
+    max-height: 80px;
+    min-height: 80px;
   }
 
   a {

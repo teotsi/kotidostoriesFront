@@ -39,9 +39,6 @@
     width: 100%;
     height: 100%;
   }
-  #icon-container:hover {
-    background-color: #440044;
-  }
 
   .dropprof {
     padding-right: 5px;
