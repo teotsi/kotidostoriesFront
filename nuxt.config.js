@@ -1,5 +1,7 @@
+var webpack = require('webpack')
+
 export default {
-  mode: 'universal',
+  mode: 'spa',
   /*
   ** Headers of the page
   */
@@ -37,7 +39,8 @@ export default {
   ** Plugins to load before mounting the App
   */
   plugins: ['~/plugins/authUtils.js',
-    { src: '~plugins/nuxt-quill-plugin', ssr: false }
+    { src: '~plugins/rich-editor', ssr: false },
+    // { src: '~plugins/spanblock', ssr: false},
   ],
   /*
   ** Nuxt.js dev-modules
@@ -65,7 +68,13 @@ export default {
     ** You can extend webpack config here
     */
     extend(config, ctx) {
-    }
+    },
+    plugins: [
+      new webpack.ProvidePlugin({
+        'window.Quill': 'quill/dist/quill.js',
+        'Quill': 'quill/dist/quill.js'
+      })
+    ]
   },
   auth: {
     strategies: {
