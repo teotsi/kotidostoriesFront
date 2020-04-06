@@ -1,5 +1,3 @@
-var webpack = require('webpack')
-
 export default {
   mode: 'spa',
   /*
@@ -27,20 +25,12 @@ export default {
   ** Global CSS
   */
   css: [
-    // ...
-    'quill/dist/quill.core.css',
-    // for snow theme
-    'quill/dist/quill.snow.css',
-    // for bubble theme
-    'quill/dist/quill.bubble.css'
-    // ...
   ],
   /*
   ** Plugins to load before mounting the App
   */
   plugins: ['~/plugins/authUtils.js',
-    { src: '~plugins/rich-editor', ssr: false },
-    // { src: '~plugins/spanblock', ssr: false},
+    { src: '~plugins/rich-editor', ssr: false }
   ],
   /*
   ** Nuxt.js dev-modules
@@ -68,13 +58,7 @@ export default {
     ** You can extend webpack config here
     */
     extend(config, ctx) {
-    },
-    plugins: [
-      new webpack.ProvidePlugin({
-        'window.Quill': 'quill/dist/quill.js',
-        'Quill': 'quill/dist/quill.js'
-      })
-    ]
+    }
   },
   auth: {
     strategies: {
