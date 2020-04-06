@@ -3,7 +3,7 @@
     <article id="article">
       <div id="div">
         <aside id="aside">
-          <b-img :src="img" class="post-img" fluid-grow/>
+          <b-img :src="img+'#'+new Date().getTime()" class="post-img" fluid-grow/>
           <div class="content-title">
             <h2>{{title}}</h2>
           </div>
