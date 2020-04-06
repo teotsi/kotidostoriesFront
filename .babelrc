@@ -13,6 +13,9 @@
           }
         ]
       ]
+    },
+    "development" : {
+      "compact": false
     }
   }
 }

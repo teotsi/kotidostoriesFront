@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <editor></editor>
+    <rich-editor></rich-editor>
     <div class="save__buttons">
       <b-button variant="outline-danger">Cancel</b-button>
       <b-button>Publish</b-button>
@@ -10,11 +10,11 @@
 </template>
 
 <script>
-import editor from '../../components/editor';
+import RichEditor from '../../components/RichEditor';
 
 export default {
   components: {
-    editor
+    RichEditor
   },
   middleware:'redirectLogin'
 }
