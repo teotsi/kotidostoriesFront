@@ -9,7 +9,7 @@
 
 <script>
   import CKEditor from '@ckeditor/ckeditor5-vue'
-  import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
+  import UnfoldEditor from '@teotsi/unfold-ckeditor'
 
   export default {
     name: 'RichEditor',
@@ -25,7 +25,7 @@
     },
     data() {
       return {
-        editor: ClassicEditor,
+        editor: UnfoldEditor,
         editorConfig: this.options,
       }
     }
