@@ -1,5 +1,5 @@
 <template>
-  <nuxt-link id="link" :to="id" class="col-lg-4 col-md-4">
+  <nuxt-link id="link" :to="`${id}\\${slug}`" class="col-lg-4 col-md-4">
     <article id="article">
       <div id="div">
         <aside id="aside">
@@ -60,6 +60,7 @@
       },
       comments: Number,
       reactions: Number,
+      slug: String
     },
     methods: {
       truncate(str) {

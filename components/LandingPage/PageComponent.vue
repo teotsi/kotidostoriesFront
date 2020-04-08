@@ -4,31 +4,33 @@
       <div class="col-lg-10">
         <div class="row">
           <client-only>
-            <Post v-if="catfilter.length===0"
-                  v-for="post in this.$auth.user.posts"
-                  :key="post.id"
-                  :title="post.title"
-                  :user="post.user.username"
-                  :preview="post.preview"
+            <Post :comments="post.comments.length"
+                  :content="post.content"
                   :date="post.date"
                   :id="post.id"
-                  :content="post.content"
                   :img="'http://localhost:5000/'+post.img"
-                  :comments="post.comments.length"
-                  :reactions="post.reactions.length"/>
-            <Post v-else
+                  :key="post.id"
+                  :preview="post.preview"
+                  :reactions="post.reactions.length"
+                  :title="post.title"
+                  :slug="post.slug"
+                  :user="post.user.username"
+                  v-for="post in this.$auth.user.posts"
+                  v-if="catfilter.length===0"/>
+            <Post :comments="post.comments.length"
+                  :content="post.content"
+                  :date="post.date"
+                  :id="post.id"
+                  :img="'http://localhost:5000/'+post.img"
+                  :key="post.id"
+                  :preview="post.preview"
+                  :reactions="post.reactions.length"
+                  :title="post.title"
+                  :slug="post.slug"
+                  :user="post.user.username"
+                  v-else
                   v-for="post in this.$auth.user.posts"
                   v-if="catfilter.includes(post.category)"
-                  :key="post.id"
-                  :title="post.title"
-                  :user="post.user.username"
-                  :preview="post.preview"
-                  :date="post.date"
-                  :id="post.id"
-                  :content="post.content"
-                  :img="'http://localhost:5000/'+post.img"
-                  :comments="post.comments.length"
-                  :reactions="post.reactions.length"
             />
           </client-only>
         </div>
@@ -43,14 +45,14 @@
             <h2 class="title-widget-sidebar">CATEGORIES</h2>
             <b-button-group size="sm">
               <div>
-              <b-button squared class="categories-btn"
-                v-for="(btn, idx) in buttons"
-                :key="idx"
-                :pressed.sync="btn.state"
-                @click="toggleCategory(btn.caption.toLowerCase())"
-              >
-                {{ btn.caption }}
-              </b-button>
+                <b-button :key="idx" :pressed.sync="btn.state"
+                          @click="toggleCategory(btn.caption.toLowerCase())"
+                          class="categories-btn"
+                          squared
+                          v-for="(btn, idx) in buttons"
+                >
+                  {{ btn.caption }}
+                </b-button>
 
               </div>
             </b-button-group>
@@ -73,19 +75,13 @@
     },
     methods: {
       toggleCategory: function (category) {
-        if (category==="poems"){
-          category='poem';
-          if (this.catfilter.includes(category)){
-            this.catfilter.splice(this.catfilter.indexOf(category), 1);
-          }else{
-            this.catfilter.push(category);
-          }
-        }else {
-          if (this.catfilter.includes(category)){
-            this.catfilter.splice(this.catfilter.indexOf(category), 1);
-          }else{
-            this.catfilter.push(category);
-          }
+        if (category === "poems") {
+          category = 'poem';
+        }
+        if (this.catfilter.includes(category)) {
+          this.catfilter.splice(this.catfilter.indexOf(category), 1);
+        } else {
+          this.catfilter.push(category);
         }
         console.log(this.catfilter);
       }
@@ -95,12 +91,12 @@
         catfilter: [],
         myToggle: false,
         buttons: [
-          { caption: 'Love', state: false },
-          { caption: 'Horror', state: false },
-          { caption: 'Funny', state: false },
-          { caption: 'Poems', state: false },
-          { caption: 'Sci-fi', state: false },
-          { caption: 'Mystery', state: false }
+          {caption: 'Love', state: false},
+          {caption: 'Horror', state: false},
+          {caption: 'Funny', state: false},
+          {caption: 'Poems', state: false},
+          {caption: 'Sci-fi', state: false},
+          {caption: 'Mystery', state: false}
         ]
       }
     }
@@ -167,8 +163,8 @@
   /*  color: #fff;*/
   /*}*/
 
-  .btn-secondary:not(:disabled):not(.disabled).active{
-      background-color: #950ca0;
-      color: #fff;
+  .btn-secondary:not(:disabled):not(.disabled).active {
+    background-color: #950ca0;
+    color: #fff;
   }
 </style>
