@@ -3,7 +3,8 @@
     <div class="row">
       <div class="col-lg-10">
         <div class="row">
-          <client-only>
+          <transition-group name="list-complete" tag="div">
+
             <Post :comments="post.comments.length"
                   :content="post.content"
                   :date="post.date"
@@ -12,27 +13,33 @@
                   :key="post.id"
                   :preview="post.preview"
                   :reactions="post.reactions.length"
-                  :title="post.title"
                   :slug="post.slug"
+                  :title="post.title"
                   :user="post.user.username"
+                  class="post"
                   v-for="post in this.$auth.user.posts"
                   v-if="catfilter.length===0"/>
-            <Post :comments="post.comments.length"
-                  :content="post.content"
-                  :date="post.date"
-                  :id="post.id"
-                  :img="'http://localhost:5000/'+post.img"
-                  :key="post.id"
-                  :preview="post.preview"
-                  :reactions="post.reactions.length"
-                  :title="post.title"
-                  :slug="post.slug"
-                  :user="post.user.username"
-                  v-else
-                  v-for="post in this.$auth.user.posts"
-                  v-if="catfilter.includes(post.category)"
-            />
-          </client-only>
+          </transition-group>
+
+          <transition-group name="list-complete" tag="div">
+          <Post :comments="post.comments.length"
+                :content="post.content"
+                :date="post.date"
+                :id="post.id"
+                :img="'http://localhost:5000/'+post.img"
+                :key="post.id"
+                :preview="post.preview"
+                :reactions="post.reactions.length"
+                :slug="post.slug"
+                :title="post.title"
+                :user="post.user.username"
+                class="post"
+                v-else
+                v-for="post in this.$auth.user.posts"
+                v-if="catfilter.includes(post.category)"
+          />
+          </transition-group>
+
         </div>
       </div>
       <client-only>
@@ -167,4 +174,17 @@
     background-color: #950ca0;
     color: #fff;
   }
+
+  .post {
+    transition: all 1s;
+    display: inline-block;
+  }
+
+  .list-complete-enter, .list-complete-leave-to
+    /* .list-complete-leave-active below version 2.1.8 */
+  {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
 </style>
