@@ -4,7 +4,7 @@
       <div class="col-lg-10">
         <div class="row">
           <transition-group name="list-complete" tag="div">
-
+{{categorizedPosts}}
             <Post :comments="post.comments.length"
                   :content="post.content"
                   :date="post.date"
@@ -17,28 +17,27 @@
                   :title="post.title"
                   :user="post.user.username"
                   class="post"
-                  v-for="post in this.$auth.user.posts"
-                  v-if="catfilter.length===0"/>
+                  v-for="post in this.posts"/>
           </transition-group>
 
-          <transition-group name="list-complete" tag="div">
-          <Post :comments="post.comments.length"
-                :content="post.content"
-                :date="post.date"
-                :id="post.id"
-                :img="'http://localhost:5000/'+post.img"
-                :key="post.id"
-                :preview="post.preview"
-                :reactions="post.reactions.length"
-                :slug="post.slug"
-                :title="post.title"
-                :user="post.user.username"
-                class="post"
-                v-else
-                v-for="post in this.$auth.user.posts"
-                v-if="catfilter.includes(post.category)"
-          />
-          </transition-group>
+<!--          <transition-group name="list-complete" tag="div">-->
+<!--          <Post :comments="post.comments.length"-->
+<!--                :content="post.content"-->
+<!--                :date="post.date"-->
+<!--                :id="post.id"-->
+<!--                :img="'http://localhost:5000/'+post.img"-->
+<!--                :key="post.id"-->
+<!--                :preview="post.preview"-->
+<!--                :reactions="post.reactions.length"-->
+<!--                :slug="post.slug"-->
+<!--                :title="post.title"-->
+<!--                :user="post.user.username"-->
+<!--                class="post"-->
+<!--                v-else-->
+<!--                v-for="post in this.$auth.user.posts"-->
+<!--                v-if="catfilter.includes(post.category)"-->
+<!--          />-->
+<!--          </transition-group>-->
 
         </div>
       </div>
@@ -74,6 +73,7 @@
 
 <script>
   import Post from "./Post";
+  import util from "../../assets/js/utils";
 
   export default {
 
@@ -87,14 +87,31 @@
         }
         if (this.catfilter.includes(category)) {
           this.catfilter.splice(this.catfilter.indexOf(category), 1);
+          if (this.catfilter.length ===0){
+            this.$auth.user.posts.forEach((post,index)=>{
+              this.posts[index] = post;
+            })
+          }
         } else {
           this.catfilter.push(category);
+
+          let j = 0;
+          this.posts.forEach((post, index) => {
+            if (this.catfilter.includes(post.category)) {
+              if (index!==j) this.posts[j] = post;
+              j++;
+            }
+          });
+
+          this.posts.length = j;
         }
         console.log(this.catfilter);
-      }
+      },
     },
     data() {
       return {
+        posts : this.$auth.user.posts.slice(),
+        currentPosts : this.$auth.user.posts.slice(),
         catfilter: [],
         myToggle: false,
         buttons: [
@@ -105,6 +122,25 @@
           {caption: 'Sci-fi', state: false},
           {caption: 'Mystery', state: false}
         ]
+      }
+    },
+    computed: {
+      categorizedPosts(){
+        return this.$auth.user.posts.reduce((group, post) => {
+          if (!group[post.category]) {
+            group[post.category] = [];
+          }
+          group[post.category].push(post);
+          return group;
+        });
+  },
+      activePosts(){
+        const catfilter = this.catfilter;
+        if (catfilter.length === 0){
+          return this.posts;
+        }
+        util.filterInPlace(this.posts,post=>post.category==='love')
+        return this.posts
       }
     }
   }
@@ -181,7 +217,6 @@
   }
 
   .list-complete-enter, .list-complete-leave-to
-    /* .list-complete-leave-active below version 2.1.8 */
   {
     opacity: 0;
     transform: translateY(30px);

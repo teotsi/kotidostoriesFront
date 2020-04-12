@@ -28,7 +28,7 @@ export default {
   /*
   ** Plugins to load before mounting the App
   */
-  plugins: ['~/plugins/authUtils.js',
+  plugins: ['~/plugins/utils.js',
     {src: '~plugins/rich-editor', ssr: false}
   ],
   /*
