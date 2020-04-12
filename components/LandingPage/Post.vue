@@ -5,10 +5,10 @@
         <aside id="aside">
           <b-img :src="img+'#'+new Date().getTime()" class="post-img" fluid-grow/>
           <div class="content-title">
-            <h2>{{title}}</h2>
+            <h2>{{truncate(title,'title')}}</h2>
           </div>
           <div class="content-preview">
-            <p>{{truncate(preview)}}</p>
+            <p>{{truncate(preview, 'preview')}}</p>
           </div>
           <div class="content-footer">
             <b-icon class="user-small-img" icon="person-fill"></b-icon>
@@ -63,9 +63,15 @@
       slug: String
     },
     methods: {
-      truncate(str) {
-        if (str.length > 110) {
-          str = str.substring(0, 110) + '...'
+      truncate(str, type) {
+        let limit;
+        if(type==='title'){
+          limit=20;
+        }else{
+          limit=110;
+        }
+        if (str.length > limit) {
+          str = str.substring(0, limit) + '...'
         }
         return str;
       }

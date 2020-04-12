@@ -51,11 +51,11 @@
             <h2 class="title-widget-sidebar">CATEGORIES</h2>
             <b-button-group size="sm">
               <div>
-                <b-button :key="idx" :pressed.sync="btn.state"
-                          @click="toggleCategory(btn.caption.toLowerCase())"
-                          :class="['categories-btn']"
+                <b-button :class="['categories-btn']" :disabled="!existingCategory(btn.caption)"
+                          :key="idx"
+                          :pressed.sync="btn.state"
+                          @click="toggleCategory(btn.caption)"
                           squared
-                          :disabled="!existingCategory(btn.caption)"
                           v-for="(btn, idx) in buttons"
                 >
                   {{ btn.caption }}
@@ -82,40 +82,34 @@
       Post
     },
     methods: {
-      existingCategory: function(category) {
-        console.log(category)
-        category = category.toLowerCase()
-        if(this.categorizedPosts[category]){
+      existingCategory: function (category) { //check if category exists in current dataset
+        category = util.normalizeCategory(category);
+        if (this.categorizedPosts[category]) {
           return this.categorizedPosts[category].length > 0;
         }
       },
-      toggleCategory: function (category) {
-        if (category === "poems") {
-          category = 'poem';
-        }
-        if (this.catfilter.includes(category)) {
+      toggleCategory: function (category) { //filter posts
+        category = util.normalizeCategory(category);
+        if (this.catfilter.includes(category)) { //in case category is being removed from filter
           this.catfilter.splice(this.catfilter.indexOf(category), 1);
 
-          if (this.catfilter.length === 0) {
+          if (this.catfilter.length === 0) { //if no more categories, show all posts
             this.$auth.user.posts.forEach((post, index) => {
               this.posts[index] = post;
             })
           } else {
             let j = 0;
-            if (this.categorizedPosts[category]) {
-              let indices = [];
+            if (this.categorizedPosts[category]) { //if category exists
+              let postsToRemove = [];
               this.posts.forEach((post, index) => {
                 if (post.category === category) {
-                  console.log("found it!")
-                  indices.push(post)
+                  postsToRemove.push(post) //collect posts to be removed
                 }
               });
-              console.log(`Found ${indices.length} to remove. Posts has ${this.posts.length}`)
-              indices.forEach((post,count) => {
-                let indexToRemove = this.posts.indexOf(post)
-                this.posts.splice(indexToRemove, 1)
+              postsToRemove.forEach((post, count) => {
+                let indexToRemove = this.posts.indexOf(post);
+                this.posts.splice(indexToRemove, 1) //remove said posts
               });
-              console.log(` Posts has ${this.posts.length}`)
 
             }
           }
@@ -124,23 +118,18 @@
 
 
           let j = 0;
-          if (this.categorizedPosts[category]) {
-            if (this.catfilter.length === 1) {
-              console.log(this.categorizedPosts[category]);
+          if (this.categorizedPosts[category]) { //if category exists
+            if (this.catfilter.length === 1) { //if first category, just show entire category
               this.categorizedPosts[category].forEach((post, index) => {
-                if(post.category===category) {
-                  console.log("I was found!");
-                  console.log(index);
+                if (post.category === category) {
                   this.posts[j] = post;
                   j++;
-                  console.log(this.posts)
-                  console.log("GOody")
                 }
               });
 
               this.posts.length = j;
             } else {
-              this.posts.push(...this.categorizedPosts[category])
+              this.posts.push(...this.categorizedPosts[category]) //append category
             }
           }
         }
@@ -166,17 +155,7 @@
       }
     },
     computed: {
-      categorizedPosts() {
-        // return this.$auth.user.posts.reduce(post => {
-        //   if (!this.group[post.category]) {
-        //     console.log(post)
-        //     console.log("----")
-        //     this.group[post.category] = [];
-        //   }
-        //   this.group[post.category].push(post);
-        //   return this.group;
-        // });
-
+      categorizedPosts() { //create object with groups of posts based on shared category
         return this.$auth.user.posts.reduce((cat, post) => {
           if (!cat[post.category]) {
             cat[post.category] = [];
@@ -227,7 +206,7 @@
   /*categories//////////////////////*/
 
   .categories-btn {
-    background-color: #7e6ca0;
+    background-color: #8357a0;
     margin-top: 30px;
     color: #fff;
     cursor: pointer;
@@ -246,14 +225,17 @@
   /*  color: #fff;*/
   /*}*/
 
-  /*.categories-btn:active {*/
-  /*  background-color: #950ca0;*/
-  /*  color: #fff;*/
-  /*}*/
+  .categories-btn:disabled {
+    background-color: #525150;
+    color: #fff;
+  }
 
   .btn-secondary:not(:disabled):not(.disabled).active {
     background-color: #950ca0;
     color: #fff;
+  }
+  .btn-secondary:disabled:hover{
+    cursor: default;
   }
 
 
