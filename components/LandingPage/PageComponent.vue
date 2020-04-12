@@ -91,6 +91,7 @@
       toggleCategory: function (category) { //filter posts
         category = util.normalizeCategory(category);
         if (this.catfilter.includes(category)) { //in case category is being removed from filter
+
           this.catfilter.splice(this.catfilter.indexOf(category), 1);
 
           if (this.catfilter.length === 0) { //if no more categories, show all posts
