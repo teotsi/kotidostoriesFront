@@ -226,7 +226,7 @@
   /*}*/
 
   .categories-btn:disabled {
-    background-color: #525150;
+    background-color: #1d191c;
     color: #fff;
   }
 
@@ -249,4 +249,22 @@
     transform: translateY(30px);
   }
 
+  .categories-btn:disabled:hover {
+    animation: shake 0.25s cubic-bezier(.36,.07,.19,.97) both;
+    transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+  }
+
+  @keyframes shake {
+    20%, 80% {
+      transform: translate3d(-1px, 0, 0);
+    }
+
+    40%, 60% {
+      transform: translate3d(2px, 0, 0);
+    }
+
+
+  }
 </style>
