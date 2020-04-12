@@ -4,7 +4,7 @@
       <div class="col-lg-10">
         <div class="row">
           <transition-group name="list-complete" tag="div">
-{{categorizedPosts}}
+            {{categorizedPosts}}
             <Post :comments="post.comments.length"
                   :content="post.content"
                   :date="post.date"
@@ -20,24 +20,24 @@
                   v-for="post in this.posts"/>
           </transition-group>
 
-<!--          <transition-group name="list-complete" tag="div">-->
-<!--          <Post :comments="post.comments.length"-->
-<!--                :content="post.content"-->
-<!--                :date="post.date"-->
-<!--                :id="post.id"-->
-<!--                :img="'http://localhost:5000/'+post.img"-->
-<!--                :key="post.id"-->
-<!--                :preview="post.preview"-->
-<!--                :reactions="post.reactions.length"-->
-<!--                :slug="post.slug"-->
-<!--                :title="post.title"-->
-<!--                :user="post.user.username"-->
-<!--                class="post"-->
-<!--                v-else-->
-<!--                v-for="post in this.$auth.user.posts"-->
-<!--                v-if="catfilter.includes(post.category)"-->
-<!--          />-->
-<!--          </transition-group>-->
+          <!--          <transition-group name="list-complete" tag="div">-->
+          <!--          <Post :comments="post.comments.length"-->
+          <!--                :content="post.content"-->
+          <!--                :date="post.date"-->
+          <!--                :id="post.id"-->
+          <!--                :img="'http://localhost:5000/'+post.img"-->
+          <!--                :key="post.id"-->
+          <!--                :preview="post.preview"-->
+          <!--                :reactions="post.reactions.length"-->
+          <!--                :slug="post.slug"-->
+          <!--                :title="post.title"-->
+          <!--                :user="post.user.username"-->
+          <!--                class="post"-->
+          <!--                v-else-->
+          <!--                v-for="post in this.$auth.user.posts"-->
+          <!--                v-if="catfilter.includes(post.category)"-->
+          <!--          />-->
+          <!--          </transition-group>-->
 
         </div>
       </div>
@@ -53,8 +53,9 @@
               <div>
                 <b-button :key="idx" :pressed.sync="btn.state"
                           @click="toggleCategory(btn.caption.toLowerCase())"
-                          class="categories-btn"
+                          :class="['categories-btn']"
                           squared
+                          :disabled="!existingCategory(btn.caption)"
                           v-for="(btn, idx) in buttons"
                 >
                   {{ btn.caption }}
@@ -81,38 +82,78 @@
       Post
     },
     methods: {
+      existingCategory: function(category) {
+        console.log(category)
+        category = category.toLowerCase()
+        if(this.categorizedPosts[category]){
+          return this.categorizedPosts[category].length > 0;
+        }
+      },
       toggleCategory: function (category) {
         if (category === "poems") {
           category = 'poem';
         }
         if (this.catfilter.includes(category)) {
           this.catfilter.splice(this.catfilter.indexOf(category), 1);
-          if (this.catfilter.length ===0){
-            this.$auth.user.posts.forEach((post,index)=>{
+
+          if (this.catfilter.length === 0) {
+            this.$auth.user.posts.forEach((post, index) => {
               this.posts[index] = post;
             })
+          } else {
+            let j = 0;
+            if (this.categorizedPosts[category]) {
+              let indices = [];
+              this.posts.forEach((post, index) => {
+                if (post.category === category) {
+                  console.log("found it!")
+                  indices.push(post)
+                }
+              });
+              console.log(`Found ${indices.length} to remove. Posts has ${this.posts.length}`)
+              indices.forEach((post,count) => {
+                let indexToRemove = this.posts.indexOf(post)
+                this.posts.splice(indexToRemove, 1)
+              });
+              console.log(` Posts has ${this.posts.length}`)
+
+            }
           }
-        } else {
+        } else {  //insert new category
           this.catfilter.push(category);
 
-          let j = 0;
-          this.posts.forEach((post, index) => {
-            if (this.catfilter.includes(post.category)) {
-              if (index!==j) this.posts[j] = post;
-              j++;
-            }
-          });
 
-          this.posts.length = j;
+          let j = 0;
+          if (this.categorizedPosts[category]) {
+            if (this.catfilter.length === 1) {
+              console.log(this.categorizedPosts[category]);
+              this.categorizedPosts[category].forEach((post, index) => {
+                if(post.category===category) {
+                  console.log("I was found!");
+                  console.log(index);
+                  this.posts[j] = post;
+                  j++;
+                  console.log(this.posts)
+                  console.log("GOody")
+                }
+              });
+
+              this.posts.length = j;
+            } else {
+              this.posts.push(...this.categorizedPosts[category])
+            }
+          }
         }
         console.log(this.catfilter);
+
       },
     },
     data() {
       return {
-        posts : this.$auth.user.posts.slice(),
-        currentPosts : this.$auth.user.posts.slice(),
+        posts: this.$auth.user.posts.slice(),
+        currentPosts: this.$auth.user.posts.slice(),
         catfilter: [],
+        group: {},
         myToggle: false,
         buttons: [
           {caption: 'Love', state: false},
@@ -125,22 +166,26 @@
       }
     },
     computed: {
-      categorizedPosts(){
-        return this.$auth.user.posts.reduce((group, post) => {
-          if (!group[post.category]) {
-            group[post.category] = [];
+      categorizedPosts() {
+        // return this.$auth.user.posts.reduce(post => {
+        //   if (!this.group[post.category]) {
+        //     console.log(post)
+        //     console.log("----")
+        //     this.group[post.category] = [];
+        //   }
+        //   this.group[post.category].push(post);
+        //   return this.group;
+        // });
+
+        return this.$auth.user.posts.reduce((cat, post) => {
+          if (!cat[post.category]) {
+            cat[post.category] = [];
           }
-          group[post.category].push(post);
-          return group;
-        });
-  },
-      activePosts(){
-        const catfilter = this.catfilter;
-        if (catfilter.length === 0){
-          return this.posts;
-        }
-        util.filterInPlace(this.posts,post=>post.category==='love')
-        return this.posts
+          cat[post.category].push(post);
+          return cat;
+        }, {})
+
+
       }
     }
   }
@@ -211,13 +256,13 @@
     color: #fff;
   }
 
+
   .post {
     transition: all 1s;
     display: inline-block;
   }
 
-  .list-complete-enter, .list-complete-leave-to
-  {
+  .list-complete-enter, .list-complete-leave-to {
     opacity: 0;
     transform: translateY(30px);
   }
