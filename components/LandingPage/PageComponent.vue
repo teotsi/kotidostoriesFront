@@ -81,6 +81,7 @@
     components: {
       Post
     },
+    middleware: 'auth',
     methods: {
       existingCategory: function (category) { //check if category exists in current dataset
         category = util.normalizeCategory(category);
