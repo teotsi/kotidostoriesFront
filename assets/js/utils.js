@@ -1,6 +1,6 @@
 const util = {
   normalizeCategory(category){
-    return category === "poems" ? "poem" : category.toLowerCase();
+    return category.toLowerCase() === "poems" ? "poem" : category.toLowerCase();
   },
 
 };

@@ -29,6 +29,7 @@
     "@fortawesome/free-solid-svg-icons": "^5.12.1",
     "@fortawesome/vue-fontawesome": "^0.1.9",
     "@nuxtjs/auth": "^4.9.0",
+    "@nuxtjs/pwa": "^3.0.0-beta.20",
     "@teotsi/unfold-ckeditor": "^1.0.1",
     "axios": "latest",
     "bootstrap": "^4.1.3",

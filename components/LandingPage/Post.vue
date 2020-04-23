@@ -1,30 +1,28 @@
 <template>
-  <nuxt-link id="link" :to="`${id}/${slug}`" class="col-lg-4 col-md-4">
-    <article id="article">
-      <div id="div">
-        <aside id="aside">
-          <b-img :src="img+'#'+new Date().getTime()" class="post-img" fluid-grow/>
-          <div class="content-title">
-            <h2>{{truncate(title,'title')}}</h2>
-          </div>
-          <div class="content-preview">
-            <p>{{truncate(preview, 'preview')}}</p>
-          </div>
-          <div class="content-footer">
-            <b-icon class="user-small-img" icon="person-fill"></b-icon>
-            <span style="font-size: 16px;color: #fff;">{{user}}</span>
-            <span class="pull-right">
+  <div class="post-details">
+    <nuxt-link :to="`${id}/${slug}`" id="link">
+
+      <b-img :src="img+'#'+new Date().getTime()" class="post-img" fluid-grow/>
+      <div class="content-title">
+        <h2>{{truncate(title,'title')}}</h2>
+      </div>
+      <div class="content-preview">
+        <p>{{truncate(preview, 'preview')}}</p>
+      </div>
+      <div class="content-footer">
+        <b-icon class="user-small-img" icon="person-fill"></b-icon>
+        <span style="font-size: 16px;color: #fff;">{{user}}</span>
+        <span class="pull-right">
               <a data-placement="left" data-toggle="tooltip" href="#" title="Comments">
                 <font-awesome-icon :icon="['far', 'comments']"/>{{comments}}</a>
               <a data-placement="right" data-toggle="tooltip" href="#" title="Loved">
                  <font-awesome-icon :icon="['far', 'heart']"/>
                  {{reactions}}</a>
               </span>
-          </div>
-        </aside>
       </div>
-    </article>
-  </nuxt-link>
+
+    </nuxt-link>
+  </div>
 </template>
 
 <script>
@@ -65,14 +63,15 @@
     methods: {
       truncate(str, type) {
         let limit;
-        if(type==='title'){
-          limit=20;
-        }else{
-          limit=110;
+        if (type === 'title') {
+          limit = 20;
+        } else {
+          limit = 70;
         }
         if (str.length > limit) {
           str = str.substring(0, limit) + '...'
         }
+        console.log(str)
         return str;
       }
     }
@@ -80,13 +79,34 @@
 </script>
 
 <style scoped>
-
-  .post-img {
-    height:250px;
-    object-fit:cover;
+  .post-details {
+    width: 100%;
+    height: 430px;
+    margin: 30px 15px;
+    -webkit-box-shadow: 1px 4px 16px 3px rgba(199, 197, 199, 1);
+    -moz-box-shadow: 1px 4px 16px 3px rgba(199, 197, 199, 1);
+    box-shadow: 1px 4px 16px 3px rgba(199, 197, 199, 1);
   }
 
-  .content-preview{
+  @media (min-width: 800px) {
+    .post-details {
+      width: 45%;
+    }
+  }
+
+  @media (min-width: 1200px ) {
+    .post-details {
+      width: 30%;
+    }
+
+  }
+
+  .post-img {
+    height: 250px;
+    object-fit: cover;
+  }
+
+  .content-preview {
     max-height: 80px;
     min-height: 80px;
   }
@@ -94,13 +114,6 @@
   a {
     text-decoration: none;
     color: black;
-  }
-
-  aside {
-    margin-top: 30px;
-    -webkit-box-shadow: 1px 4px 16px 3px rgba(199, 197, 199, 1);
-    -moz-box-shadow: 1px 4px 16px 3px rgba(199, 197, 199, 1);
-    box-shadow: 1px 4px 16px 3px rgba(199, 197, 199, 1);
   }
 
   .content-title {

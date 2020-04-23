@@ -1,75 +1,49 @@
 <template>
-  <section id="blog-section">
-    <div class="row">
-      <div class="col-lg-10">
-        <div class="row">
-          <transition-group name="list-complete" tag="div">
-            {{categorizedPosts}}
-            <Post :comments="post.comments.length"
-                  :content="post.content"
-                  :date="post.date"
-                  :id="post.id"
-                  :img="'http://localhost:5000/'+post.img"
-                  :key="post.id"
-                  :preview="post.preview"
-                  :reactions="post.reactions.length"
-                  :slug="post.slug"
-                  :title="post.title"
-                  :user="post.user.username"
-                  class="post"
-                  v-for="post in this.posts"/>
-          </transition-group>
 
-          <!--          <transition-group name="list-complete" tag="div">-->
-          <!--          <Post :comments="post.comments.length"-->
-          <!--                :content="post.content"-->
-          <!--                :date="post.date"-->
-          <!--                :id="post.id"-->
-          <!--                :img="'http://localhost:5000/'+post.img"-->
-          <!--                :key="post.id"-->
-          <!--                :preview="post.preview"-->
-          <!--                :reactions="post.reactions.length"-->
-          <!--                :slug="post.slug"-->
-          <!--                :title="post.title"-->
-          <!--                :user="post.user.username"-->
-          <!--                class="post"-->
-          <!--                v-else-->
-          <!--                v-for="post in this.$auth.user.posts"-->
-          <!--                v-if="catfilter.includes(post.category)"-->
-          <!--          />-->
-          <!--          </transition-group>-->
+  <div class="grid-wrapper">
+    <!--=====================
+                     CATEGORIES
+                ======================-->
+    <div class="widget-sidebar">
+      <h2 class="title-widget-sidebar">CATEGORIES</h2>
+      <b-button-group size="sm">
+        <div>
+          <b-button :class="['categories-btn']" :disabled="!existingCategory(btn.caption)"
+                    :key="idx"
+                    :pressed.sync="btn.state"
+                    @click="toggleCategory(btn.caption)"
+                    squared
+                    v-for="(btn, idx) in buttons"
+          >
+            {{ btn.caption }}
+          </b-button>
 
         </div>
-      </div>
-      <client-only>
-        <div class="col-lg-2">
-
-          <!--=====================
-                 CATEGORIES
-            ======================-->
-          <div class="widget-sidebar">
-            <h2 class="title-widget-sidebar">CATEGORIES</h2>
-            <b-button-group size="sm">
-              <div>
-                <b-button :class="['categories-btn']" :disabled="!existingCategory(btn.caption)"
-                          :key="idx"
-                          :pressed.sync="btn.state"
-                          @click="toggleCategory(btn.caption)"
-                          squared
-                          v-for="(btn, idx) in buttons"
-                >
-                  {{ btn.caption }}
-                </b-button>
-
-              </div>
-            </b-button-group>
-          </div>
-        </div>
-      </client-only>
+      </b-button-group>
     </div>
+    <!--=====================
+                    POSTS
+               ======================-->
+    <transition-group class="post-container" name="list-complete" tag="div">
+      <Post :comments="post.comments.length"
+            :content="post.content"
+            :date="post.date"
+            :id="post.id"
+            :img="'http://localhost:5000/'+post.img"
+            :key="post.id"
+            :preview="post.preview"
+            :reactions="post.reactions.length"
+            :slug="post.slug"
+            :title="post.title"
+            :user="post.user.username"
+            class="post"
+            v-for="post in this.posts"/>
+    </transition-group>
 
 
-  </section>
+  </div>
+
+
 </template>
 
 <script>
@@ -174,18 +148,27 @@
 
 <style scoped>
 
-
-  #blog-section {
+  .grid-wrapper {
+    display: grid;
+    grid-template-columns: 1fr;
     margin-top: 40px;
     margin-bottom: 80px;
-    width: 100%;
+    justify-items: center;
+  }
+
+  .post-container {
+    align-content: center;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    grid-column: 1;
   }
 
   /*recent-post-col////////////////////*/
   .widget-sidebar {
-    background-color: #fff;
     padding: 20px;
     margin-top: 30px;
+    grid-column: 1;
   }
 
   .title-widget-sidebar {
@@ -209,17 +192,19 @@
 
   .categories-btn {
     background-color: #8357a0;
-    margin-top: 30px;
+    margin-top: 15px;
     color: #fff;
     cursor: pointer;
-    padding: 18px;
+    padding: 10px;
     width: 100%;
     border: none;
-    text-align: left;
+    text-align: center;
     outline: none;
     font-size: 15px;
     transition: 0.4s;
-
+    -webkit-box-shadow: 1px 4px 16px 3px rgba(199, 197, 199, 1);
+    -moz-box-shadow: 1px 4px 16px 3px rgba(199, 197, 199, 1);
+    box-shadow: 1px 4px 16px 3px rgba(199, 197, 199, 1);
   }
 
   /*.categories-btn:hover {*/
@@ -232,18 +217,55 @@
     color: #fff;
   }
 
-  .btn-secondary:not(:disabled):not(.disabled).active {
+  .btn-secondary:not(:disabled).active {
     background-color: #950ca0;
     color: #fff;
   }
-  .btn-secondary:disabled:hover{
+
+
+  .btn-secondary:not(:disabled):hover {
+    background-color: #9839a0;
+    color: #fff;
+  }
+
+  .btn-secondary:disabled:hover {
     cursor: default;
+  }
+
+
+  @media (min-width: 800px) {
+    .post-container {
+      justify-content: space-between;
+    }
+
+    .categories-btn {
+      margin-top: 30px;
+      padding: 18px;
+      text-align: left;
+    }
+  }
+
+  @media (min-width: 1200px) {
+    .grid-wrapper {
+      grid-template-columns: 7fr 1fr;
+      justify-items: stretch;
+      margin-left: 50px;
+    }
+
+    .post-container {
+      grid-column: 1/2;
+      justify-content: stretch;
+    }
+
+    .widget-sidebar {
+      grid-row: 1/2;
+      grid-column: 2/3;
+    }
   }
 
 
   .post {
     transition: all 1s;
-    display: inline-block;
   }
 
   .list-complete-enter, .list-complete-leave-to {
@@ -252,7 +274,7 @@
   }
 
   .categories-btn:disabled:hover {
-    animation: shake 0.25s cubic-bezier(.36,.07,.19,.97) both;
+    animation: shake 0.25s cubic-bezier(.36, .07, .19, .97) both;
     transform: translate3d(0, 0, 0);
     backface-visibility: hidden;
     perspective: 1000px;
@@ -262,11 +284,10 @@
     20%, 80% {
       transform: translate3d(-1px, 0, 0);
     }
-
     40%, 60% {
       transform: translate3d(2px, 0, 0);
     }
-
-
   }
+
+
 </style>

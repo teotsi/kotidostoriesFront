@@ -12,7 +12,7 @@
 <script>
   import LoginComponent from "@/components/Login_SignUp/LoginComponent";
   import ModalComponent from "../components/Preview/ModalComponent";
-  import PageComponent from "@/components/LandingPage/PageComponent";
+  import PageComponent from "../components/LandingPage/PageComponent";
   import axios from "axios";
 
   export default {
