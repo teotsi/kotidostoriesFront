@@ -13,7 +13,7 @@
   import LoginComponent from "@/components/Login_SignUp/LoginComponent";
   import ModalComponent from "../components/Preview/ModalComponent";
   import PageComponent from "../components/LandingPage/PageComponent";
-
+  import util from "../assets/js/utils";
   export default {
     components: {
 
@@ -38,16 +38,7 @@
       }
     },
     mounted() {
-      let sidebar = document.querySelector(".widget-sidebar");
-      window.addEventListener('scroll', e => {
-        let mouseElement = document.querySelector( ".widget-sidebar:hover" );
-        if (!mouseElement){
-          sidebar.style.opacity=0.5;
-        }
-      });
-      sidebar.addEventListener('mouseover',e=>{
-        sidebar.style.opacity=1;
-      })
+      util.fadeSide();
     }
   }
 </script>
@@ -110,5 +101,11 @@
   .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */
   {
     opacity: 0;
+  }
+  .side{
+    transition: ease 1.5s;
+  }
+  .side:hover{
+    transition: ease 0.5s;
   }
 </style>

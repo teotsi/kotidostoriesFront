@@ -4,7 +4,7 @@
     <!--=====================
                      CATEGORIES
                 ======================-->
-    <div class="widget-sidebar">
+    <div class="widget-sidebar side">
       <h2 class="title-widget-sidebar">CATEGORIES</h2>
       <b-button-group size="sm">
         <div>
@@ -169,7 +169,6 @@
     padding: 20px;
     margin-top: 30px;
     grid-column: 1;
-    transition: ease 0.5s;
   }
 
 
