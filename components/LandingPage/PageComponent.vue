@@ -24,7 +24,7 @@
     <!--=====================
                     POSTS
                ======================-->
-    <transition-group class="post-container" name="list-complete" tag="div">
+    <transition-group class="post-container" name="list-complete" tag="div" >
       <Post :comments="post.comments.length"
             :content="post.content"
             :date="post.date"
@@ -169,7 +169,9 @@
     padding: 20px;
     margin-top: 30px;
     grid-column: 1;
+    transition: ease 0.5s;
   }
+
 
   .title-widget-sidebar {
     font-size: 14pt;
@@ -289,5 +291,8 @@
     }
   }
 
+  .dim{
+    opacity: 0.5;
+  }
 
 </style>

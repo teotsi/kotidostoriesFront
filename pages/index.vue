@@ -3,7 +3,7 @@
     <transition name="fade">
       <login-component v-if="!this.$auth.loggedIn"></login-component>
       <section id="posts" v-else>
-      <PageComponent/>
+        <PageComponent/>
       </section>
     </transition>
   </div>
@@ -13,15 +13,42 @@
   import LoginComponent from "@/components/Login_SignUp/LoginComponent";
   import ModalComponent from "../components/Preview/ModalComponent";
   import PageComponent from "../components/LandingPage/PageComponent";
-  import axios from "axios";
 
   export default {
     components: {
+
       LoginComponent,
       ModalComponent,
       PageComponent
     },
-    methods: {}
+    created() {
+      window.addEventListener('scroll', this.handleScroll);
+    },
+    destroyed() {
+      window.removeEventListener('scroll', this.handleScroll);
+    },
+    methods: {
+      handleScroll: function () {
+        this.dim = true;
+      }
+    },
+    data() {
+      return {
+        progress: 0
+      }
+    },
+    mounted() {
+      let sidebar = document.querySelector(".widget-sidebar");
+      window.addEventListener('scroll', e => {
+        let mouseElement = document.querySelector( ".widget-sidebar:hover" );
+        if (!mouseElement){
+          sidebar.style.opacity=0.5;
+        }
+      });
+      sidebar.addEventListener('mouseover',e=>{
+        sidebar.style.opacity=1;
+      })
+    }
   }
 </script>
 <style>
@@ -69,18 +96,19 @@
   }
 
 
-
-
   a {
     color: #333;
     font-size: 14px;
     text-decoration: none;
     margin: 15px 0;
   }
+
   .fade-enter-active, .fade-leave-active {
     transition: opacity .5s;
   }
-  .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+
+  .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */
+  {
     opacity: 0;
   }
 </style>
