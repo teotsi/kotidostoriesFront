@@ -28,7 +28,7 @@ export default {
   /*
   ** Plugins to load before mounting the App
   */
-  plugins: ['~/plugins/utils.js',
+  plugins: [
     {src: '~plugins/rich-editor', ssr: false}
   ],
   /*

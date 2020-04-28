@@ -24,7 +24,7 @@
     <!--=====================
                     POSTS
                ======================-->
-    <transition-group class="post-container" name="list-complete" tag="div" >
+    <transition-group class="post-container" name="list-complete" tag="div">
       <Post :comments="post.comments.length"
             :content="post.content"
             :date="post.date"
@@ -48,7 +48,7 @@
 
 <script>
   import Post from "./Post";
-  import util from "../../assets/js/utils";
+  import {fadeSide, normalizeCategory} from "../../assets/js/utils";
 
   export default {
 
@@ -58,13 +58,13 @@
     middleware: 'auth',
     methods: {
       existingCategory: function (category) { //check if category exists in current dataset
-        category = util.normalizeCategory(category);
+        category = normalizeCategory(category);
         if (this.categorizedPosts[category]) {
           return this.categorizedPosts[category].length > 0;
         }
       },
       toggleCategory: function (category) { //filter posts
-        category = util.normalizeCategory(category);
+        category = normalizeCategory(category);
         if (this.catfilter.includes(category)) { //in case category is being removed from filter
 
           this.catfilter.splice(this.catfilter.indexOf(category), 1);
@@ -142,6 +142,9 @@
 
 
       }
+    },
+    mounted() {
+      fadeSide();
     }
   }
 </script>
@@ -289,9 +292,4 @@
       transform: translate3d(2px, 0, 0);
     }
   }
-
-  .dim{
-    opacity: 0.5;
-  }
-
 </style>
