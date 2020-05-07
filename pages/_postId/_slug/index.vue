@@ -29,3 +29,10 @@
     }
   }
 </script>
+
+<style>
+  .email-button-container {
+    height: 42px!important;
+    width: 100px!important;
+  }
+</style>

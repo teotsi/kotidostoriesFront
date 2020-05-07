@@ -1,3 +1,5 @@
+import axios from "axios";
+
 function normalizeCategory(category) {
   return category.toLowerCase() === "poems" ? "poem" : category.toLowerCase();
 }
@@ -43,4 +45,11 @@ function addSlug(params, slug) {
 
 }
 
-export {normalizeCategory, fadeSide, truncate, addSlug};
+function loadUsers() {
+  axios.get('http://localhost:5000/user/')
+    .then(response=> {
+      return response.data.users;
+    })
+}
+
+export {normalizeCategory, fadeSide, truncate, addSlug, loadUsers};
