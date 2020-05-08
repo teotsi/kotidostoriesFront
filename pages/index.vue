@@ -21,25 +21,25 @@
       ModalComponent,
       PageComponent
     },
-    created() {
-      window.addEventListener('scroll', this.handleScroll);
-    },
-    destroyed() {
-      window.removeEventListener('scroll', this.handleScroll);
-    },
-    methods: {
-      handleScroll: function () {
-        this.dim = true;
-      }
-    },
-    data() {
-      return {
-        progress: 0
-      }
-    },
-    mounted() {
-      util.fadeSide();
-    }
+    // created() {
+    //   window.addEventListener('scroll', this.handleScroll);
+    // },
+    // destroyed() {
+    //   window.removeEventListener('scroll', this.handleScroll);
+    // },
+    // methods: {
+    //   handleScroll: function () {
+    //     this.dim = true;
+    //   }
+    // },
+    // data() {
+    //   return {
+    //     progress: 0
+    //   }
+    // },
+    // mounted() {
+    //   util.fadeSide();
+    // }
   }
 </script>
 <style>
@@ -58,13 +58,6 @@
     flex-direction: column;
     margin-left: 10px;
     margin-right: 10px;
-  }
-
-  @media (min-width: 35rem) {
-    #posts {
-      flex-direction: row;
-    }
-
   }
 
   body {

@@ -17,7 +17,7 @@
                v-model="form.password"/>
       <b-input :state="this.matchingPass?null:false" placeholder="Confirm password" type="password" v-if="newPass"
                v-model="form.confirm_password"/>
-      <b-form-radio v-if="id==='log-in'" v-model="form.remember_me" value="true">Remember me?</b-form-radio>
+      <b-form-checkbox v-if="id==='log-in'" v-model="form.remember_me" value="true">Remember me?</b-form-checkbox>
       <nuxt-link to="reset" v-if="id==='log-in'">Forgot your password?</nuxt-link>
       <button-component :disabled="!this.matchingPass" :is-ghost="false" :msg="msg" @click="$emit('button-clickz')"/>
     </form>

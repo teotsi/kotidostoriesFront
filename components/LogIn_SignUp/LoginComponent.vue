@@ -34,6 +34,7 @@
     },
     methods: {
       logIn: function (form) {
+        console.log(form);
         this.$auth.loginWith('local', {
           data: form
         }).then(function (response) {
