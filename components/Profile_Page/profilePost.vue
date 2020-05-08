@@ -1,11 +1,11 @@
 <template>
-        <div class="posts">  
+        <div class="posts">
             <nuxt-link :to="`/${id}/`">
                 <div class="post-image">
                     <img :src="`http://localhost:5000/${img}`" alt="Post image">
                 </div>
             </nuxt-link>
-            
+
             <div style="grid-column=2; padding-top: 15px;">
                 <nuxt-link :to="`/${id}/`">
                     <h4>{{title}}</h4>
@@ -41,7 +41,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 
 .posts{
     display: grid;

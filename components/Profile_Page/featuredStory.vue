@@ -4,7 +4,7 @@
             <div class= "image-wrapper">
                 <img :src="image" alt="Post image">
             </div>
-            <h6 class="featured_title">{{title}}</h6>    
+            <h6 class="featured_title">{{title}}</h6>
         </nuxt-link>
     </div>
 </template>
@@ -29,7 +29,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 
 .image-wrapper{
     display: flex;
