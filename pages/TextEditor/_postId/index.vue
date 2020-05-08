@@ -8,7 +8,16 @@
         <nuxt-link to="/help">Getting started</nuxt-link>
         guide. Happy writing!
       </p>
-      <rich-editor v-on:input="store"></rich-editor>
+      <div class="title">
+        <b-input-group class="mt-3" prepend="Title 📕">
+          <b-form-input
+            :state="validTitle"
+            @update="checkTitle"
+            v-model="post.title"
+            placeholder="Enter a title!"></b-form-input>
+        </b-input-group>
+      </div>
+      <rich-editor v-on:input="store"/>
       <div class="save-buttons">
         <b-input-group>
           <template v-slot:prepend>
@@ -27,7 +36,10 @@
           </template>
         </b-input-group>
 
-        <b-dropdown :disabled="!disabled" @click="publish" id="popover-target-1" split text="Publish!">
+        <b-dropdown :disabled="!disabled"
+                    @click="publish"
+                    id="popover-target-1"
+                    split text="Publish!">
           <b-dropdown-item @click="saveDraft" href="#">Save draft</b-dropdown-item>
         </b-dropdown>
         <b-popover
@@ -35,7 +47,7 @@
           placement="top"
           ref="popover"
           target="popover-target-1" triggers="hover">
-          You have to select a category first!
+          You have to select a category <i>and</i> a title first!
         </b-popover>
         <b-button @click="back" variant="outline-danger">Cancel</b-button>
 
@@ -52,13 +64,26 @@
       RichEditor
     },
     methods: {
+      checkTitle() {
+        if (this.post.title.length > 0) {
+          this.validTitle = null;
+          if(!this.disabled && !this.selectedCategory.includes('Category')){
+              this.disabled = true;
+          }
+        } else {
+          this.validTitle = false;
+          if(this.disabled){
+            this.disabled = false;
+          }
+        }
+      },
       saveDraft() {
         this.published = false;
         this.publish()
       },
       disableByRef(category) {
-        this.disabled=true;
-        console.log(this.disabled)
+        this.disabled = true;
+        console.log(this.disabled);
         this.selectedCategory = category;
         this.$refs.popover.$emit('disable')
       },
@@ -66,19 +91,19 @@
         this.$router.push('/');
       },
       store(event) {
-        this.results = event
+        this.post.content = event
       },
       publish() {
         if (!this.$route.params.postId) {
           let data = {
-            title: "Yeah, this is just a placeholder tbh",
-            content: this.results,
+            title: this.post.title,
+            content: this.post.content,
             preview: "Yeah, this is just another placeholder tbemh",
             category: this.selectedCategory.slice(0, -2).toLowerCase().trim(),
             published: this.published
           };
           this.$axios.$post('/post/', data, {withCredentials: true})
-            .then((response) =>{
+            .then((response) => {
               let post = response.post;
               this.$router.push(`/${post.id}`)
             })
@@ -88,6 +113,12 @@
     middleware: ['redirectLogin', 'loadUsers'],
     data: function () {
       return {
+        post: {
+          title: "",
+          content: "",
+          preview: "",
+          published: true,
+        },
         disabled: false,
         results: "",
         selectedCategory: "Select Category 📝",
@@ -98,7 +129,7 @@
           'Sci-fi 👾',
           'Horror 👻'
         ],
-        published: true
+        validTitle: null
       }
     },
   }
@@ -110,7 +141,11 @@
     justify-content: center;
     align-items: center;
     text-align: center;
-    padding-top: 100px;
+    padding-top: 20px;
+  }
+
+  .title {
+    margin: 20px;
   }
 
   .input-group-text {

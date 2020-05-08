@@ -43,7 +43,7 @@
   }
 
   body {
-    background: #f6f5f7;
+    /*background: #f6f5f7;*/
     /* */
     /* height: 100vh;*/
     margin: 0;

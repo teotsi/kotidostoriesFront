@@ -23,7 +23,7 @@ function fadeSide() {
 function truncate(str, type) { //truncates titles and previews that are too long
   let limit;
   if (type === 'title') {
-    limit = 20;
+    limit = 25;
   } else {
     limit = 70;
   }
