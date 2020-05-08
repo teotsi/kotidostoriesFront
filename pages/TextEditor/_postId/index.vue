@@ -85,7 +85,7 @@
         }
       }
     },
-    middleware: 'redirectLogin',
+    middleware: ['redirectLogin', 'loadUsers'],
     data: function () {
       return {
         disabled: false,

@@ -9,6 +9,7 @@
 
 <script>
   import axios from "axios";
+  import {addSlug} from "../../../assets/js/utils";
 
   export default {
     asyncData({params}) {
@@ -24,15 +25,14 @@
     },
     mounted() {
       //weird solution to add slug on url, if there's such a need
-      let url = window.location.toString();
-      if (this.$route.params.slug === undefined) {
-        if (!url.endsWith('/')) { //checking if the url already has /
-          url += '/'
-        }
-        url+=this.slug
-      }
-      history.replaceState({}, this.title, url) // replacing the url without reloading the page
-
+      addSlug(this.$route.params,this.slug);
     }
   }
 </script>
+
+<style>
+  .email-button-container {
+    height: 42px!important;
+    width: 100px!important;
+  }
+</style>

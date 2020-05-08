@@ -13,6 +13,8 @@
 <script>
   import CKEditor from '@ckeditor/ckeditor5-vue'
   import UnfoldEditor from '@teotsi/unfold-ckeditor'
+  import {loadUsers} from "../assets/js/utils";
+  import axios from "axios";
 
   export default {
     name: 'RichEditor',
@@ -53,8 +55,27 @@
     data() {
       return {
         editor: UnfoldEditor,
-        editorConfig: this.options,
+        editorConfig: {
+          mention: {
+            feeds: [
+              {
+                marker: '@',
+                feed: this.users,
+                minimumCharacters: 1
+              }
+            ]
+          }
+        },
         editorData: '<p>Content of the editor.</p>',
+      }
+    },
+    computed:{
+      users(){
+        axios.get('http://localhost:5000/user/')
+          .then(response=> {
+            console.log(response);
+            return response.data.users;
+          })
       }
     }
   }

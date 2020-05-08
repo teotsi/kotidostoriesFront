@@ -26,6 +26,8 @@
 </template>
 
 <script>
+  import {truncate} from "../../assets/js/utils";
+
   export default {
     props: {
       title: {
@@ -62,17 +64,7 @@
     },
     methods: {
       truncate(str, type) {
-        let limit;
-        if (type === 'title') {
-          limit = 20;
-        } else {
-          limit = 70;
-        }
-        if (str.length > limit) {
-          str = str.substring(0, limit) + '...'
-        }
-        console.log(str)
-        return str;
+        return truncate(str,type);
       }
     }
   }

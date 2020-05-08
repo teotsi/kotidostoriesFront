@@ -1,7 +1,8 @@
 export const state = () => ({
   reset_token: null,
   valid_token: true,
-  active: 'dashboard'
+  active: 'dashboard',
+  users: []
 });
 export const mutations = {
   SET_TOKEN(state, reset_token) {
@@ -13,4 +14,7 @@ export const mutations = {
   SET_ACTIVE(state, active) {
     state.active = active;
   },
+  SET_USERS(state, users) {
+    state.users = users;
+  }
 };

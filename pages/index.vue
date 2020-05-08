@@ -10,46 +10,21 @@
 </template>
 
 <script>
-  import LoginComponent from "@/components/Login_SignUp/LoginComponent";
+  import LoginComponent from "../components/Login_SignUp/LoginComponent";
   import ModalComponent from "../components/Preview/ModalComponent";
   import PageComponent from "../components/LandingPage/PageComponent";
-  import util from "../assets/js/utils";
   export default {
     components: {
 
       LoginComponent,
       ModalComponent,
       PageComponent
-    },
-    // created() {
-    //   window.addEventListener('scroll', this.handleScroll);
-    // },
-    // destroyed() {
-    //   window.removeEventListener('scroll', this.handleScroll);
-    // },
-    // methods: {
-    //   handleScroll: function () {
-    //     this.dim = true;
-    //   }
-    // },
-    // data() {
-    //   return {
-    //     progress: 0
-    //   }
-    // },
-    // mounted() {
-    //   util.fadeSide();
-    // }
+    }
   }
 </script>
 <style>
   @import url('https://fonts.googleapis.com/css?family=Montserrat:400,800');
 
-  /*header {*/
-  /*  background: linear-gradient(35deg, #CCFFFF, #FFCCCC);*/
-  /*  padding: 20px 10px;*/
-
-  /*}*/
   #posts {
     padding-top: 2rem;
     display: flex;
