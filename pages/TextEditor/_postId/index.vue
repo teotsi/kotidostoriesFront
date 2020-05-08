@@ -57,8 +57,8 @@
         this.publish()
       },
       disableByRef(category) {
-        this.disabled=true;
-        console.log(this.disabled)
+        this.disabled = true;
+        console.log(this.disabled);
         this.selectedCategory = category;
         this.$refs.popover.$emit('disable')
       },
@@ -66,19 +66,19 @@
         this.$router.push('/');
       },
       store(event) {
-        this.results = event
+        this.post.content = event
       },
       publish() {
         if (!this.$route.params.postId) {
           let data = {
-            title: "Yeah, this is just a placeholder tbh",
-            content: this.results,
+            title: this.post.title.trim(),
+            content: this.post.content,
             preview: "Yeah, this is just another placeholder tbemh",
             category: this.selectedCategory.slice(0, -2).toLowerCase().trim(),
             published: this.published
           };
           this.$axios.$post('/post/', data, {withCredentials: true})
-            .then((response) =>{
+            .then((response) => {
               let post = response.post;
               this.$router.push(`/${post.id}`)
             })
@@ -88,6 +88,12 @@
     middleware: ['redirectLogin', 'loadUsers'],
     data: function () {
       return {
+        post: {
+          title: "",
+          content: "",
+          preview: "",
+          published: true,
+        },
         disabled: false,
         results: "",
         selectedCategory: "Select Category 📝",
@@ -98,7 +104,7 @@
           'Sci-fi 👾',
           'Horror 👻'
         ],
-        published: true
+        validTitle: null
       }
     },
   }
@@ -110,7 +116,11 @@
     justify-content: center;
     align-items: center;
     text-align: center;
-    padding-top: 100px;
+    padding-top: 20px;
+  }
+
+  .title {
+    margin: 20px;
   }
 
   .input-group-text {
