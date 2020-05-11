@@ -4,6 +4,16 @@ function normalizeCategory(category) {
   return category.toLowerCase() === "poems" ? "poem" : category.toLowerCase();
 }
 
+function normalizeReaction(reaction) {
+  let reactions = {
+    'thumbs-up': 'like',
+    'heart': 'love',
+    'laugh-beam': 'laugh',
+    'lightbulb': 'inspiring'
+  };
+  return reactions[reaction.toLowerCase()];
+}
+
 function fadeSide() {
   let side = document.querySelector(".side"); //selecting sidebar
   if (side) { //checking if sidebar has been defined in document
@@ -47,9 +57,9 @@ function addSlug(params, slug) {
 
 function loadUsers() {
   axios.get('http://localhost:5000/user/')
-    .then(response=> {
+    .then(response => {
       return response.data.users;
     })
 }
 
-export {normalizeCategory, fadeSide, truncate, addSlug, loadUsers};
+export {normalizeCategory, normalizeReaction, fadeSide, truncate, addSlug, loadUsers};

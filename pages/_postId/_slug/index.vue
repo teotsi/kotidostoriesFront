@@ -1,23 +1,81 @@
 <template>
   <div class="grid-wrapper">
     <div class="content-container">
-      <h1 class="title">{{post.title}} <span class="inline">by <nuxt-link :to="'user/'+ post.user.username">{{post.user.username}} </nuxt-link> </span></h1>
+      <h1 class="title">{{post.title}} <span class="inline">by <nuxt-link :to="'user/'+ post.user.username">{{post.user.username}} </nuxt-link> </span>
+      </h1>
       <div class="image-container">
-        <img :src="'http://localhost:5000/'+post.img" class="main-image" alt="Story image">
+        <img :src="'http://localhost:5000/'+post.img" alt="Story image" class="main-image">
       </div>
 
       <div class="main-text" v-html="post.content"></div>
+      <section class="reaction-section">
+        <h2 class="header">
+          {{reactionQuote}}
+        </h2>
+        <div class="reaction-box">
+          <reaction-icon
+            :enabled="reaction[1]"
+            :icon="reaction[0]"
+            :key="index"
+            :ref="reaction[0]"
+            v-for="(reaction,index) in reactions"
+            v-on:toggle-reaction="toggleReaction(index,reaction[1])"
+          />
+        </div>
+      </section>
+      <section class="comment-section">
+        <h1 class="comments-header">
+          Comments
+        </h1>
+        <hr/>
+      </section>
     </div>
 
-    <!--    <p>{{user_id}}</p>-->
   </div>
 </template>
 
 <script>
   import axios from "axios";
   import {addSlug} from "../../../assets/js/utils";
+  import ReactionIcon from "../../../components/Reaction/ReactionIcon";
 
   export default {
+    components: {
+      ReactionIcon
+    },
+    methods: {
+      toggleReaction(index, state) {
+        for (let reaction of this.reactions) {
+          reaction[1] = false;
+        }
+        this.$set(this.reactions[index], 1, !state);
+
+      }
+    },
+    data() {
+      return {
+        reactionQuotes: [
+          'What did you think?',
+          'Show some appreciation!',
+          'Something even cooler!'
+        ],
+        reactions: [
+          ['thumbs-up', false],
+          ['heart', false],
+          ['lightbulb', false],
+          ['laugh-beam', false]
+        ],
+        enabledHeart: false,
+        enabledThumbsUp: false,
+        enabledLightbulb: false,
+        enabledLaugh: false,
+      }
+    },
+    computed: {
+      reactionQuote() {
+        return this.reactionQuotes[Math.floor(Math.random() * this.reactionQuotes.length)];
+      }
+    },
     asyncData({params}) {
       return axios.get(`http://localhost:5000/post/${params.postId}`)
         .then((res) => {
@@ -49,25 +107,25 @@
     max-width: 600px;
     padding: 0 15px;
 
-    grid-column:1;
+    grid-column: 1;
     border-radius: 10px;
     /*box-shadow: var(--soft-shadow);*/
     margin: 20px auto;
   }
 
-  .image-container{
+  .image-container {
     width: 100%;
     box-shadow: var(--soft-shadow);
     margin: 10px 0;
   }
 
   .main-image {
-    max-width:100%;
-    max-height:100%;
+    max-width: 100%;
+    max-height: 100%;
     width: 100%;
   }
 
-  .title {
+  .title, .comments-header, .reaction-section h2 {
     font-family: var(--title-font);
     color: var(--soft-black);
   }
@@ -86,12 +144,25 @@
   }
 
   @media (min-width: 800px) {
-    .grid-wrapper{
+    .grid-wrapper {
       grid-template-columns: 32% 36% 32%;
     }
-    .content-container{
+
+    .content-container {
       grid-column: 2/3;
       max-width: initial;
     }
   }
+
+  hr {
+    border: 1px solid var(--soft-black);
+  }
+
+  .reaction-box {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+
+
 </style>
