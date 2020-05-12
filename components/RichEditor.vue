@@ -2,9 +2,8 @@
   <transition name="fade">
   <ckeditor
     :editor="editor"
-    :value="value"
+    :value="intro"
     :config="editorConfig"
-    :v-model="this.editorData"
     @input="ev => $emit('input', ev)"
   />
   </transition>
@@ -13,7 +12,6 @@
 <script>
   import CKEditor from '@ckeditor/ckeditor5-vue'
   import UnfoldEditor from '@teotsi/unfold-ckeditor'
-  import {loadUsers} from "../assets/js/utils";
   import axios from "axios";
 
   export default {
@@ -35,7 +33,7 @@
           </p>
           <ul>
             <li>
-              Write something big, or random sories of yours.
+              Write something big, or random stories of yours.
             </li>
             <li>
               Make your text interesting by using the tools above.
@@ -66,7 +64,7 @@
             ]
           }
         },
-        editorData: '<p>Content of the editor.</p>',
+        editorData: this.intro,
       }
     },
     computed:{

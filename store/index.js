@@ -2,7 +2,10 @@ export const state = () => ({
   reset_token: null,
   valid_token: true,
   active: 'dashboard',
-  users: []
+  users: [],
+  reactions:{
+
+  }
 });
 export const mutations = {
   SET_TOKEN(state, reset_token) {

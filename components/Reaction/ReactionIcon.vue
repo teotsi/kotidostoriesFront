@@ -23,6 +23,10 @@
       enabled: {
         type: Boolean,
         default: false
+      },
+      existingId: {
+        type: String,
+        default: null
       }
     },
     methods: {
@@ -59,8 +63,8 @@
     },
     data() {
       return {
-        iconType: ['far', this.icon],
-        reactionId: null,
+        iconType: this.enabled ? ['fas', this.icon] : ['far', this.icon],
+        reactionId: this.existingId,
         test: 'test'
       }
     },
@@ -71,6 +75,9 @@
         } else {
           this.iconType = ['far', this.icon];
         }
+      },
+      existingId: function () {
+        console.log(this.existingId)
       }
     }
   }

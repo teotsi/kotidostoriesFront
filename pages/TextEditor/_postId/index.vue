@@ -8,16 +8,36 @@
         <nuxt-link to="/help">Getting started</nuxt-link>
         guide. Happy writing!
       </p>
+      <div class="image-wrapper">
+        <div class="preview-image">
+          <img :src="imageUrl" alt="selected image" id="post-image" v-if="imageUrl">
+          <b-input-group>
+            <b-input-group-prepend>
+              <b-input-group-text accept="image/jpeg, image/png, image/gif" variant="light">Image 📷
+              </b-input-group-text>
+            </b-input-group-prepend>
+            <b-form-file
+              @change="previewImage"
+              drop-placeholder="Drop image here..."
+              placeholder="Choose an image for your story!"
+              v-model="post.image"
+            />
+          </b-input-group>
+        </div>
+      </div>
+
+
       <div class="title">
         <b-input-group class="mt-3" prepend="Title 📕">
           <b-form-input
             :state="validTitle"
             @update="checkTitle"
-            v-model="post.title"
-            placeholder="Enter a title!"></b-form-input>
+            id="title-input"
+            placeholder="Enter a title!"
+            v-model="post.title"></b-form-input>
         </b-input-group>
       </div>
-      <rich-editor v-on:input="store"/>
+      <rich-editor :intro="intro" v-on:input="store"/>
       <div class="save-buttons">
         <b-input-group>
           <template v-slot:prepend>
@@ -64,15 +84,22 @@
       RichEditor
     },
     methods: {
+      previewImage(event) {
+        if (event.target.files[0]) {
+          const file = event.target.files[0];
+          this.imageUrl = URL.createObjectURL(file);
+        }
+
+      },
       checkTitle() {
         if (this.post.title.length > 0) {
           this.validTitle = null;
-          if(!this.disabled && !this.selectedCategory.includes('Category')){
-              this.disabled = true;
+          if (!this.disabled && !this.selectedCategory.includes('Category')) {
+            this.disabled = true;
           }
         } else {
           this.validTitle = false;
-          if(this.disabled){
+          if (this.disabled) {
             this.disabled = false;
           }
         }
@@ -94,19 +121,31 @@
         this.post.content = event
       },
       publish() {
-        if (!this.$route.params.postId) {
-          let data = {
-            title: this.post.title,
-            content: this.post.content,
-            preview: "Yeah, this is just another placeholder tbemh",
-            category: this.selectedCategory.slice(0, -2).toLowerCase().trim(),
-            published: this.published
-          };
-          this.$axios.$post('/post/', data, {withCredentials: true})
+        let formData = new FormData();
+        let data = {
+          title: this.post.title,
+          content: this.post.content,
+          preview: "Yeah, this is just another placeholder tbemh",
+          category: this.selectedCategory.slice(0, -2).toLowerCase().trim(),
+          published: this.published
+        };
+        formData.append('data', JSON.stringify(data));
+        if (this.post.image) {
+          formData.append('image', this.post.image);
+        }
+
+        if (!this.$route.params.postId) { //in case of new post
+          this.$axios.$post('/post/', formData, {withCredentials: true})
             .then((response) => {
               let post = response.post;
               this.$router.push(`/${post.id}`)
             })
+        } else { //in case of editing existing post
+          this.$axios.$put(`/post/${this.$route.params.postId}/`, formData, {withCredentials: true})
+            .then(response => {
+              this.$router.push(`/${this.$route.params.postId}`)
+            })
+
         }
       }
     },
@@ -115,12 +154,14 @@
       return {
         post: {
           title: "",
-          content: "",
+          content: this.intro,
           preview: "",
           published: true,
+          image: null
         },
         disabled: false,
         results: "",
+        imageUrl: null,
         selectedCategory: "Select Category 📝",
         categories: [
           'Love 💖',
@@ -129,9 +170,48 @@
           'Sci-fi 👾',
           'Horror 👻'
         ],
-        validTitle: null
+        validTitle: null,
+        intro: `
+          <h3>
+            Hi there,
+          </h3>
+          <p>
+            You can write here your story!
+          </p>
+          <ul>
+            <li>
+              Write something big, or random sories of yours.
+            </li>
+            <li>
+              Make your text interesting by using the tools above.
+            </li>
+          </ul>
+          <blockquote>
+            It's like being in a fairytale 👏
+            <br />
+            – Unfold Team
+          </blockquote>
+        `
+
       }
     },
+    mounted() {
+      if (this.$route.params.postId) {
+        this.$axios.$get(`http://localhost:5000/post/${this.$route.params.postId}`)
+          .then(response => {
+            this.intro = this.post.content = response.content;
+            this.post.title = response.title;
+            this.disabled = true;
+            this.imageUrl = `http://localhost:5000/${response.img}`;
+            for (let category of this.categories) {
+              if (category.toLowerCase().startsWith(response.category)) {
+                this.selectedCategory = category;
+                break;
+              }
+            }
+          })
+      }
+    }
   }
 </script>
 
@@ -145,7 +225,7 @@
   }
 
   .title {
-    margin: 20px;
+    margin: 20px 0;
   }
 
   .input-group-text {
@@ -154,6 +234,41 @@
 
   .input-group {
     width: auto;
+  }
+
+  .image-wrapper {
+    display: flex;
+    justify-content: center;
+  }
+
+  .preview-image {
+    text-align: center;
+    width: 50%;
+  }
+
+
+  .container:not(.preview-image) {
+    position: relative;
+    z-index: 0;
+  }
+
+  #post-image {
+    z-index: 5;
+    position: relative;
+    margin: 20px auto;
+    max-width: 100%;
+    max-height: 250px;
+    transition: ease 0.5s;
+    box-shadow: var(--soft-shadow);
+  }
+
+  #post-image:hover {
+    transform: scale(1.5);
+    transition: ease 0.5s;
+  }
+
+  #title-input {
+    font-family: var(--title-font);
   }
 
   .save-buttons {

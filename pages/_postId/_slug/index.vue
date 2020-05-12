@@ -15,6 +15,7 @@
         <div class="reaction-box">
           <reaction-icon
             :enabled="reaction[1]"
+            :existingId="existingId"
             :icon="reaction[0]"
             :key="index"
             :ref="reaction[0]"
@@ -23,11 +24,18 @@
           />
         </div>
       </section>
+      <hr/>
       <section class="comment-section">
         <h1 class="comments-header">
           Comments
         </h1>
-        <hr/>
+        <comment
+          :content="comment.content"
+          :date="comment.date"
+          :key="comment.id"
+          :user="comment.user.username"
+          v-for="comment in post.comments"
+        />
       </section>
     </div>
 
@@ -38,9 +46,11 @@
   import axios from "axios";
   import {addSlug} from "../../../assets/js/utils";
   import ReactionIcon from "../../../components/Reaction/ReactionIcon";
+  import Comment from "../../../components/Comment/Comment";
 
   export default {
     components: {
+      Comment,
       ReactionIcon
     },
     methods: {
@@ -59,16 +69,6 @@
           'Show some appreciation!',
           'Something even cooler!'
         ],
-        reactions: [
-          ['thumbs-up', false],
-          ['heart', false],
-          ['lightbulb', false],
-          ['laugh-beam', false]
-        ],
-        enabledHeart: false,
-        enabledThumbsUp: false,
-        enabledLightbulb: false,
-        enabledLaugh: false,
       }
     },
     computed: {
@@ -77,10 +77,42 @@
       }
     },
     asyncData({params}) {
-      return axios.get(`http://localhost:5000/post/${params.postId}`)
+      return axios.get(`http://localhost:5000/post/${params.postId}`, {withCredentials: true})
         .then((res) => {
+          let post = res.data;
+          let reacted = post.reacted;
+          let existingReaction;
+          let existingId;
+          let reactions = [
+            ['thumbs-up', false],
+            ['heart', false],
+            ['lightbulb', false],
+            ['laugh-beam', false]
+          ];
+          if (reacted) {
+            existingId = post.reacted_id;
+            console.log(existingId)
+            if (reacted === 'love') {
+              existingReaction = 'heart'
+            } else if (reacted === 'like') {
+              existingReaction = 'thumbs-up'
+            } else if (reacted === 'laugh') {
+              existingReaction = 'laugh-beam'
+            } else {
+              existingReaction = 'lightbulb'
+            }
+            for (let [index, reaction] of reactions.entries()) {
+              console.log(reactions)
+              if (reaction[0] === existingReaction) {
+                reactions[index][1] = true;
+                break
+              }
+            }
+          }
           return {
-            post: res.data
+            post: res.data,
+            reactions: reactions,
+            existingId:existingId
           }
         })
 
@@ -88,6 +120,7 @@
     mounted() {
       //weird solution to add slug on url, if there's such a need
       addSlug(this.$route.params, this.slug);
+
     }
   }
 </script>
