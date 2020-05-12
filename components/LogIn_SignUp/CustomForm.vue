@@ -2,7 +2,11 @@
   <div :class="[{'form-container':cls},cls]">
     <form @submit="$emit('submit-'+id, form)" v-on:submit.prevent>
       <h1>{{msg}}</h1>
-      <b-form-input :state="valid_username" @update="checkUsername" id="username" placeholder="Username" type="text"
+      <b-form-input :state="valid_username"
+                    @update="checkUsername"
+                    id="username"
+                    placeholder="Username"
+                    type="text"
                     v-if="hasName"
                     v-model="form.username"/>
       <b-form-invalid-feedback id="username-feedback">

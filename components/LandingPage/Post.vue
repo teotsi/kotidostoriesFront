@@ -114,6 +114,11 @@
     text-align: center;
   }
 
+  .content-title h2{
+    font-family: var(--title-font);
+    color: var(--soft-black);
+  }
+
   .content-preview {
     padding: 5px;
     background-color: #fff;

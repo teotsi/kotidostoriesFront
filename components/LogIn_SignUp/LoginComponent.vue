@@ -17,8 +17,8 @@
 </template>
 
 <script>
-  import OverlayComponent from "@/components/LogIn_SignUp/OverlayComponent";
-  import CustomForm from "@/components/LogIn_SignUp/CustomForm";
+  import OverlayComponent from "../../components/LogIn_SignUp/OverlayComponent";
+  import CustomForm from "../../components/LogIn_SignUp/CustomForm";
   import axios from "axios";
 
   export default {
