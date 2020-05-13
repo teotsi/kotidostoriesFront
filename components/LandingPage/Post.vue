@@ -4,7 +4,7 @@
 
       <b-img :src="img+'#'+new Date().getTime()" class="post-img" fluid-grow/>
       <div class="content-title">
-        <h2>{{truncate(title,'title')}}</h2>
+        <h2>{{title}}</h2>
       </div>
       <div class="content-preview">
         <p>{{truncate(preview, 'preview')}}</p>

@@ -91,7 +91,6 @@
           ];
           if (reacted) {
             existingId = post.reacted_id;
-            console.log(existingId)
             if (reacted === 'love') {
               existingReaction = 'heart'
             } else if (reacted === 'like') {
@@ -102,7 +101,6 @@
               existingReaction = 'lightbulb'
             }
             for (let [index, reaction] of reactions.entries()) {
-              console.log(reactions)
               if (reaction[0] === existingReaction) {
                 reactions[index][1] = true;
                 break
@@ -112,7 +110,8 @@
           return {
             post: res.data,
             reactions: reactions,
-            existingId:existingId
+            existingId:existingId,
+            slug:res.data.slug
           }
         })
 

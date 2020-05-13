@@ -13,6 +13,7 @@
   import LoginComponent from "../components/Login_SignUp/LoginComponent";
   import ModalComponent from "../components/Preview/ModalComponent";
   import PageComponent from "../components/LandingPage/PageComponent";
+
   export default {
     components: {
 
@@ -77,10 +78,12 @@
   {
     opacity: 0;
   }
-  .side{
+
+  .side {
     transition: ease 1.5s;
   }
-  .side:hover{
+
+  .side:hover {
     transition: ease 0.5s;
   }
 </style>

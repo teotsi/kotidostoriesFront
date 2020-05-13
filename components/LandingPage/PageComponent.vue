@@ -154,7 +154,6 @@
   .grid-wrapper {
     display: grid;
     grid-template-columns: 1fr;
-    margin-top: 40px;
     margin-bottom: 80px;
     justify-items: center;
   }
