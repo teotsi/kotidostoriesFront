@@ -37,6 +37,7 @@
             v-model="post.title"></b-form-input>
         </b-input-group>
       </div>
+      <comment-editor eventName="preview" :value="previewInput" v-on:preview-input="storePreview"/>
       <unfold-editor :intro="intro" v-on:input="store"/>
       <div class="save-buttons">
         <b-input-group>
@@ -78,10 +79,13 @@
 
 <script>
   import UnfoldEditor from '../../../components/UnfoldEditor';
+  import CommentEditor from "../../../components/Comment/CommentEditor";
+
 
   export default {
     components: {
-      UnfoldEditor
+      UnfoldEditor,
+      CommentEditor
     },
     methods: {
       previewImage(event) {
@@ -118,14 +122,17 @@
         this.$router.push('/');
       },
       store(event) {
-        this.post.content = event
+        this.post.content = event;
+      },
+      storePreview(event) {
+        this.post.preview = event;
       },
       publish() {
         let formData = new FormData();
         let data = {
           title: this.post.title,
           content: this.post.content,
-          preview: "Yeah, this is just another placeholder tbemh",
+          preview: this.post.preview,
           category: this.selectedCategory.slice(0, -2).toLowerCase().trim(),
           published: this.published
         };
@@ -155,7 +162,7 @@
         post: {
           title: "",
           content: this.intro,
-          preview: "",
+          preview: this.previewInput,
           published: true,
           image: null
         },
@@ -191,7 +198,8 @@
             <br />
             – Unfold Team
           </blockquote>
-        `
+        `,
+        previewInput: ``
 
       }
     },

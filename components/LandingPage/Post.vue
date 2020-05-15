@@ -7,7 +7,9 @@
         <h2>{{title}}</h2>
       </div>
       <div class="content-preview">
-        <p>{{truncate(preview, 'preview')}}</p>
+        <div v-html="preview">
+        </div>
+<!--        <p>{{truncate(preview, 'preview')}}</p>-->
       </div>
       <div class="content-footer">
         <b-icon class="user-small-img" icon="person-fill"></b-icon>

@@ -82,7 +82,16 @@
       EditorContent,
       EditorMenuBar,
     },
-    props: [ 'value' ],
+    props: {
+      value:{
+        type: String,
+        default:''
+      },
+      eventName:{
+        type:String,
+        default: 'comment'
+      }
+    },
     data() {
       return {
         editor: null
@@ -106,7 +115,7 @@
         ],
         onUpdate: ({ getHTML }) => {
           this.editorChange = true;
-          this.$emit("comment-input", getHTML());
+          this.$emit(`${this.eventName}-input`, getHTML());
         },
         content: this.value
       })
@@ -223,14 +232,15 @@
 
   .editor {
     position: relative;
-    max-width: 50rem;
-    margin: 1rem auto;
+    margin: 0 auto 1rem auto;
     border: 1px solid var(--soft-black);
 
     &__content {
       overflow-wrap: break-word;
       word-wrap: break-word;
       word-break: break-word;
+      text-align: justify;
+      padding: 10px;
 
       * {
         caret-color: currentColor;

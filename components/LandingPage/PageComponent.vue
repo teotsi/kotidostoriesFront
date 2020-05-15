@@ -39,8 +39,6 @@
             class="post"
             v-for="post in this.posts"/>
     </transition-group>
-
-
   </div>
 
 
@@ -49,6 +47,7 @@
 <script>
   import Post from "./Post";
   import {fadeSide, normalizeCategory} from "../../assets/js/utils";
+  import axios from "axios";
 
   export default {
 
@@ -143,9 +142,11 @@
 
       }
     },
-    mounted() {
+    async mounted() {
       fadeSide();
-    }
+      const postData = await axios.get('http://localhost:5000/user/me', {withCredentials: true});
+      this.posts = postData.data.user.posts;
+    },
   }
 </script>
 
