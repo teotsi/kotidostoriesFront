@@ -60,5 +60,28 @@
     padding: 0;
   }
 
+  blockquote{
+    font-style:italic;
+    color: #555555!important;
+    padding:2em!important;
+    padding-bottom: 0!important;
+    border-left:3px solid #656565!important;
+    margin: 0;
+    position: relative;
+    background:#EDEDED!important;
+  }
+  blockquote::before{
+    content: "\201C";
+    color:#555555;
+    font-size:4em;
+    position: absolute;
+    left: 10px;
+    top:-10px;
+  }
+
+  .email-button-container {
+    padding: 5px!important;
+  }
+
 
 </style>

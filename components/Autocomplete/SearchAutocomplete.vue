@@ -54,7 +54,7 @@
     watch: {
       input: function () {
         {
-          if (this.input.length > 3) {
+          if (this.input.length > 1) {
             this.$axios.$get(`http://localhost:5000/suggest?q='${this.input}'`)
               .then((response) => {
                 console.log(response)

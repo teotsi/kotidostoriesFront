@@ -224,7 +224,7 @@
   .editor {
     position: relative;
     max-width: 50rem;
-    margin: 0 auto 1rem auto;
+    margin: 1rem auto;
     border: 1px solid var(--soft-black);
 
     &__content {

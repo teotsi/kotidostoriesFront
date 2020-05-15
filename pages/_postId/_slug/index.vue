@@ -37,13 +37,16 @@
                     @click="createComment">Post Comment
           </b-button>
         </div>
+        <transition-group name="comments" tag="div">
         <comment
+          class="comment-item"
           :content="comment.content"
           :date="comment.date"
           :key="comment.id"
           :user="comment.user.username"
           v-for="comment in post.comments"
         />
+        </transition-group>
       </section>
     </div>
     <section class="sidebar-suggestions">
@@ -213,6 +216,13 @@
     height: 42px !important;
     width: 100px !important;
   }
+  .comments-enter-active, .comments-leave-active {
+    transition: all 1s;
+  }
+  .comments-enter, .comments-leave-to{
+    opacity: 0;
+    transform: translateY(30px);
+  }
 
   @media (min-width: 800px) {
     .grid-wrapper {
@@ -247,6 +257,7 @@
   }
 
   .comment-buttons {
+    margin-bottom: 20px;
     display: flex;
     justify-content: flex-end;
   }
