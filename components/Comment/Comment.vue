@@ -15,7 +15,7 @@
       <span class="date-info">
             {{this.dateInfo}},{{this.timeInfo}}
       </span>
-  </div>
+    </div>
 
   </div>
 </template>
@@ -41,9 +41,9 @@
         required: true
       }
     },
-    data(){
+    data() {
       return {
-        dateObj:null,
+        dateObj: null,
         dateInfo: null,
         timeInfo: null
       }
@@ -62,21 +62,23 @@
     padding: 10px 0;
   }
 
-  .comment-container:not(:last-child){
+  .comment-container:not(:last-child) {
     border-bottom: 1px solid gray;
   }
 
-  .comment-container:hover{
+  .comment-container:hover {
     background-color: var(--hover-soft-gray);
   }
 
-  .comment-content-container{
+  .comment-content-container {
     margin-bottom: 0;
   }
+
   .comment-content {
     text-align: justify;
   }
-  .date-info{
+
+  .date-info {
     text-align: right;
     font-size: 10px;
     color: #7f828b;
@@ -87,6 +89,7 @@
     text-align: center;
     margin-right: 20px;
   }
+
   .user-details p {
     font-size: 14px;
     margin: 0;

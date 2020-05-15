@@ -38,18 +38,28 @@
         />
       </section>
     </div>
+    <section class="sidebar-suggestions">
+      <div class="side">
+        <h2 class="header">Check out...</h2>
+        <sidebar-post :post="post"
+                      :key="post.id"
+                      v-for="post in suggestions"/>
+      </div>
 
+    </section>
   </div>
 </template>
 
 <script>
   import axios from "axios";
-  import {addSlug} from "../../../assets/js/utils";
+  import {addSlug, fadeSide} from "../../../assets/js/utils";
   import ReactionIcon from "../../../components/Reaction/ReactionIcon";
   import Comment from "../../../components/Comment/Comment";
+  import SidebarPost from "../../../components/Sidebar/SidebarPost";
 
   export default {
     components: {
+      SidebarPost,
       Comment,
       ReactionIcon
     },
@@ -67,7 +77,7 @@
         reactionQuotes: [
           'What did you think?',
           'Show some appreciation!',
-          'Something even cooler!'
+          'Your feedback matters!'
         ],
       }
     },
@@ -76,55 +86,57 @@
         return this.reactionQuotes[Math.floor(Math.random() * this.reactionQuotes.length)];
       }
     },
-    asyncData({params}) {
-      return axios.get(`http://localhost:5000/post/${params.postId}`, {withCredentials: true})
-        .then((res) => {
-          let post = res.data;
-          let reacted = post.reacted;
-          let existingReaction;
-          let existingId;
-          let reactions = [
-            ['thumbs-up', false],
-            ['heart', false],
-            ['lightbulb', false],
-            ['laugh-beam', false]
-          ];
-          if (reacted) {
-            existingId = post.reacted_id;
-            if (reacted === 'love') {
-              existingReaction = 'heart'
-            } else if (reacted === 'like') {
-              existingReaction = 'thumbs-up'
-            } else if (reacted === 'laugh') {
-              existingReaction = 'laugh-beam'
-            } else {
-              existingReaction = 'lightbulb'
-            }
-            for (let [index, reaction] of reactions.entries()) {
-              if (reaction[0] === existingReaction) {
-                reactions[index][1] = true;
-                break
-              }
-            }
+    async asyncData({params}) {
+      let reacted;
+      let existingReaction;
+      let existingId;
+      let reactions = [
+        ['thumbs-up', false],
+        ['heart', false],
+        ['lightbulb', false],
+        ['laugh-beam', false]
+      ];
+      const postData = await axios.get(`http://localhost:5000/post/${params.postId}`, {withCredentials: true})
+      const post = postData.data
+      reacted = post.reacted;
+      if (reacted) {
+        existingId = post.reacted_id;
+        if (reacted === 'love') {
+          existingReaction = 'heart'
+        } else if (reacted === 'like') {
+          existingReaction = 'thumbs-up'
+        } else if (reacted === 'laugh') {
+          existingReaction = 'laugh-beam'
+        } else {
+          existingReaction = 'lightbulb'
+        }
+        for (let [index, reaction] of reactions.entries()) {
+          if (reaction[0] === existingReaction) {
+            reactions[index][1] = true;
+            break
           }
-          return {
-            post: res.data,
-            reactions: reactions,
-            existingId:existingId,
-            slug:res.data.slug
-          }
-        })
+        }
+      }
+      const suggestionData = await axios.get(`http://localhost:5000/suggest?q=${post.user.username}`)
+      return {
+        post: post,
+        reactions: reactions,
+        existingId: existingId,
+        slug: post.slug,
+        suggestions: suggestionData.data
+      }
 
     },
     mounted() {
       //weird solution to add slug on url, if there's such a need
       addSlug(this.$route.params, this.slug);
-
+      fadeSide();
     }
+
   }
 </script>
 
-<style>
+<style scoped>
   .inline {
     font-weight: normal;
   }
@@ -145,6 +157,10 @@
     margin: 20px auto;
   }
 
+  .sidebar-suggestions {
+
+  }
+
   .image-container {
     width: 100%;
     box-shadow: var(--soft-shadow);
@@ -157,7 +173,7 @@
     width: 100%;
   }
 
-  .title, .comments-header, .reaction-section h2 {
+  .title, .comments-header, .reaction-section h2, .sidebar-suggestions h2 {
     font-family: var(--title-font);
     color: var(--soft-black);
   }
@@ -167,7 +183,7 @@
   }
 
   .story-form {
-    width: 100%;
+    width: 100% !important;
   }
 
   .email-button-container {
@@ -178,11 +194,22 @@
   @media (min-width: 800px) {
     .grid-wrapper {
       grid-template-columns: 32% 36% 32%;
+      justify-items: center;
     }
 
     .content-container {
       grid-column: 2/3;
       max-width: initial;
+    }
+
+    .sidebar-suggestions {
+      grid-column: 3/4;
+      position: relative;
+      top: 300px;
+    }
+
+    .side {
+      margin-left: 50px;
     }
   }
 

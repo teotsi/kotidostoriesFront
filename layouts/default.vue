@@ -30,7 +30,7 @@
 
 <style>
   @import url('https://fonts.googleapis.com/css?family=Montserrat:400,800');
-  @import url('https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@700&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@500;600;700&display=swap');
 
   :root {
     --soft-shadow: 0 0 5px 0 #888;

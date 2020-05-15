@@ -37,7 +37,7 @@
             v-model="post.title"></b-form-input>
         </b-input-group>
       </div>
-      <rich-editor :intro="intro" v-on:input="store"/>
+      <unfold-editor :intro="intro" v-on:input="store"/>
       <div class="save-buttons">
         <b-input-group>
           <template v-slot:prepend>
@@ -77,11 +77,11 @@
 </template>
 
 <script>
-  import RichEditor from '../../../components/RichEditor';
+  import UnfoldEditor from '../../../components/UnfoldEditor';
 
   export default {
     components: {
-      RichEditor
+      UnfoldEditor
     },
     methods: {
       previewImage(event) {

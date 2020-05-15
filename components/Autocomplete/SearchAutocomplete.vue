@@ -1,13 +1,13 @@
 <template>
   <div class="autocomplete-container">
-    <b-input-group class="search" >
+    <b-input-group class="search">
       <b-form-input @mouseup="toggleWidth" @blur="toggleWidth" autocomplete="off" id="autocomplete-input"
                     v-model="input"></b-form-input>
       <b-input-group-append>
         <b-button>Search</b-button>
       </b-input-group-append>
     </b-input-group>
-    <div :class="['autocomplete-list',!show?'hide':'']" >
+    <div :class="['autocomplete-list',!show?'hide':'']">
       <auto-complete-item
         v-for="suggestion in matches"
         :key="suggestion.id"
@@ -33,7 +33,6 @@
     },
     methods: {
       toggleWidth(event) {
-        console.log(event)
         if (event.type === 'mouseup') {
           event.target.parentElement.parentElement.style.width =
             event.target.parentElement.nextElementSibling.style.width = "40%";
@@ -48,20 +47,24 @@
       return {
         open: false,
         current: 0,
-        input: ""
+        input: "",
+        matches: []
       }
     },
-    computed: {
-      //Filtering the suggestion based on the input
-      matches() {
-        if (this.input.length > 0) {
-          return this.suggestions.filter((post) => {
-            return post.title.toLowerCase().indexOf(this.input) >= 0;
-          });
+    watch: {
+      input: function () {
+        {
+          if (this.input.length > 3) {
+            this.$axios.$get(`http://localhost:5000/suggest?q='${this.input}'`)
+              .then((response) => {
+                console.log(response)
+                this.matches = response;
+              })
+          }
+          this.matches = [];
         }
-        return [];
       }
-    }
+    },
   }
 </script>
 

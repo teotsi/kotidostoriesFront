@@ -15,7 +15,7 @@
   import axios from "axios";
 
   export default {
-    name: 'RichEditor',
+    name: 'UnfoldEditor',
     props: {
       value: [String],
       options: {

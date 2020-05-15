@@ -68,6 +68,8 @@
   a, a:hover, a:visited {
     color: initial;
     text-decoration: none;
+    margin:0;
+    padding: 5px 0;
   }
 
   .post-link{
@@ -105,9 +107,5 @@
 
   .autocomplete-item:not(:last-child) {
     border-bottom: 1px solid gray;
-  }
-
-  .autocomplete-item:last-child {
-    margin-bottom: -16px;
   }
 </style>
