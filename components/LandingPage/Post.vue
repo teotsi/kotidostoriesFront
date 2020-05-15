@@ -137,10 +137,16 @@
     margin: auto;
   }
 
-  .content-preview div, .content-title{
+  .content-preview div{
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 3;
+    overflow: hidden;
+  }
+  .content-title{
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
     overflow: hidden;
   }
 
