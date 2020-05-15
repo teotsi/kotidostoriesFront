@@ -25,10 +25,18 @@
         </div>
       </section>
       <hr/>
+
       <section class="comment-section">
         <h1 class="comments-header">
           Comments
         </h1>
+        <comment-editor :value="commentContent" v-on:comment-input="storeComment"/>
+        <div class="comment-buttons">
+          <b-button :disabled="this.commentContent.length===0 || this.commentContent==='<p></p>'"
+                    variant="light"
+                    @click="createComment">Post Comment
+          </b-button>
+        </div>
         <comment
           :content="comment.content"
           :date="comment.date"
@@ -55,11 +63,12 @@
   import {addSlug, fadeSide} from "../../../assets/js/utils";
   import ReactionIcon from "../../../components/Reaction/ReactionIcon";
   import Comment from "../../../components/Comment/Comment";
+  import CommentEditor from "../../../components/Comment/CommentEditor";
   import SidebarPost from "../../../components/Sidebar/SidebarPost";
-
   export default {
     components: {
-      SidebarPost,
+      CommentEditor,
+       SidebarPost,
       Comment,
       ReactionIcon
     },
@@ -70,6 +79,19 @@
         }
         this.$set(this.reactions[index], 1, !state);
 
+      },
+      createComment() {
+        this.$axios.$post(`http://localhost:5000/user/${this.post.user.username}/posts/${this.$route.params.postId}/comments/`,
+          {"content":this.commentContent},
+          {withCredentials:true})
+        .then((response)=>{
+          this.commentContent = '';
+          this.post.comments.push(response.comment)
+        })
+      }
+      ,
+      storeComment(event) {
+        this.commentContent = event;
       }
     },
     data() {
@@ -79,6 +101,7 @@
           'Show some appreciation!',
           'Your feedback matters!'
         ],
+        commentContent: ''
       }
     },
     computed: {
@@ -221,6 +244,11 @@
     display: flex;
     justify-content: space-between;
     margin-bottom: 20px;
+  }
+
+  .comment-buttons {
+    display: flex;
+    justify-content: flex-end;
   }
 
 

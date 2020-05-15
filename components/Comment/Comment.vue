@@ -9,9 +9,8 @@
     </div>
 
     <div class="comment-content-container">
-      <p class="comment-content">
-        {{content}}
-      </p>
+      <div v-html="content" class="comment-content">
+      </div>
       <span class="date-info">
             {{this.dateInfo}},{{this.timeInfo}}
       </span>

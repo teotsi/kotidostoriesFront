@@ -21,6 +21,25 @@
       ModalComponent,
       PageComponent
     }
+    // created() {
+    //   window.addEventListener('scroll', this.handleScroll);
+    // },
+    // destroyed() {
+    //   window.removeEventListener('scroll', this.handleScroll);
+    // },
+    // methods: {
+    //   handleScroll: function () {
+    //     this.dim = true;
+    //   }
+    // },
+    // data() {
+    //   return {
+    //     progress: 0
+    //   }
+    // },
+    // mounted() {
+    //   util.fadeSide();
+    // }
   }
 </script>
 <style>

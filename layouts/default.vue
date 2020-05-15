@@ -38,6 +38,12 @@
     --soft-black: #333;
     --hover-soft-gray: #e9e9e9;
   }
+  .ProseMirror-focused{
+    outline: none!important;
+  }
+  .ProseMirror:focus{
+    outline: none!important;
+  }
 
   * {
     font-family: 'Montserrat', sans-serif;

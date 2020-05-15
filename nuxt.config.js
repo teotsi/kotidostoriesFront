@@ -30,7 +30,7 @@ export default {
   */
   plugins: [
     {src: '~plugins/rich-editor', ssr: false}
-  ],
+    ],
   /*
   ** Nuxt.js dev-modules
   */

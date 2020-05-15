@@ -29,6 +29,7 @@
     "@fortawesome/free-solid-svg-icons": "^5.12.1",
     "@fortawesome/vue-fontawesome": "^0.1.9",
     "@nuxtjs/auth": "^4.9.0",
+    "@nuxtjs/axios": "latest",
     "@nuxtjs/pwa": "^3.0.0-beta.20",
     "@teotsi/unfold-ckeditor": "^1.1.1",
     "axios": "latest",
@@ -40,7 +41,8 @@
     "nuxt-fontawesome": "^0.4.0",
     "postcss-loader": "^3.0.0",
     "sass-loader": "^8.0.2",
-    "@nuxtjs/axios": "latest"
+    "tiptap": "^1.27.1",
+    "tiptap-extensions": "^1.29.1"
   },
   "devDependencies": {
     "@ava/babel": "^1.0.0",
