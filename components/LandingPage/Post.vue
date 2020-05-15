@@ -1,15 +1,16 @@
 <template>
   <div class="post-details">
     <nuxt-link :to="`${id}/${slug}`" id="link">
-
-      <b-img :src="img+'#'+new Date().getTime()" class="post-img" fluid-grow/>
+      <div class="content-image">
+        <b-img :src="img+'#'+new Date().getTime()" class="post-img" fluid-grow/>
+      </div>
       <div class="content-title">
         <h2>{{title}}</h2>
       </div>
       <div class="content-preview">
         <div v-html="preview">
         </div>
-<!--        <p>{{truncate(preview, 'preview')}}</p>-->
+        <!--        <p>{{truncate(preview, 'preview')}}</p>-->
       </div>
       <div class="content-footer">
         <b-icon class="user-small-img" icon="person-fill"></b-icon>
@@ -24,6 +25,7 @@
       </div>
 
     </nuxt-link>
+
   </div>
 </template>
 
@@ -66,7 +68,7 @@
     },
     methods: {
       truncate(str, type) {
-        return truncate(str,type);
+        return truncate(str, type);
       }
     }
   }
@@ -75,11 +77,11 @@
 <style scoped>
   .post-details {
     width: 100%;
-    height: 430px;
+    /*height: 430px;*/
     margin: 30px 15px;
-    -webkit-box-shadow: 1px 4px 16px 3px rgba(199, 197, 199, 1);
-    -moz-box-shadow: 1px 4px 16px 3px rgba(199, 197, 199, 1);
-    box-shadow: 1px 4px 16px 3px rgba(199, 197, 199, 1);
+    /*-webkit-box-shadow: 1px 4px 16px 3px rgba(199, 197, 199, 1);*/
+    /*-moz-box-shadow: 1px 4px 16px 3px rgba(199, 197, 199, 1);*/
+    /*box-shadow: 1px 4px 16px 3px rgba(199, 197, 199, 1);*/
   }
 
   @media (min-width: 800px) {
@@ -95,13 +97,17 @@
 
   }
 
+  .content-image {
+    order: -1;
+  }
+
   .post-img {
     height: 250px;
     object-fit: cover;
   }
 
   .content-preview {
-    max-height: 80px;
+    /*max-height: 80px;*/
     min-height: 80px;
   }
 
@@ -111,31 +117,47 @@
   }
 
   .content-title {
-    padding: 5px;
+    /*padding: 5px;*/
     background-color: #fff;
     text-align: center;
   }
 
-  .content-title h2{
+  .content-title h2 {
     font-family: var(--title-font);
     color: var(--soft-black);
   }
 
   .content-preview {
+    align-items: center;
     padding: 5px;
     background-color: #fff;
     text-align: center;
     color: #7F828B;
+    width: 80%;
+    margin: auto;
+  }
+
+  .content-preview div, .content-title{
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
   }
 
   .content-title {
+    display: inline-block;
     background-color: white;
+    width: 80%;
+    margin: 0 10%;
+    margin-top: -2rem;
   }
 
   .content-footer {
     background-color: #950ca0;
     padding: 10px;
     position: relative;
+    width: 60%;
+    margin: auto;
   }
 
   .pull-right {
