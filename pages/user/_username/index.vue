@@ -22,7 +22,7 @@
                     </div>
                 </div>
             </div>
-            <div id="posts">
+            <!-- <div id="posts">
                 <h3 id="section_title">User's Posts</h3>  
                 <div class="post-grid-container">
                     <profile-post
@@ -34,7 +34,7 @@
                         v-for="post in this.user.posts"
                     />
                 </div>
-            </div>
+            </div> -->
         </div>
   </div>
 </template>
