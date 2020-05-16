@@ -3,7 +3,7 @@
 
     <editor-menu-bar :editor="editor" v-slot="{ commands, isActive }">
       <div class="menubar">
-
+        <p v-if="eventName!=='comment'" class="preview-title">Preview 👀</p>
         <b-button
           :class="{ 'is-active': isActive.bold() }"
           variant="white"
@@ -144,7 +144,13 @@
 
   }
 
-
+  .preview-title {
+    display: inline;
+    float: left;
+    margin-left: 10px;
+    padding-top: 2px;
+    color:#495057;
+  }
   #boldB {
     background-image: url("../../assets/images/icons/bold.svg");
   }

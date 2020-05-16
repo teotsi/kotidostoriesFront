@@ -31,13 +31,15 @@
         <b-input-group class="mt-3" prepend="Title 📕">
           <b-form-input
             :state="validTitle"
-            @update="checkTitle"
+            @input="checkTitle"
             id="title-input"
             placeholder="Enter a title!"
             v-model="post.title"></b-form-input>
         </b-input-group>
       </div>
-      <comment-editor eventName="preview" :value="previewInput" v-on:preview-input="storePreview"/>
+      <comment-editor eventName="preview"
+                      :value="previewInput"
+                      v-on:preview-input="storePreview"/>
       <unfold-editor :intro="intro" v-on:input="store"/>
       <div class="save-buttons">
         <b-input-group>
@@ -96,27 +98,27 @@
 
       },
       checkTitle() {
-        if (this.post.title.length > 0) {
+        if (this.post.title) {
           this.validTitle = null;
-          if (!this.disabled && !this.selectedCategory.includes('Category')) {
-            this.disabled = true;
-          }
         } else {
-          this.validTitle = false;
-          if (this.disabled) {
-            this.disabled = false;
-          }
+          this.validTitle = false
         }
+        this.checkDisabled();
+      },
+      checkDisabled() {
+        console.log(this.post.preview === "<p></p>");
+        this.disabled = !!(this.post.title && this.post.preview && this.post.preview !== "<p></p>" & !this.selectedCategory.includes('Category'));
+        return this.disabled;
       },
       saveDraft() {
         this.published = false;
         this.publish()
       },
       disableByRef(category) {
-        this.disabled = true;
-        console.log(this.disabled);
         this.selectedCategory = category;
-        this.$refs.popover.$emit('disable')
+        if (this.checkDisabled()) {
+          this.$refs.popover.$emit('disable')
+        }
       },
       back() {
         this.$router.push('/');
@@ -126,6 +128,7 @@
       },
       storePreview(event) {
         this.post.preview = event;
+        this.checkDisabled();
       },
       publish() {
         let formData = new FormData();
@@ -159,13 +162,6 @@
     middleware: ['redirectLogin', 'loadUsers'],
     data: function () {
       return {
-        post: {
-          title: "",
-          content: this.intro,
-          preview: this.previewInput,
-          published: true,
-          image: null
-        },
         disabled: false,
         results: "",
         imageUrl: null,
@@ -199,6 +195,13 @@
             – Unfold Team
           </blockquote>
         `,
+        post: {
+          title: "",
+          content: this.intro,
+          preview: this.previewInput,
+          published: true,
+          image: null
+        },
         previewInput: ``
 
       }
@@ -218,6 +221,8 @@
               }
             }
           })
+      } else {
+        this.post.content = this.intro;
       }
     }
   }

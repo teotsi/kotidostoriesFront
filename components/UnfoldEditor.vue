@@ -1,11 +1,11 @@
 <template>
   <transition name="fade">
-  <ckeditor
-    :editor="editor"
-    :value="intro"
-    :config="editorConfig"
-    @input="ev => $emit('input', ev)"
-  />
+    <ckeditor
+      :config="editorConfig"
+      :editor="editor"
+      :value="intro"
+      @input="ev => $emit('input', ev)"
+    />
   </transition>
 </template>
 
@@ -20,11 +20,12 @@
       value: [String],
       options: {
         type: [Object],
-        default: () => {}
+        default: () => {
+        }
       },
-      intro:{
+      intro: {
         type: String,
-        default:`
+        default: `
           <h3>
             Hi there,
           </h3>
@@ -67,14 +68,18 @@
         editorData: this.intro,
       }
     },
-    computed:{
-      users(){
+    computed: {
+      users() {
         axios.get('http://localhost:5000/user/')
-          .then(response=> {
+          .then(response => {
             console.log(response);
             return response.data.users;
           })
       }
+    },
+    mounted() {
+      this.value = this.intro;
+      this.$emit('input', this.value)
     }
   }
 </script>
@@ -84,7 +89,9 @@
   .fade-enter-active, .fade-leave-active {
     transition: opacity .5s;
   }
-  .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+
+  .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */
+  {
     opacity: 0;
   }
 </style>
