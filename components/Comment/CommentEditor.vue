@@ -83,12 +83,12 @@
       EditorMenuBar,
     },
     props: {
-      value:{
+      value: {
         type: String,
-        default:''
+        default: ''
       },
-      eventName:{
-        type:String,
+      eventName: {
+        type: String,
         default: 'comment'
       }
     },
@@ -113,7 +113,7 @@
           new Underline(),
           new History(),
         ],
-        onUpdate: ({ getHTML }) => {
+        onUpdate: ({getHTML}) => {
           this.editorChange = true;
           this.$emit(`${this.eventName}-input`, getHTML());
         },
@@ -139,101 +139,63 @@
   .editor__content {
     outline: none;
   }
+
+  #boldB, #italic, #underline, #bullet_list, #undo, #redo {
+
+  }
+
+
   #boldB {
     background-image: url("../../assets/images/icons/bold.svg");
-    background-repeat: no-repeat;
-    height: 1rem;
-    width: 1rem;
   }
 
   #italic {
     background-image: url("../../assets/images/icons/italic.svg");
-    background-repeat: no-repeat;
-    height: 1rem;
-    width: 1rem;
-  }
-
-  #strike {
-    background-image: url("../../assets/images/icons/strike.svg");
-    background-repeat: no-repeat;
-    height: 1rem;
-    width: 1rem;
   }
 
   #underline {
     background-image: url("../../assets/images/icons/underline.svg");
-    background-repeat: no-repeat;
-    height: 1rem;
-    width: 1rem;
-  }
-
-  #code {
-    background-image: url("../../assets/images/icons/code.svg");
-    background-repeat: no-repeat;
-    height: 1rem;
-    width: 1rem;
-  }
-
-  #paragraph {
-    background-image: url("../../assets/images/icons/paragraph.svg");
-    background-repeat: no-repeat;
-    height: 1rem;
-    width: 1rem;
   }
 
   #bullet_list {
     background-image: url("../../assets/images/icons/ul.svg");
-    background-repeat: no-repeat;
-    height: 1rem;
-    width: 1rem;
-  }
-
-  #order_list {
-    background-image: url("../../assets/images/icons/ol.svg");
-    background-repeat: no-repeat;
-    height: 1rem;
-    width: 1rem;
-  }
-
-  #blockquote {
-    background-image: url("../../assets/images/icons/quote.svg");
-    background-repeat: no-repeat;
-    height: 1rem;
-    width: 1rem;
-  }
-
-  #code_block {
-    background-image: url("../../assets/images/icons/code.svg");
-    background-repeat: no-repeat;
-    height: 1rem;
-    width: 1rem;
-  }
-
-  #horizontal {
-    background-image: url("../../assets/images/icons/hr.svg");
-    background-repeat: no-repeat;
-    height: 1rem;
-    width: 1rem;
   }
 
   #undo {
     background-image: url("../../assets/images/icons/undo.svg");
-    background-repeat: no-repeat;
-    height: 1rem;
-    width: 1rem;
   }
 
   #redo {
     background-image: url("../../assets/images/icons/redo.svg");
-    background-repeat: no-repeat;
-    height: 1rem;
-    width: 1rem;
+  }
+
+  .menubar {
+    background: var(--ck-color-toolbar-background);
+    border-bottom: 1px solid #ced4da;
+
+    .menubar__button {
+      background-repeat: no-repeat;
+      height: 1rem;
+      width: 1rem;
+      margin: 5px;
+      padding: 1px;
+      border-radius: 2px;
+
+      &.is-active {
+        background-color: #b1b1b1;
+      }
+
+      &:hover {
+        background-color: #cecece;
+      }
+
+    }
   }
 
   .editor {
     position: relative;
     margin: 0 auto 1rem auto;
-    border: 1px solid var(--soft-black);
+    border: 1px solid #ced4da;
 
     &__content {
       overflow-wrap: break-word;
