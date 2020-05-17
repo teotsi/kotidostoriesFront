@@ -16,7 +16,7 @@
       <div class="post-options-container">
         <b-button :href="`/TextEditor/${post.id}`"
                   v-if="this.$auth.loggedIn && post.user.username === this.$auth.user.username"
-                  variant="outline-info">Edit story 📝
+                  variant="contrast">Edit story 📝
         </b-button>
 
         <share-button :key="index"
@@ -65,7 +65,7 @@
           <b-button :disabled="!this.$auth.loggedIn
           ||this.commentContent.length===0 || this.commentContent==='<p></p>'"
                     @click="createComment"
-                    variant="light">Post Comment
+                    variant="light">Post Comment 💬
           </b-button>
 
           <b-popover
@@ -79,7 +79,9 @@
           <comment
             :content="comment.content"
             :date="comment.date"
+            :id="comment.id"
             :key="comment.id"
+            :post="post"
             :user="comment.user.username"
             class="comment-item"
             v-for="comment in post.comments"
@@ -125,7 +127,7 @@
 
       },
       createComment() {
-        this.$axios.$post(`http://localhost:5000/user/${this.post.user.username}/posts/${this.$route.params.postId}/comments/`,
+        this.$axios.$post(`http://localhost:5000/user/${this.post.user.username}/posts/${this.post.id}/comments/`,
           {"content": this.commentContent},
           {withCredentials: true})
           .then((response) => {
@@ -134,9 +136,8 @@
           })
       },
       storeComment(event) {
-        this.commentContent = event;
+        this.commentContent = event['value'];
       },
-
       copyToClipboard(event) {
         if (event.type === 'click') {
           navigator.clipboard.writeText(this.url);
@@ -148,6 +149,7 @@
     },
     data() {
       return {
+        editCommentContent: {},
         reactionQuotes: [
           'What did you think?',
           'Show some appreciation!',
@@ -276,7 +278,8 @@
   }
 
   #clipboard-icon {
-    margin-top: 4px;
+    margin-top: 0;
+    height: initial !important;
     color: #212529;
   }
 

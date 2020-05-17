@@ -228,9 +228,9 @@
   }
 </script>
 
-<style>
+<style scoped>
   .container {
-    margin: 0 auto;
+    margin: 30px auto;
     justify-content: center;
     align-items: center;
     text-align: center;
@@ -288,6 +288,7 @@
     display: flex;
     justify-content: center;
     padding-top: 10px;
+    margin-top: 20px;
   }
 
   .save-buttons > div {

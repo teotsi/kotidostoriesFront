@@ -3,55 +3,55 @@
 
     <editor-menu-bar :editor="editor" v-slot="{ commands, isActive }">
       <div class="menubar">
-        <p v-if="eventName!=='comment'" class="preview-title">Preview 👀</p>
+        <p class="preview-title" v-if="eventName!=='comment'">{{eventMessage}}</p>
         <b-button
           :class="{ 'is-active': isActive.bold() }"
-          variant="white"
           @click="commands.bold"
           class="menubar__button"
           id="boldB"
+          variant="white"
         >
         </b-button>
 
         <b-button
           :class="{ 'is-active': isActive.italic() }"
-          variant="white"
           @click="commands.italic"
           class="menubar__button"
           id="italic"
+          variant="white"
         >
         </b-button>
 
         <b-button
           :class="{ 'is-active': isActive.underline() }"
-          variant="white"
           @click="commands.underline"
           class="menubar__button"
           id="underline"
+          variant="white"
         >
         </b-button>
 
         <b-button
           :class="{ 'is-active': isActive.bullet_list() }"
           @click="commands.bullet_list"
-          variant="white"
           class="menubar__button"
           id="bullet_list"
+          variant="white"
         >
         </b-button>
 
         <b-button
           @click="commands.undo"
           class="menubar__button"
-          variant="white"
           id="undo"
+          variant="white"
         >
         </b-button>
         <b-button
           @click="commands.redo"
           class="menubar__button"
-          variant="white"
           id="redo"
+          variant="white"
         >
         </b-button>
 
@@ -64,17 +64,7 @@
 
 <script>
   import {Editor, EditorContent, EditorMenuBar} from 'tiptap'
-  import {
-    Bold,
-    BulletList,
-    History,
-    Italic,
-    Link,
-    ListItem,
-    TodoItem,
-    TodoList,
-    Underline,
-  } from 'tiptap-extensions'
+  import {Bold, BulletList, History, Italic, Link, ListItem, TodoItem, TodoList, Underline,} from 'tiptap-extensions'
 
   export default {
     name: 'CommentEditor',
@@ -90,6 +80,14 @@
       eventName: {
         type: String,
         default: 'comment'
+      },
+      eventMessage: {
+        type: String,
+        default: 'Preview 👀'
+      },
+      id: {
+        type: String,
+        default: null
       }
     },
     data() {
@@ -115,7 +113,9 @@
         ],
         onUpdate: ({getHTML}) => {
           this.editorChange = true;
-          this.$emit(`${this.eventName}-input`, getHTML());
+          this.$emit(`${this.eventName}-input`, {"value": getHTML(), "id": this.id});
+          let vm = this.$parent;
+          vm.$emit(`${this.eventName}-input`, {"value": getHTML(), "id": this.id});
         },
         content: this.value
       })
@@ -130,7 +130,7 @@
     }
   }
 </script>
-<style scoped lang="scss">
+<style lang="scss" scoped>
   $color-black: #000000;
   $color-white: #ffffff;
   $color-grey: #dddddd;
@@ -148,9 +148,11 @@
     display: inline;
     float: left;
     margin-left: 10px;
+    margin-bottom: 0;
     padding-top: 2px;
-    color:#495057;
+    color: #495057;
   }
+
   #boldB {
     background-image: url("../../assets/images/icons/bold.svg");
   }

@@ -1,5 +1,28 @@
 <template>
-  <div class="comment-container">
+
+  <div class="comment-edit" v-if="edit">
+    <comment-editor :id="id" :value="content" event-message="Edit comment"
+                    event-name="comment-edit"
+                    v-on:comment-edit-input="storeEdit"/>
+    <div class="save-button-container">
+      <b-button
+        @click="edit=false"
+        size="sm"
+        variant="outline-danger">Cancel ❌
+      </b-button>
+      <b-button
+        :disabled="!editContent"
+        @click="saveCommentEdit"
+        class="save-button"
+        size="sm"
+        variant="contrast">Save 💾
+      </b-button>
+
+    </div>
+
+  </div>
+
+  <div class="comment-container" v-else>
     <div class="user-details">
       <div class="user-image">
         <img :src="`http://localhost:5000/${img}`" alt="User image">
@@ -9,22 +32,41 @@
     </div>
 
     <div class="comment-content-container">
-      <div v-html="content" class="comment-content">
+      <div class="comment-content" v-html="contentInfo">
       </div>
       <span class="date-info">
             {{this.dateInfo}},{{this.timeInfo}}
       </span>
-    </div>
 
+    </div>
+    <b-button
+      :class="['edit-button',!this.$auth.loggedIn || this.$auth.user.username !==user?'hide':'']"
+      @click="edit=!edit"
+      size="sm"
+      variant="contrast">Edit 📝
+    </b-button>
   </div>
+
 </template>
 
 <script>
+  import CommentEditor from "./CommentEditor";
+  import axios from "axios";
+
   export default {
     name: "Comment",
+    components: {CommentEditor},
     props: {
       user: {
         type: String,
+        required: true
+      },
+      id: {
+        type: String,
+        required: true
+      },
+      post: {
+        type: Object,
         required: true
       },
       img: {
@@ -44,29 +86,64 @@
       return {
         dateObj: null,
         dateInfo: null,
-        timeInfo: null
+        timeInfo: null,
+        contentInfo: this.content,
+        editContent: '',
+        edit: false
       }
     },
     mounted() {
       this.dateObj = new Date(this.date);
       this.dateInfo = this.dateObj.toDateString();
       this.timeInfo = `${this.dateObj.getHours()}:${this.dateObj.getMinutes()}`
+    },
+    methods: {
+      storeEdit(event) {
+        this.editContent = event['value'];
+      },
+      async saveCommentEdit() {
+        const editResponse = await axios.patch(`http://localhost:5000/user/${this.post.user.username}/posts/`
+          + `${this.post.id}/comments/${this.id}/`,
+          {'content': this.editContent}, {withCredentials: true});
+        if (editResponse.status === 200) {
+          this.contentInfo = this.editContent;
+          this.edit = false;
+        }
+      }
     }
+
   }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
   .comment-container {
+    position: relative;
     display: flex;
     padding: 10px 0;
+
+    &:not(:last-child) {
+      border-bottom: 1px solid gray;
+    }
+
+    &:hover {
+      background-color: var(--hover-soft-gray);
+
+      .edit-button {
+        visibility: initial;
+      }
+    }
   }
 
-  .comment-container:not(:last-child) {
-    border-bottom: 1px solid gray;
+  .hide {
+    display: none;
   }
 
-  .comment-container:hover {
-    background-color: var(--hover-soft-gray);
+  .comment-edit {
+    margin: 10px 0;
+  }
+
+  .save-button {
+    margin-left: 10px;
   }
 
   .comment-content-container {
@@ -74,7 +151,21 @@
   }
 
   .comment-content {
+    padding-bottom: 5px;
     text-align: justify;
+  }
+
+  .edit-button {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    margin: 5px;
+    visibility: hidden;
+  }
+
+  .save-button-container {
+    display: flex;
+    justify-content: flex-end;
   }
 
   .date-info {
