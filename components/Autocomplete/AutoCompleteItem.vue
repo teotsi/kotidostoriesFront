@@ -14,7 +14,7 @@
     <nuxt-link prefetch :to="`/${post.id}`" class="post-link">
       <div class="item-content-container">
         <h4> {{ post.title }}</h4>
-        <p>{{post.preview}}</p>
+        <div class="preview-content" v-html="post.preview"/>
       </div>
     </nuxt-link>
 
@@ -89,11 +89,11 @@
     font-size: 22px;
   }
 
-  .item-content-container h4, .item-content-container p {
+  .item-content-container h4, .item-content-container .preview-content {
     overflow: hidden;
   }
 
-  .item-content-container p {
+  .item-content-container .preview-content {
     font-size: 15px;
   }
 

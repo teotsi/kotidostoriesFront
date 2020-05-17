@@ -1,13 +1,42 @@
 <template>
   <div class="grid-wrapper">
     <div class="content-container">
+
       <h1 class="title">{{post.title}} <span class="inline">by <nuxt-link :to="'user/'+ post.user.username">{{post.user.username}} </nuxt-link> </span>
       </h1>
+
+      <p class="date-info"><a href="#">{{post.category}}</a> {{new Date(this.post.date).toDateString()}}</p>
+
       <div class="image-container">
         <img :src="'http://localhost:5000/'+post.img" alt="Story image" class="main-image">
       </div>
 
-      <div class="main-text" v-html="post.content"></div>
+      <div class="main-text" v-html="post.content"/>
+
+      <div class="post-options-container">
+        <b-button :href="`/TextEditor/${post.id}`"
+                  v-if="this.$auth.loggedIn && post.user.username === this.$auth.user.username"
+                  variant="outline-info">Edit story 📝
+        </b-button>
+
+        <share-button :key="index"
+                      :name="site"
+                      id="hey" v-for="(site, index) in media">
+        </share-button>
+
+        <font-awesome-icon
+          :icon="['fas','clipboard']"
+          @click="copyToClipboard"
+          @mouseover="copyToClipboard"
+          id="clipboard-icon"
+          size="2x"/>
+
+        <b-popover
+          placement="right"
+          target="clipboard-icon" triggers="hover">
+          {{copyInfo}}
+        </b-popover>
+      </div>
       <section class="reaction-section">
         <h2 class="header">
           {{reactionQuote}}
@@ -31,29 +60,38 @@
           Comments
         </h1>
         <comment-editor :value="commentContent" v-on:comment-input="storeComment"/>
-        <div class="comment-buttons">
-          <b-button :disabled="this.commentContent.length===0 || this.commentContent==='<p></p>'"
-                    variant="light"
-                    @click="createComment">Post Comment
+        <div class="comment-buttons" id="comment-button-container"
+        >
+          <b-button :disabled="!this.$auth.loggedIn
+          ||this.commentContent.length===0 || this.commentContent==='<p></p>'"
+                    @click="createComment"
+                    variant="light">Post Comment
           </b-button>
+
+          <b-popover
+            :disabled="this.$auth.loggedIn"
+            placement="right"
+            target="comment-button-container" triggers="hover">
+            You need to be signed in!
+          </b-popover>
         </div>
         <transition-group name="comments" tag="div">
-        <comment
-          class="comment-item"
-          :content="comment.content"
-          :date="comment.date"
-          :key="comment.id"
-          :user="comment.user.username"
-          v-for="comment in post.comments"
-        />
+          <comment
+            :content="comment.content"
+            :date="comment.date"
+            :key="comment.id"
+            :user="comment.user.username"
+            class="comment-item"
+            v-for="comment in post.comments"
+          />
         </transition-group>
       </section>
     </div>
     <section class="sidebar-suggestions">
       <div class="side">
         <h2 class="header">Check out...</h2>
-        <sidebar-post :post="post"
-                      :key="post.id"
+        <sidebar-post :key="post.id"
+                      :post="post"
                       v-for="post in suggestions"/>
       </div>
 
@@ -68,10 +106,13 @@
   import Comment from "../../../components/Comment/Comment";
   import CommentEditor from "../../../components/Comment/CommentEditor";
   import SidebarPost from "../../../components/Sidebar/SidebarPost";
+  import ShareButton from "../../../components/Share/ShareButton";
+
   export default {
     components: {
+      ShareButton,
       CommentEditor,
-       SidebarPost,
+      SidebarPost,
       Comment,
       ReactionIcon
     },
@@ -85,16 +126,24 @@
       },
       createComment() {
         this.$axios.$post(`http://localhost:5000/user/${this.post.user.username}/posts/${this.$route.params.postId}/comments/`,
-          {"content":this.commentContent},
-          {withCredentials:true})
-        .then((response)=>{
-          this.commentContent = '';
-          this.post.comments.push(response.comment)
-        })
-      }
-      ,
+          {"content": this.commentContent},
+          {withCredentials: true})
+          .then((response) => {
+            this.commentContent = '';
+            this.post.comments.push(response.comment)
+          })
+      },
       storeComment(event) {
         this.commentContent = event;
+      },
+
+      copyToClipboard(event) {
+        if (event.type === 'click') {
+          navigator.clipboard.writeText(this.url);
+          this.copyInfo = "Copied!"
+        } else {
+          this.copyInfo = "Click to copy!"
+        }
       }
     },
     data() {
@@ -104,7 +153,11 @@
           'Show some appreciation!',
           'Your feedback matters!'
         ],
-        commentContent: ''
+        commentContent: '',
+        media: ['facebook', 'twitter', 'email'],
+        url: "",
+        copyInfo: "Click to copy!",
+        disabled: false
       }
     },
     computed: {
@@ -156,6 +209,7 @@
     mounted() {
       //weird solution to add slug on url, if there's such a need
       addSlug(this.$route.params, this.slug);
+      this.url = window.location.href;
       fadeSide();
     }
 
@@ -204,6 +258,10 @@
     color: var(--soft-black);
   }
 
+  .title {
+    margin-bottom: 0;
+  }
+
   .main-text {
     text-align: justify;
   }
@@ -216,10 +274,22 @@
     height: 42px !important;
     width: 100px !important;
   }
+
+  #clipboard-icon {
+    margin-top: 4px;
+    color: #212529;
+  }
+
+  #clipboard-icon:hover {
+    cursor: pointer;
+    color: #656565;
+  }
+
   .comments-enter-active, .comments-leave-active {
     transition: all 1s;
   }
-  .comments-enter, .comments-leave-to{
+
+  .comments-enter, .comments-leave-to {
     opacity: 0;
     transform: translateY(30px);
   }
@@ -250,7 +320,7 @@
     border: 1px solid var(--soft-black);
   }
 
-  .reaction-box {
+  .reaction-box, .post-options-container {
     display: flex;
     justify-content: space-between;
     margin-bottom: 20px;

@@ -24,13 +24,16 @@ export default {
   /*
   ** Global CSS
   */
-  css: [],
+  css: [
+    '@fortawesome/fontawesome-svg-core/styles.css'
+  ],
   /*
   ** Plugins to load before mounting the App
   */
   plugins: [
-    {src: '~plugins/rich-editor', ssr: false}
-    ],
+    {src: '~plugins/rich-editor', ssr: false},
+    '~/plugins/fontawesome.js'
+  ],
   /*
   ** Nuxt.js dev-modules
   */
@@ -100,6 +103,10 @@ export default {
       {
         set: '@fortawesome/free-solid-svg-icons',
         icons: ['fas']
+      },
+      {
+        set: '@fortawesome/free-brands-svg-icons',
+        icons: ['fab']
       }
     ],
   }

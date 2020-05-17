@@ -85,21 +85,14 @@
   }
 
   .post-author {
-    font-size: 12px;
     margin: 0;
   }
 
   .post-author a, .post-author a:hover, .post-author a:visited {
     color: #717171;
-    text-decoration: none !important;
-  }
+    font-size: 12px!important;
 
-  .date-info {
-    text-align: right;
-    font-size: 10px;
-    color: #7f828b;
-    position: relative;
-    bottom: 0;
+    text-decoration: none !important;
   }
 
 </style>

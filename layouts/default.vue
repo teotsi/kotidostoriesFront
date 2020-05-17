@@ -56,6 +56,10 @@
     box-sizing: border-box;
   }
 
+  a{
+    color: #333;
+    text-decoration: none;
+  }
   .custom-nav {
     padding: 0;
   }
@@ -82,6 +86,23 @@
   .email-button-container {
     padding: 5px!important;
   }
+
+  .date-info {
+    text-align: right;
+    font-size: 10px;
+    color: #7f828b;
+    position: relative;
+    bottom: 0;
+  }
+  .date-info a{
+    font-size: inherit;
+    color: inherit;
+    text-decoration: none;
+  }
+  .date-info a:hover {
+    color: var(--soft-black);
+  }
+
 
 
 </style>
