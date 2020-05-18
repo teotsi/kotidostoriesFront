@@ -85,6 +85,7 @@
             :user="comment.user.username"
             class="comment-item"
             v-for="comment in post.comments"
+            v-on:delete-comment="removeFromList"
           />
         </transition-group>
       </section>
@@ -137,6 +138,15 @@
       },
       storeComment(event) {
         this.commentContent = event['value'];
+      },
+      removeFromList(event) {
+        console.log(this.post.comments.length)
+        this.post.comments.forEach((comment, index) => {
+          if (comment.id === event) {
+            this.post.comments.splice(index, 1);
+          }
+        })
+        console.log(this.post.comments.length)
       },
       copyToClipboard(event) {
         if (event.type === 'click') {
@@ -288,13 +298,25 @@
     color: #656565;
   }
 
-  .comments-enter-active, .comments-leave-active {
-    transition: all 1s;
-  }
+  /*.comments-enter-active, .comments-leave-active {*/
+  /*  transition: all 1s;*/
+  /*}*/
 
-  .comments-enter, .comments-leave-to {
+  /*.comments-enter, .comments-leave-to {*/
+  /*  opacity: 0;*/
+  /*  transform: translateY(30px);*/
+  /*}*/
+
+  .comment-item {
+    transition: all 0.5s;
+  }
+  .comments-enter, .comments-leave-to
+    /* .list-complete-leave-active below version 2.1.8 */ {
     opacity: 0;
     transform: translateY(30px);
+  }
+  .comments-leave-active {
+    position: absolute;
   }
 
   @media (min-width: 800px) {

@@ -39,12 +39,23 @@
       </span>
 
     </div>
-    <b-button
-      :class="['edit-button',!this.$auth.loggedIn || this.$auth.user.username !==user?'hide':'']"
-      @click="edit=!edit"
-      size="sm"
-      variant="contrast">Edit 📝
-    </b-button>
+
+    <div class="edit-delete-container">
+      <b-button
+        :class="!this.$auth.loggedIn || this.$auth.user.username !==user?'hide':''"
+        @click="deleteComment"
+        size="sm"
+        variant="danger">Delete
+      </b-button>
+      <b-button
+        :class="!this.$auth.loggedIn || this.$auth.user.username !==user?'hide':''"
+        @click="edit=!edit"
+        size="sm"
+        variant="contrast">Edit 📝
+      </b-button>
+    </div>
+
+
   </div>
 
 </template>
@@ -101,6 +112,13 @@
       storeEdit(event) {
         this.editContent = event['value'];
       },
+      async deleteComment() {
+        const deleteResponse = await axios.delete(`http://localhost:5000/user/${this.post.user.username}/posts/`
+          + `${this.post.id}/comments/${this.id}/`, {withCredentials: true});
+        if (deleteResponse.status===200) {
+          this.$emit('delete-comment',this.id);
+        }
+      },
       async saveCommentEdit() {
         const editResponse = await axios.patch(`http://localhost:5000/user/${this.post.user.username}/posts/`
           + `${this.post.id}/comments/${this.id}/`,
@@ -128,7 +146,7 @@
     &:hover {
       background-color: var(--hover-soft-gray);
 
-      .edit-button {
+      button {
         visibility: initial;
       }
     }
@@ -155,12 +173,16 @@
     text-align: justify;
   }
 
-  .edit-button {
+  .edit-delete-container {
     position: absolute;
     bottom: 0;
     right: 0;
-    margin: 5px;
-    visibility: hidden;
+    display: flex;
+
+    button {
+      margin: 5px;
+      visibility: hidden;
+    }
   }
 
   .save-button-container {
@@ -178,11 +200,11 @@
     padding: 0 10px;
     text-align: center;
     margin-right: 20px;
-  }
 
-  .user-details p {
-    font-size: 14px;
-    margin: 0;
+    p {
+      font-size: 14px;
+      margin: 0;
+    }
   }
 
   .user-image {

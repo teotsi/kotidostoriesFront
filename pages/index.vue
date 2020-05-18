@@ -20,10 +20,11 @@
       LoginComponent,
       ModalComponent,
       PageComponent
-    }
+    },
+    layout: 'landingPageLayout',
   }
 </script>
-<style>
+<style lang="scss">
   @import url('https://fonts.googleapis.com/css?family=Montserrat:400,800');
 
   #posts {
@@ -83,4 +84,5 @@
   .side:hover {
     transition: ease 0.5s;
   }
+
 </style>

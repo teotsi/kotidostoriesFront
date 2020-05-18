@@ -1,6 +1,6 @@
 <template>
   <div @mouseup="closePopUp" class="content">
-    <navbar :show="show" id="nav"/>
+    <navbar :show="show" id="nav" v-if="this.$auth.loggedIn"/>
     <nuxt/>
   </div>
 
@@ -28,7 +28,7 @@
   }
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
   @import url('https://fonts.googleapis.com/css?family=Montserrat:400,800');
   @import url('https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@500;600;700&display=swap');
 
@@ -76,15 +76,16 @@
     margin: 0;
     position: relative;
     background: #EDEDED !important;
-  }
 
-  blockquote::before {
-    content: "\201C";
-    color: #555555;
-    font-size: 4em;
-    position: absolute;
-    left: 10px;
-    top: -10px;
+    &::before {
+      content: "\201C";
+      color: #555555;
+      font-size: 4em;
+      position: absolute;
+      left: 10px;
+      top: -10px;
+    }
+
   }
 
   .email-button-container {
@@ -130,6 +131,7 @@
   }
 
   .profile-dropdown a[role] {
+
     &:hover {
       background-color: #e7d0e7;
     }
@@ -137,6 +139,7 @@
     &:active {
       background-color: #950ca0;
     }
+
   }
 
 

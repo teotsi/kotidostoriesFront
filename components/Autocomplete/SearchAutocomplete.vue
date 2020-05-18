@@ -23,9 +23,6 @@
     name: "SearchAutocomplete",
     components: {AutoCompleteItem},
     props: {
-      suggestions: {
-        required: true
-      },
       show: {
         type: Boolean,
         default: false
