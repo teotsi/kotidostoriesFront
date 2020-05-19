@@ -1,5 +1,5 @@
 <template>
-  <a :to="`${media[name]['url']}`" target="_blank">
+  <a :href="`${media[name]['url']}`" target="_blank">
     <font-awesome-icon :icon="media[name]['class']" size="2x"/>
   </a>
 </template>
@@ -21,7 +21,7 @@
       return {
         media: {
           "facebook": {
-            "url": "https://facebook.com/sharer/sharer.php?u=Unfold!",
+            "url": `https://www.facebook.com/sharer/sharer.php?u=http://127.0.0.1:3000`,
             "class": ['fab', 'facebook']
           },
           "twitter": {
