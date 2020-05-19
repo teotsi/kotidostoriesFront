@@ -63,6 +63,7 @@
 
   .post-info {
     margin-top: 15px;
+    color: black;
   }
 
   .post-image {

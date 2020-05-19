@@ -9,7 +9,7 @@
       </template>
       <div v-if="this.$auth.loggedIn">
         <a></a>
-        <b-dropdown-item href="#">Profile</b-dropdown-item>
+        <b-dropdown-item v-bind:href="'/user/'+profile_name">Profile</b-dropdown-item>
         <b-dropdown-item href="/account">Account</b-dropdown-item>
         <b-dropdown-item href="/TextEditor">New Post</b-dropdown-item>
         <b-dropdown-item @click="logout">Logout
@@ -35,6 +35,11 @@
         this.$auth.logout();
         this.$router.push('/')
 
+      }
+    },
+    data(){
+      return{
+        profile_name: this.$auth.user.username
       }
     }
   }

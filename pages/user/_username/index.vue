@@ -24,6 +24,12 @@
         <div style="font-weight: bold; text-align: center; margin-top: 5px;">
           Social Media
         </div>
+        <div class="social-icons">
+          <share-button :key="index"
+                        :name="site"
+                        id="hey" v-for="(site, index) in media">
+          </share-button>
+        </div>
       </div>
     </div>
 
@@ -69,9 +75,11 @@
   import axios from 'axios';
   import profilePost from '../../../components/Profile_Page/profilePost';
   import Post from "../../../components/LandingPage/Post";
+  import ShareButton from "../../../components/Share/ShareButton";
 
   export default {
     components: {
+      ShareButton,
       Post,
       profilePost
     },
@@ -82,6 +90,7 @@
         followers: this.$auth.user.followers.length,
         description: this.$auth.user.description,
         posts: this.$auth.user.posts,
+        media: ['facebook', 'twitter', 'email']
       }
     },
     asyncData({params}) {
@@ -139,22 +148,12 @@
 
   }
 
-  .posts {
-    grid-column: 2;
-  }
-
   /* ------FEATURED STORIES------ */
 
   .post-grid-container {
     height: 85%;
     width: 100%;
     overflow: scroll;
-  }
-
-  .flex-container {
-    display: flex;
-    flex-wrap: nowrap;
-    grid-column: 2;
   }
 
   .flex-container > div {
@@ -167,6 +166,11 @@
     font-weight: bold;
     text-align: center;
     margin-top: 5px;
+  }
+
+  .social-icons{
+    margin-left: 18%;
+    margin-top: 10%;
   }
 
   #followers {
@@ -187,7 +191,6 @@
   #stats, #about, #socials, #profile_pic {
     background-color: white;
     width: 190px;
-    height: 70px;
     margin: 40px auto auto;
     border-radius: 15px;
     border: 1.5px solid black;
