@@ -78,16 +78,12 @@
   </div>
 </template>
 <script>
-  import ListItem from "../../components/Account/ListItem";
   import CustomForm from "../../components/LogIn_SignUp/CustomForm";
-  import RightHandContent from "../../components/Account/rightHandContent";
   import Post from "../../components/LandingPage/Post";
 
   export default {
     components: {
-      RightHandContent,
       CustomForm,
-      ListItem,
       Post
     },
     middleware: "redirectLogin",
