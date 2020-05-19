@@ -19,6 +19,9 @@
                   variant="contrast">Edit story 📝
         </b-button>
 
+        <DonateModal :user="post.user.username"
+                     v-else-if="this.$auth.loggedIn && post.user.username !== this.$auth.user.username"/>
+
         <share-button :key="index"
                       :name="site"
                       id="hey" v-for="(site, index) in media">
@@ -75,7 +78,7 @@
             You need to be signed in!
           </b-popover>
         </div>
-        <transition-group name="comments" tag="div">
+        <transition-group name="fade-out" tag="div">
           <comment
             :content="comment.content"
             :date="comment.date"
@@ -110,9 +113,11 @@
   import CommentEditor from "../../../components/Comment/CommentEditor";
   import SidebarPost from "../../../components/Sidebar/SidebarPost";
   import ShareButton from "../../../components/Share/ShareButton";
+  import DonateModal from "../../../components/Donate/DonateModal";
 
   export default {
     components: {
+      DonateModal,
       ShareButton,
       CommentEditor,
       SidebarPost,
@@ -125,6 +130,9 @@
           reaction[1] = false;
         }
         this.$set(this.reactions[index], 1, !state);
+
+      },
+      isNumber() {
 
       },
       createComment() {
@@ -169,7 +177,9 @@
         media: ['facebook', 'twitter', 'email'],
         url: "",
         copyInfo: "Click to copy!",
-        disabled: false
+        disabled: false,
+        selected: null,
+        donateOther: null
       }
     },
     computed: {
@@ -228,7 +238,7 @@
   }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
   .inline {
     font-weight: normal;
   }
@@ -245,7 +255,6 @@
 
     grid-column: 1;
     border-radius: 10px;
-    /*box-shadow: var(--soft-shadow);*/
     margin: 20px auto;
   }
 
@@ -298,25 +307,8 @@
     color: #656565;
   }
 
-  /*.comments-enter-active, .comments-leave-active {*/
-  /*  transition: all 1s;*/
-  /*}*/
-
-  /*.comments-enter, .comments-leave-to {*/
-  /*  opacity: 0;*/
-  /*  transform: translateY(30px);*/
-  /*}*/
-
   .comment-item {
-    transition: all 0.5s;
-  }
-  .comments-enter, .comments-leave-to
-    /* .list-complete-leave-active below version 2.1.8 */ {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  .comments-leave-active {
-    position: absolute;
+    transition: all 0.3s ease;
   }
 
   @media (min-width: 800px) {

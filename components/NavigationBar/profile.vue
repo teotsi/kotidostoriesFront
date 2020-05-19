@@ -43,7 +43,7 @@
 <style scoped>
 
   #icon {
-    color: black;
+    color: #ffffff;
     background-size: 938px 318px;
     height: 50px;
     width: 50px;

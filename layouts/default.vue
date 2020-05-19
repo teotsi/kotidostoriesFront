@@ -28,7 +28,7 @@
   }
 </script>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
   @import url('https://fonts.googleapis.com/css?family=Montserrat:400,800');
   @import url('https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@500;600;700&display=swap');
 
@@ -129,6 +129,25 @@
     }
   }
 
+  .btn-donate {
+    background-color: #950ca0;
+    border-color: #8357a0;
+    color: white;
+
+    &:disabled {
+      border: none;
+      color: white;
+    }
+
+    &:not(:disabled):hover {
+      background-color: #9839a0;
+    }
+
+    &:focus {
+      box-shadow: 0 0 0 0.2rem rgba(96, 83, 109, 0.25)
+    }
+  }
+
   .profile-dropdown a[role] {
     &:hover {
       background-color: #e7d0e7;
@@ -139,5 +158,17 @@
     }
   }
 
+  #donate-modal .modal-body {
+    height: 110px;
+  }
+
+  .fade-out-enter-active, .fade-out-leave-active {
+    transition: all .3s ease;
+  }
+
+  .fade-out-enter, .fade-out-leave-to {
+    transform: translateX(10px);
+    opacity: 0;
+  }
 
 </style>

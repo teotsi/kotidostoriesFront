@@ -1,62 +1,64 @@
 <template>
+  <transition name="fade-out" mode="out-in">
+    <div class="comment-edit" v-if="edit">
 
-  <div class="comment-edit" v-if="edit">
-    <comment-editor :id="id" :value="content" event-message="Edit comment"
-                    event-name="comment-edit"
-                    v-on:comment-edit-input="storeEdit"/>
-    <div class="save-button-container">
-      <b-button
-        @click="edit=false"
-        size="sm"
-        variant="outline-danger">Cancel ❌
-      </b-button>
-      <b-button
-        :disabled="!editContent"
-        @click="saveCommentEdit"
-        class="save-button"
-        size="sm"
-        variant="contrast">Save 💾
-      </b-button>
+      <comment-editor :id="id" :value="content" event-message="Edit comment"
+                      event-name="comment-edit"
+                      v-on:comment-edit-input="storeEdit"/>
+      <div class="save-button-container">
+        <b-button
+          @click="edit=false"
+          size="sm"
+          variant="outline-danger">Cancel ❌
+        </b-button>
+        <b-button
+          :disabled="!editContent"
+          @click="saveCommentEdit"
+          class="save-button"
+          size="sm"
+          variant="contrast">Save 💾
+        </b-button>
 
+      </div>
     </div>
 
-  </div>
+    <div class="comment-container" v-else>
+      <div class="user-details">
+        <div class="user-image">
+          <img :src="`http://localhost:5000/${img}`" alt="User image">
+        </div>
 
-  <div class="comment-container" v-else>
-    <div class="user-details">
-      <div class="user-image">
-        <img :src="`http://localhost:5000/${img}`" alt="User image">
+        <p>{{user}}</p>
       </div>
 
-      <p>{{user}}</p>
-    </div>
-
-    <div class="comment-content-container">
-      <div class="comment-content" v-html="contentInfo">
-      </div>
-      <span class="date-info">
+      <div class="comment-content-container">
+        <div class="comment-content" v-html="contentInfo">
+        </div>
+        <span class="date-info">
             {{this.dateInfo}},{{this.timeInfo}}
       </span>
 
+      </div>
+
+      <div class="edit-delete-container">
+        <b-button
+          :class="!this.$auth.loggedIn || this.$auth.user.username !==user?'hide':''"
+          @click="deleteComment"
+          size="sm"
+          variant="danger">Delete
+        </b-button>
+        <b-button
+          :class="!this.$auth.loggedIn || this.$auth.user.username !==user?'hide':''"
+          @click="edit=!edit"
+          size="sm"
+          variant="contrast">Edit 📝
+        </b-button>
+      </div>
+
+
     </div>
+  </transition>
 
-    <div class="edit-delete-container">
-      <b-button
-        :class="!this.$auth.loggedIn || this.$auth.user.username !==user?'hide':''"
-        @click="deleteComment"
-        size="sm"
-        variant="danger">Delete
-      </b-button>
-      <b-button
-        :class="!this.$auth.loggedIn || this.$auth.user.username !==user?'hide':''"
-        @click="edit=!edit"
-        size="sm"
-        variant="contrast">Edit 📝
-      </b-button>
-    </div>
-
-
-  </div>
 
 </template>
 
@@ -115,8 +117,8 @@
       async deleteComment() {
         const deleteResponse = await axios.delete(`http://localhost:5000/user/${this.post.user.username}/posts/`
           + `${this.post.id}/comments/${this.id}/`, {withCredentials: true});
-        if (deleteResponse.status===200) {
-          this.$emit('delete-comment',this.id);
+        if (deleteResponse.status === 200) {
+          this.$emit('delete-comment', this.id);
         }
       },
       async saveCommentEdit() {
@@ -145,9 +147,8 @@
 
     &:hover {
       background-color: var(--hover-soft-gray);
-
       button {
-        visibility: initial;
+        display: initial;
       }
     }
   }
@@ -181,7 +182,7 @@
 
     button {
       margin: 5px;
-      visibility: hidden;
+      display: none;
     }
   }
 
@@ -216,5 +217,15 @@
   img {
     max-width: 100%;
     max-height: 100%;
+  }
+
+
+  .fade-out-enter-active, .fade-out-leave-active {
+    transition: all .3s ease;
+  }
+
+  .fade-out-enter, .fade-out-leave-to {
+    transform: translateX(10px);
+    opacity: 0;
   }
 </style>

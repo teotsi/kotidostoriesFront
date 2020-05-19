@@ -130,6 +130,26 @@
     }
   }
 
+
+  .btn-donate {
+    background-color: #950ca0;
+    border-color: #8357a0;
+    color: white;
+
+    &:disabled {
+      border: none;
+    }
+
+    &:not(:disabled):hover {
+      background-color: #9839a0;
+      color: white;
+    }
+
+    &:focus {
+      box-shadow: 0 0 0 0.2rem rgba(200, 51, 241, 0.47)
+    }
+  }
+
   .profile-dropdown a[role] {
 
     &:hover {
@@ -142,5 +162,17 @@
 
   }
 
+  #donate-modal .modal-body {
+    height: 110px;
+  }
 
+
+  .fade-out-enter-active, .fade-out-leave-active {
+    transition: all .3s ease;
+  }
+
+  .fade-out-enter, .fade-out-leave-to {
+    transform: translateX(10px);
+    opacity: 0;
+  }
 </style>
