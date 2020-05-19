@@ -1,6 +1,6 @@
 <template>
   <div class="post-details">
-    <nuxt-link :to="`${id}/${slug}`" id="link">
+    <nuxt-link :to="`/${id}/${slug}`" id="link">
       <div class="content-image">
         <b-img :src="img+'#'+new Date().getTime()" class="post-img" fluid-grow/>
       </div>
@@ -68,7 +68,7 @@
       },
       img: {
         type: String,
-        default: 'http://localhost:5000/post/default.png'
+        default: 'http://localhost:5000/post/default.jpg'
       },
       comments: Number,
       reactions: Number,

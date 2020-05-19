@@ -37,13 +37,6 @@
     margin-right: 10px;
   }
 
-  @media (min-width: 35rem) {
-    #posts {
-      flex-direction: row;
-    }
-
-  }
-
   body {
     /*background: #f6f5f7;*/
     /* */

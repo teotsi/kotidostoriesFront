@@ -37,8 +37,8 @@
             v-model="post.title"></b-form-input>
         </b-input-group>
       </div>
-      <comment-editor eventName="preview"
-                      :value="previewInput"
+      <comment-editor :value="previewInput"
+                      eventName="preview"
                       v-on:preview-input="storePreview"/>
       <unfold-editor :intro="intro" v-on:input="store"/>
       <div class="save-buttons">
@@ -203,7 +203,6 @@
           image: null
         },
         previewInput: ``
-
       }
     },
     mounted() {

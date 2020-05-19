@@ -2,7 +2,7 @@
   <div class="grid-wrapper">
     <div class="content-container">
 
-      <h1 class="title">{{post.title}} <span class="inline">by <nuxt-link :to="'user/'+ post.user.username">{{post.user.username}} </nuxt-link> </span>
+      <h1 class="title">{{post.title}} <span class="inline">by <nuxt-link :to="'/user/'+ post.user.username">{{post.user.username}} </nuxt-link> </span>
       </h1>
 
       <p class="date-info"><a href="#">{{post.category}}</a> {{new Date(this.post.date).toDateString()}}</p>
