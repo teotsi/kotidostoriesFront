@@ -5,7 +5,7 @@
         <img :src="`http://localhost:5000/${img}`" class="post-image" alt="Post image" fluid-grow/>
         <div class="post-info">
           <h4>{{title}}</h4>
-          <p>{{preview}}</p>
+          <div v-html="preview"/>
         </div>
       </div>
     </nuxt-link>
@@ -52,7 +52,7 @@
     box-shadow: 0px 0px 4px 1px rgba(0, 0, 0, 0.75);
   }
 
-  h4{
+  h4 {
     font-family: var(--title-font);
   }
 
@@ -80,7 +80,7 @@
     height: 100%;
   }
 
-  a{
+  a {
     text-decoration: none;
   }
 

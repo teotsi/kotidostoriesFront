@@ -31,6 +31,10 @@
           </share-button>
         </div>
       </div>
+      <div style="margin-top: 25px; display: flex; justify-content: center;"
+           v-if="this.$auth.loggedIn && this.$auth.user.username===user_name">
+        <b-button style="background-color: #950ca0" href="/account">Privacy</b-button>
+      </div>
     </div>
 
     <div id="main_profile_section">
@@ -124,7 +128,7 @@
 
   .grid-container {
     display: grid;
-    grid-template-columns: 1fr 4fr;
+    grid-template-columns: 15% auto;
   }
 
   .section-title {
@@ -168,7 +172,7 @@
     margin-top: 5px;
   }
 
-  .social-icons{
+  .social-icons {
     margin-left: 18%;
     margin-top: 10%;
   }

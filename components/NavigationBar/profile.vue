@@ -10,7 +10,6 @@
       <div v-if="this.$auth.loggedIn">
         <a></a>
         <b-dropdown-item v-bind:href="'/user/'+profile_name">Profile</b-dropdown-item>
-        <b-dropdown-item href="/account">Account</b-dropdown-item>
         <b-dropdown-item href="/TextEditor">New Post</b-dropdown-item>
         <b-dropdown-item @click="logout">Logout
           <font-awesome-icon :icon="['fas', 'sign-out-alt']"/>
@@ -39,7 +38,7 @@
     },
     data(){
       return{
-        profile_name: this.$auth.user.username
+        profile_name: this.$auth.loggedIn? this.$auth.user.username:''
       }
     }
   }
