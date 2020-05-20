@@ -271,6 +271,12 @@
   .post {
     transition: all 1s;
   }
+  .list-enter-active {
+    transition: all .3s ease;
+  }
+  .list-leave-active {
+    transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+  }
 
   .list-complete-enter, .list-complete-leave-to {
     opacity: 0;

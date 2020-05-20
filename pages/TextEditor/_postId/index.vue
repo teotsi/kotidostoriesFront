@@ -8,24 +8,10 @@
         <nuxt-link to="/help">Getting started</nuxt-link>
         guide. Happy writing!
       </p>
-      <div class="image-wrapper">
-        <div class="preview-image">
-          <img :src="imageUrl" alt="selected image" id="post-image" v-if="imageUrl">
-          <b-input-group>
-            <b-input-group-prepend>
-              <b-input-group-text accept="image/jpeg, image/png, image/gif" variant="light">Image 📷
-              </b-input-group-text>
-            </b-input-group-prepend>
-            <b-form-file
-              @change="previewImage"
-              drop-placeholder="Drop image here..."
-              placeholder="Choose an image for your story!"
-              v-model="post.image"
-            />
-          </b-input-group>
-        </div>
-      </div>
 
+      <image-upload :image-url="imageUrl"
+                    caption="Choose an image for your story!"
+                    v-on:image-upload="storeImage"/>
 
       <div class="title">
         <b-input-group class="mt-3" prepend="Title 📕">
@@ -82,21 +68,16 @@
 <script>
   import UnfoldEditor from '../../../components/UnfoldEditor';
   import CommentEditor from "../../../components/Comment/CommentEditor";
+  import ImageUpload from "../../../components/UploadImage/ImageUpload";
 
 
   export default {
     components: {
+      ImageUpload,
       UnfoldEditor,
       CommentEditor
     },
     methods: {
-      previewImage(event) {
-        if (event.target.files[0]) {
-          const file = event.target.files[0];
-          this.imageUrl = URL.createObjectURL(file);
-        }
-
-      },
       checkTitle() {
         if (this.post.title) {
           this.validTitle = null;
@@ -129,6 +110,9 @@
       storePreview(event) {
         this.post.preview = event;
         this.checkDisabled();
+      },
+      storeImage(image) {
+        this.post.image = image;
       },
       publish() {
         let formData = new FormData();
@@ -248,35 +232,9 @@
     width: auto;
   }
 
-  .image-wrapper {
-    display: flex;
-    justify-content: center;
-  }
-
-  .preview-image {
-    text-align: center;
-    width: 50%;
-  }
-
-
   .container:not(.preview-image) {
     position: relative;
     z-index: 0;
-  }
-
-  #post-image {
-    z-index: 5;
-    position: relative;
-    margin: 20px auto;
-    max-width: 100%;
-    max-height: 250px;
-    transition: ease 0.5s;
-    box-shadow: var(--soft-shadow);
-  }
-
-  #post-image:hover {
-    transform: scale(1.5);
-    transition: ease 0.5s;
   }
 
   #title-input {

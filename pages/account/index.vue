@@ -25,23 +25,9 @@
     </div>
     <hr/>
     <div>
-      <div class="image-wrapper">
-        <div>
-          <img :src="imageUrl" alt="selected image" id="post-image" v-if="imageUrl">
-          <b-input-group>
-            <b-input-group-prepend>
-              <b-input-group-text accept="image/jpeg, image/png, image/gif" variant="light">Image 📷
-              </b-input-group-text>
-            </b-input-group-prepend>
-            <b-form-file
-              @change="previewImage"
-              drop-placeholder="Drop image here..."
-              placeholder="Choose profile image!"
-              v-model="form.image"
-            />
-          </b-input-group>
-        </div>
-      </div>
+      <image-upload :image-url="imageUrl"
+                    caption="Choose a profile image"
+                    v-on:image-upload="storeImage"></image-upload>
     </div>
     <hr/>
     <div style="width: 30%;">
@@ -106,16 +92,18 @@
       </div>
     </div>
     <div style="margin-top: 15px;">
-      <b-button style="background-color: #950ca0" :disabled="!validInputs" @click="submitForm">Save settings</b-button>
+      <b-button :disabled="!validInputs" @click="submitForm" style="background-color: #950ca0">Save settings</b-button>
     </div>
   </div>
 </template>
 <script>
   import CustomForm from "../../components/LogIn_SignUp/CustomForm";
   import Post from "../../components/LandingPage/Post";
+  import ImageUpload from "../../components/UploadImage/ImageUpload";
 
   export default {
     components: {
+      ImageUpload,
       CustomForm,
       Post
     },
@@ -156,13 +144,9 @@
 
         this.$axios.$put('user/' + this.$auth.user.username + "/", formData, {withCredentials: true});
       },
-      previewImage(event) {
-        if (event.target.files[0]) {
-          const file = event.target.files[0];
-          this.imageUrl = URL.createObjectURL(file);
-        }
-
-      },
+      storeImage(image) {
+        this.form.image = image;
+      }
     },
     data() {
       return {
@@ -225,7 +209,8 @@
 <style scoped>
 
   .image-wrapper {
-    width: 40%;
+    justify-content: stretch;
+    width: 70%;
   }
 
   .d-flex {
