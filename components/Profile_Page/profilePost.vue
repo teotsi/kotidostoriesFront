@@ -6,17 +6,18 @@
         <div class="post-info">
           <h4>{{title}}</h4>
           <div v-html="preview"/>
-          <div class="edit-delete-container">
+          <div class="button-container">
             <b-button
               :class="!this.$auth.loggedIn || this.$auth.user.username !==username?'hide':''"
               @click="deletePost"
-              size="sm"
               variant="danger">Delete
             </b-button>
-            <b-button :href="`/TextEditor/${id}`"
-                      v-if="this.$auth.loggedIn &&  username=== this.$auth.user.username"
-                      variant="contrast">Edit story 📝
-            </b-button>
+            <nuxt-link :to="`/TextEditor/${id}`">
+              <b-button style="margin: 0px;"
+                v-if="this.$auth.loggedIn &&  username=== this.$auth.user.username"
+                variant="contrast">Edit story 📝
+              </b-button>
+            </nuxt-link>
           </div>
         </div>
       </div>
@@ -51,7 +52,7 @@
         required: true
       }
     },
-    methods:{
+    methods: {
       async deletePost() {
         const deleteResponse = await axios.delete(`http://localhost:5000/user/${this.username}/posts/`
           + `${this.id}/`, {withCredentials: true});
@@ -64,14 +65,14 @@
   }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 
   .posts {
     display: grid;
     grid-template-columns: 1fr 4fr;
     grid-column: 2;
     width: 100%;
-    height: 120px;
+    height: 140px;
     border-radius: 15px;
     word-wrap: break-word;
     -webkit-box-shadow: 0px 0px 4px 1px rgba(0, 0, 0, 0.75);
@@ -86,12 +87,28 @@
   .post-container {
     width: 75%;
     margin: auto;
+
+    &:hover {
+      .button-container {
+        display: initial;
+
+      }
+    }
   }
 
   .post-info {
     margin-top: 15px;
     color: black;
+    position: relative;
   }
+
+  .button-container {
+    position: absolute;
+    bottom: 1px;
+    right: 8px;
+    display: none;
+  }
+
 
   .post-image {
     width: 70%;
@@ -111,16 +128,5 @@
     text-decoration: none;
   }
 
-  .edit-delete-container {
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    display: flex;
-
-  button {
-    margin: 5px;
-    display: none;
-  }
-  }
 
 </style>
