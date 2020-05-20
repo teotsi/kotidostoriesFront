@@ -28,6 +28,12 @@
                       v-on:preview-input="storePreview"/>
       <unfold-editor :intro="intro" v-on:input="store"/>
       <div class="save-buttons">
+        <b-input-group prepend="Featured?">
+          <b-input-group-append is-text>
+            <b-form-checkbox :value="true" v-model="post.featured"/>
+          </b-input-group-append>
+        </b-input-group>
+
         <b-input-group>
           <template v-slot:prepend>
             <b-input-group-text variant="light">{{`${selectedCategory} ` }}</b-input-group-text>
@@ -184,6 +190,7 @@
           content: this.intro,
           preview: this.previewInput,
           published: true,
+          featured: true,
           image: null
         },
         previewInput: ``

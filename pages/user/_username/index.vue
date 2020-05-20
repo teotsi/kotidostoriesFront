@@ -33,7 +33,7 @@
       </div>
       <div style="margin-top: 25px; display: flex; justify-content: center;"
            v-if="this.$auth.loggedIn && this.$auth.user.username===user.username">
-        <b-button style="background-color: #950ca0" href="/account">Privacy</b-button>
+        <b-button href="/account" style="background-color: #950ca0">Privacy</b-button>
       </div>
     </div>
 
@@ -54,7 +54,7 @@
                 :title="post.title"
                 :user="post.user.username"
                 class="post"
-                v-for="post in this.posts.slice(0,3)"/>
+                v-for="post in this.featuredPosts.slice(0,3)"/>
         </transition-group>
       </div>
       <!--            The list with all the user's posts   -->
@@ -62,11 +62,11 @@
         <h3 class="section-title">User's Posts</h3>
         <div class="post-grid-container">
           <profile-post
-            :key="post.id"
-            :title="post.title"
-            :preview="post.preview"
-            :img="post.img"
             :id="post.id"
+            :img="post.img"
+            :key="post.id"
+            :preview="post.preview"
+            :title="post.title"
             :username="user.username"
             v-for="post in this.posts"
             v-on:delete-post="removeFromList"
@@ -98,10 +98,12 @@
       const response = await axios.get(`http://localhost:5000/user/${params.username}`);
       let user = response.data.user;
       let posts = user.posts;
+      let featuredPosts = posts.filter(post => post.featured)
       return {
         user: user,
         image: 'http://localhost:5000/' + user.img,
-        posts: posts
+        posts: posts,
+        featuredPosts: featuredPosts
       }
 
     },
