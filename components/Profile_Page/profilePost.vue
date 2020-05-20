@@ -7,11 +7,13 @@
           <h4>{{title}}</h4>
           <div v-html="preview"/>
           <div class="button-container">
-            <b-button
-              :class="!this.$auth.loggedIn || this.$auth.user.username !==username?'hide':''"
-              @click="deletePost"
-              variant="danger">Delete
-            </b-button>
+            <nuxt-link :to="`/user/${this.$auth.user.username}`">
+              <b-button
+                :class="!this.$auth.loggedIn || this.$auth.user.username !==username?'hide':''"
+                @click="deletePost"
+                variant="danger">Delete
+              </b-button>
+            </nuxt-link>
             <nuxt-link :to="`/TextEditor/${id}`">
               <b-button style="margin: 0px;"
                 v-if="this.$auth.loggedIn &&  username=== this.$auth.user.username"

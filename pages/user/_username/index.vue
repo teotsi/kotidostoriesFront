@@ -69,6 +69,7 @@
             :id="post.id"
             :username="user.username"
             v-for="post in this.posts"
+            v-on:delete-post="removeFromList"
           />
         </div>
       </div>
@@ -90,10 +91,6 @@
     },
     data() {
       return {
-        image: 'http://localhost:5000/' + this.$auth.user.img,
-        user_name: this.$auth.user.username,
-        followers: this.$auth.user.followers.length,
-        description: this.$auth.user.description,
         media: ['facebook', 'twitter', 'email']
       }
     },
@@ -103,10 +100,20 @@
       let posts = user.posts;
       return {
         user: user,
+        image: 'http://localhost:5000/' + user.img,
         posts: posts
       }
 
     },
+    methods: {
+      removeFromList(event) {
+        this.posts.forEach((post, index) => {
+          if (post.id === event) {
+            this.posts.splice(index, 1);
+          }
+        })
+      }
+    }
   }
 </script>
 

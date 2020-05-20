@@ -108,7 +108,7 @@
         this.post.content = event;
       },
       storePreview(event) {
-        this.post.preview = event;
+        this.post.preview = event.value;
         this.checkDisabled();
       },
       storeImage(image) {
