@@ -127,7 +127,8 @@
           content: this.post.content,
           preview: this.post.preview,
           category: this.selectedCategory.slice(0, -2).toLowerCase().trim(),
-          published: this.published
+          published: this.published,
+          featured: this.post.featured
         };
         formData.append('data', JSON.stringify(data));
         if (this.post.image) {
