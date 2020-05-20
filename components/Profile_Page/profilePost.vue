@@ -6,6 +6,18 @@
         <div class="post-info">
           <h4>{{title}}</h4>
           <div v-html="preview"/>
+          <div class="edit-delete-container">
+            <b-button
+              :class="!this.$auth.loggedIn || this.$auth.user.username !==username?'hide':''"
+              @click="deletePost"
+              size="sm"
+              variant="danger">Delete
+            </b-button>
+            <b-button :href="`/TextEditor/${id}`"
+                      v-if="this.$auth.loggedIn &&  username=== this.$auth.user.username"
+                      variant="contrast">Edit story 📝
+            </b-button>
+          </div>
         </div>
       </div>
     </nuxt-link>
@@ -13,6 +25,8 @@
 </template>
 
 <script>
+  import axios from "axios";
+
   export default {
 
     props: {
@@ -31,7 +45,20 @@
       img: {
         type: String,
         default: 'post/default.png'
+      },
+      username: {
+        type: String,
+        required: true
       }
+    },
+    methods:{
+      async deletePost() {
+        const deleteResponse = await axios.delete(`http://localhost:5000/user/${this.username}/posts/`
+          + `${this.id}/`, {withCredentials: true});
+        if (deleteResponse.status === 200) {
+          this.$emit('delete-post', this.id);
+        }
+      },
     }
 
   }
@@ -82,6 +109,18 @@
 
   a {
     text-decoration: none;
+  }
+
+  .edit-delete-container {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    display: flex;
+
+  button {
+    margin: 5px;
+    display: none;
+  }
   }
 
 </style>

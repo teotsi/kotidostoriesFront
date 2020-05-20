@@ -6,10 +6,10 @@
       </div>
       <div id="stats">
         <div id="username">
-          {{user_name}}
+          {{user.username}}
         </div>
         <div id="followers">
-          <p>Followers: {{followers}}</p>
+          <p>Followers: {{user.followers.length}}</p>
         </div>
       </div>
       <div id="about">
@@ -17,7 +17,7 @@
           About me
         </div>
         <div style="width: 170px; text-align: center; font-size: 13px; margin: auto">
-          {{description}}
+          {{user.description}}
         </div>
       </div>
       <div id="socials">
@@ -32,7 +32,7 @@
         </div>
       </div>
       <div style="margin-top: 25px; display: flex; justify-content: center;"
-           v-if="this.$auth.loggedIn && this.$auth.user.username===user_name">
+           v-if="this.$auth.loggedIn && this.$auth.user.username===user.username">
         <b-button style="background-color: #950ca0" href="/account">Privacy</b-button>
       </div>
     </div>
@@ -67,7 +67,8 @@
             :preview="post.preview"
             :img="post.img"
             :id="post.id"
-            v-for="post in this.user.posts"
+            :username="user.username"
+            v-for="post in this.posts"
           />
         </div>
       </div>
@@ -93,18 +94,17 @@
         user_name: this.$auth.user.username,
         followers: this.$auth.user.followers.length,
         description: this.$auth.user.description,
-        posts: this.$auth.user.posts,
         media: ['facebook', 'twitter', 'email']
       }
     },
-    asyncData({params}) {
-      return axios.get(`http://localhost:5000/user/${params.username}`)
-        .then((res) => {
-          console.log(res)
-          return {
-            user: res.data.user
-          }
-        })
+    async asyncData({params}) {
+      const response = await axios.get(`http://localhost:5000/user/${params.username}`);
+      let user = response.data.user;
+      let posts = user.posts;
+      return {
+        user: user,
+        posts: posts
+      }
 
     },
   }

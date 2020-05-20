@@ -37,7 +37,7 @@
               @change="previewImage"
               drop-placeholder="Drop image here..."
               placeholder="Choose profile image!"
-              v-model="form.img"
+              v-model="form.image"
             />
           </b-input-group>
         </div>
@@ -64,10 +64,10 @@
         <div class="d-flex flex-column account-input" id="label-div">
           <label for="inline-form-input-lastname">First Name</label>
           <b-input
-          class="mb-2 mr-sm-2 mb-sm-0 account-input "
-          id="inline-form-input-name"
-          placeholder="Enter your name"
-          v-model="form.first_name"
+            class="mb-2 mr-sm-2 mb-sm-0 account-input "
+            id="inline-form-input-name"
+            placeholder="Enter your name"
+            v-model="form.first_name"
           ></b-input>
         </div>
         <div class="d-flex flex-column account-input">
@@ -134,6 +134,7 @@
         this.$axios.$get('checkUsername/' + this.new_username)
           .then(() => {
               this.valid_username = true;
+              this.form.username = this.new_username;
             }
           ).catch(() => {
           this.currentFeedback = this.feedback.taken;
@@ -141,13 +142,19 @@
         })
       },
       submitForm() {
+        let formData = new FormData;
         let form = this.form;
         for (let attr in form) {
           if (form[attr] === null || form[attr] === undefined) {
             delete form[attr];
           }
         }
-        this.$axios.$put('user/' + this.$auth.user.username + "/", form, {withCredentials: true});
+        formData.append('data', JSON.stringify(form));
+        if (this.form.image) {
+          formData.append('image', this.form.image);
+        }
+
+        this.$axios.$put('user/' + this.$auth.user.username + "/", formData, {withCredentials: true});
       },
       previewImage(event) {
         if (event.target.files[0]) {
@@ -191,7 +198,7 @@
           first_name: null,
           last_name: null,
           password: null,
-          img: null,
+          image: null,
           description: null
         },
         currentFeedback: null,
@@ -217,7 +224,7 @@
 
 <style scoped>
 
-  .image-wrapper{
+  .image-wrapper {
     width: 40%;
   }
 
