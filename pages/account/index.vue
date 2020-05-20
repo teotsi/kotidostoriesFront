@@ -24,17 +24,50 @@
       </b-form-group>
     </div>
     <hr/>
+    <div>
+      <div class="image-wrapper">
+        <div>
+          <img :src="imageUrl" alt="selected image" id="post-image" v-if="imageUrl">
+          <b-input-group>
+            <b-input-group-prepend>
+              <b-input-group-text accept="image/jpeg, image/png, image/gif" variant="light">Image 📷
+              </b-input-group-text>
+            </b-input-group-prepend>
+            <b-form-file
+              @change="previewImage"
+              drop-placeholder="Drop image here..."
+              placeholder="Choose profile image!"
+              v-model="form.img"
+            />
+          </b-input-group>
+        </div>
+      </div>
+    </div>
+    <hr/>
+    <div style="width: 30%;">
+      <h4>About you (description)</h4>
+      <b-form inline>
+        <div class="d-flex flex-column account-input">
+          <b-input
+            class="mb-2 mr-sm-2 mb-sm-0 account-input "
+            id="inline-form-input-description"
+            placeholder="Some words about you"
+            v-model="form.description"
+          ></b-input>
+        </div>
+      </b-form>
+    </div>
+    <hr/>
     <div class="rename">
       <h4>Personal details</h4>
       <b-form inline>
         <div class="d-flex flex-column account-input" id="label-div">
-          <label for="inline-form-input-name">First Name</label>
-
+          <label for="inline-form-input-lastname">First Name</label>
           <b-input
-            class="mb-2 mr-sm-2 mb-sm-0 account-input "
-            id="inline-form-input-name"
-            placeholder="Enter your name"
-            v-model="form.first_name"
+          class="mb-2 mr-sm-2 mb-sm-0 account-input "
+          id="inline-form-input-name"
+          placeholder="Enter your name"
+          v-model="form.first_name"
           ></b-input>
         </div>
         <div class="d-flex flex-column account-input">
@@ -115,7 +148,14 @@
           }
         }
         this.$axios.$put('user/' + this.$auth.user.username + "/", form, {withCredentials: true});
-      }
+      },
+      previewImage(event) {
+        if (event.target.files[0]) {
+          const file = event.target.files[0];
+          this.imageUrl = URL.createObjectURL(file);
+        }
+
+      },
     },
     data() {
       return {
@@ -139,6 +179,7 @@
           },
         ],
         valid_username: null,
+        imageUrl: null,
         new_username: this.$auth.user.username,
         feedback: {
           invalid: "Username must be at least 2 characters long, whitespace is not allowed",
@@ -149,7 +190,9 @@
           username: null,
           first_name: null,
           last_name: null,
-          password: null
+          password: null,
+          img: null,
+          description: null
         },
         currentFeedback: null,
         new_password: null,
@@ -173,6 +216,10 @@
 </script>
 
 <style scoped>
+
+  .image-wrapper{
+    width: 40%;
+  }
 
   .d-flex {
     padding-top: 100px;
