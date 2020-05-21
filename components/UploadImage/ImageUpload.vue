@@ -40,6 +40,11 @@
         }
       }
     },
+    watch: {
+      imageUrl(val) {
+        this.imagePreviewUrl = val;
+      }
+    },
     data() {
       return {
         imagePreviewUrl: this.imageUrl
