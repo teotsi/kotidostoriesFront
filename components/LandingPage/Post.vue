@@ -156,6 +156,7 @@
 
   .content-preview {
     min-height: 80px;
+    max-height: 3rem;
     align-items: center;
     padding: 5px;
     text-align: center;

@@ -25,7 +25,8 @@ export default {
   ** Global CSS
   */
   css: [
-    '@fortawesome/fontawesome-svg-core/styles.css'
+    '@fortawesome/fontawesome-svg-core/styles.css',
+    '@/assets/css/tablestyles.scss'
   ],
   /*
   ** Plugins to load before mounting the App
@@ -47,6 +48,7 @@ export default {
     '@nuxtjs/auth',
     '@nuxtjs/axios',
     'nuxt-fontawesome',
+
   ],
   axios: {
     baseURL: 'http://localhost:5000/',
