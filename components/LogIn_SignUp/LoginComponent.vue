@@ -40,19 +40,13 @@
           console.log(error)
         })
       },
-      register: function (form) {
-
-        axios.post('http://localhost:5000/register', form, {withCredentials: true})
-          .then(() => {
-            this.$auth.loginWith('local', {
-              data: form
-            }).then(function (response) {
-              console.log(response)
-            })
-          })
-          .catch(function (error) {
-            console.log(error)
-          })
+       async register (form) {
+        await this.$axios.post('register', form, {withCredentials: true})
+         this.$auth.loginWith('local', {
+           data: form
+         }).then(function (response) {
+           console.log(response)
+         })
 
       }
     },

@@ -50,8 +50,6 @@
 </template>
 
 <script>
-  import axios from 'axios';
-
   export default {
     name: 'donateModal',
     props: {
@@ -63,7 +61,7 @@
     methods: {
       async donate() {
         let amount = this.selected !== 'other' ? this.selected : this.donateOther;
-        const donateResponse = await axios.post(`http://localhost:5000/user/${this.user}/donation/`, {'amount': amount}, {withCredentials: true})
+        const donateResponse = await this.$axios.post(`${this.user}/donation/`, {'amount': amount}, {withCredentials: true})
         if (donateResponse.status === 200) {
           this.show = false;
         }

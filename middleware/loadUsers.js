@@ -1,9 +1,7 @@
-import axios from "axios";
 
-export default async function ({store}) {
+export default async function ({store, $axios}) {
   console.log("load")
-  axios.get('http://localhost:5000/user/')
-    .then(response=> {
-      store.commit('SET_USERS', response.data.users)
-    })
+  const userResponse  = $axios.get('user')
+  store.commit('SET_USERS', userResponse.users)
+
 }

@@ -10,7 +10,7 @@
 </template>
 
 <script>
-  import LoginComponent from "../components/Login_SignUp/LoginComponent";
+  import LoginComponent from "../components/LogIn_SignUp/LoginComponent";
   import ModalComponent from "../components/Preview/ModalComponent";
   import PageComponent from "../components/LandingPage/PageComponent";
 

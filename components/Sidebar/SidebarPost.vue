@@ -20,7 +20,7 @@
     </div>
 
     <div class="post-image">
-      <img :src="`http://localhost:5000/${post.img}`" alt="User image">
+      <img :src="`${$axios.defaults.baseURL}${post.img}`" alt="User image">
     </div>
   </div>
 </template>
@@ -90,7 +90,7 @@
 
   .post-author a, .post-author a:hover, .post-author a:visited {
     color: #717171;
-    font-size: 12px!important;
+    font-size: 12px !important;
 
     text-decoration: none !important;
   }

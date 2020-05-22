@@ -29,7 +29,7 @@
             :content="post.content"
             :date="post.date"
             :id="post.id"
-            :img="'http://localhost:5000/'+post.img"
+            :img="$axios.defaults.baseURL+post.img"
             :key="post.id"
             :preview="post.preview"
             :reactions="post.reactions.length"
@@ -47,7 +47,6 @@
 <script>
   import Post from "./Post";
   import {fadeSide, normalizeCategory} from "../../assets/js/utils";
-  import axios from "axios";
 
   export default {
 
@@ -144,7 +143,7 @@
     },
     async mounted() {
       fadeSide();
-      const postData = await axios.get('http://localhost:5000/user/me', {withCredentials: true});
+      const postData = await this.$axios.get('user/me', {withCredentials: true});
       this.posts = postData.data.user.posts;
     },
   }
@@ -271,9 +270,11 @@
   .post {
     transition: all 1s;
   }
+
   .list-enter-active {
     transition: all .3s ease;
   }
+
   .list-leave-active {
     transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
   }

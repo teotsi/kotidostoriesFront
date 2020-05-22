@@ -46,7 +46,7 @@
                 :content="post.content"
                 :date="post.date"
                 :id="post.id"
-                :img="'http://localhost:5000/'+post.img"
+                :img="$axios.defaults.baseURL+post.img"
                 :key="post.id"
                 :preview="post.preview"
                 :reactions="post.reactions.length"
@@ -78,7 +78,6 @@
 </template>
 
 <script>
-  import axios from 'axios';
   import profilePost from '../../../components/Profile_Page/profilePost';
   import Post from "../../../components/LandingPage/Post";
   import ShareButton from "../../../components/Share/ShareButton";
@@ -94,14 +93,14 @@
         media: ['facebook', 'twitter', 'email']
       }
     },
-    async asyncData({params}) {
-      const response = await axios.get(`http://localhost:5000/user/${params.username}`);
+    async asyncData({params, $axios}) {
+      const response = await $axios.get(`user/${params.username}`);
       let user = response.data.user;
       let posts = user.posts;
       let featuredPosts = posts.filter(post => post.featured)
       return {
         user: user,
-        image: 'http://localhost:5000/' + user.img,
+        image: $axios.defaults.baseURL + user.img,
         posts: posts,
         featuredPosts: featuredPosts
       }

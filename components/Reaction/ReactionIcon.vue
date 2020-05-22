@@ -10,7 +10,6 @@
 </template>
 
 <script>
-  import axios from "axios";
   import {normalizeReaction} from "../../assets/js/utils";
 
   export default {
@@ -30,24 +29,19 @@
       }
     },
     methods: {
-      toggleReaction(event) {
+      async toggleReaction(event) {
         if (event.type === 'click') {
           this.$emit('toggle-reaction');
           if (!this.enabled) {
-            axios.post(`http://localhost:5000/post/${this.$route.params.postId}/reaction/`,
+            const reactionResponse = await this.$axios.post(`post/${this.$route.params.postId}/reaction/`,
               {type: normalizeReaction(this.icon)}, {withCredentials: true})
-              .then((response) => {
-                this.enabled = true;
-                this.reactionId = response.data.reaction.id;
-              });
+            this.enabled = true;
+            this.reactionId = reactionResponse.data.reaction.id;
           } else {
-            axios.delete(`http://localhost:5000/post/${this.$route.params.postId}/reaction/${this.reactionId}/`,
+            await this.$axios.delete(`post/${this.$route.params.postId}/reaction/${this.reactionId}/`,
               {withCredentials: true})
-              .then((response) => {
-                console.log(response);
-                this.enabled = false;
-                this.reactionId = null;
-              });
+            this.enabled = false;
+            this.reactionId = null;
 
           }
         } else {

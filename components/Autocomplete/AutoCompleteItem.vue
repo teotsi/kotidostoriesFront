@@ -1,17 +1,17 @@
 <template>
   <div
-    class="autocomplete-item" @mouseup="$emit('toggle-width',$event)">
-    <nuxt-link no-prefetch :to="`/user/${post.user.username}`">
+    @mouseup="$emit('toggle-width',$event)" class="autocomplete-item">
+    <nuxt-link :to="`/user/${post.user.username}`" no-prefetch>
       <div class="post-details">
         <div class="post-image">
-          <img :src="`http://localhost:5000/${post.img}`" alt="Post image">
+          <img :src="`${$axios.defaults.baseURL}${post.img}`" alt="Post image">
         </div>
 
         <p>{{post.user.username}}</p>
       </div>
     </nuxt-link>
 
-    <nuxt-link prefetch :to="`/${post.id}`" class="post-link">
+    <nuxt-link :to="`/${post.id}`" class="post-link" prefetch>
       <div class="item-content-container">
         <h4> {{ post.title }}</h4>
         <div class="preview-content" v-html="post.preview"/>
@@ -68,13 +68,14 @@
   a, a:hover, a:visited {
     color: initial;
     text-decoration: none;
-    margin:0;
+    margin: 0;
     padding: 5px 0;
   }
 
-  .post-link{
+  .post-link {
     width: 100%;
   }
+
   .item-content-container {
     display: -webkit-box;
     width: 100%;

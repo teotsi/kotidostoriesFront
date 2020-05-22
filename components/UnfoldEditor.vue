@@ -12,7 +12,6 @@
 <script>
   import CKEditor from '@ckeditor/ckeditor5-vue'
   import UnfoldEditor from '@teotsi/unfold-ckeditor'
-  import axios from "axios";
 
   export default {
     name: 'UnfoldEditor',
@@ -69,12 +68,10 @@
       }
     },
     computed: {
-      users() {
-        axios.get('http://localhost:5000/user/')
-          .then(response => {
-            console.log(response);
-            return response.data.users;
-          })
+      async users() {
+        const userResponse = this.$axios.get('user/')
+        console.log(userResponse);
+        return userResponse.data.users;
       }
     },
     mounted() {

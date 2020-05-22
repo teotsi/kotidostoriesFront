@@ -2,7 +2,7 @@
   <div class="post-container">
     <nuxt-link :to="`/${id}/`">
       <div class="posts">
-        <img :src="`http://localhost:5000/${img}`" class="post-image" alt="Post image" fluid-grow/>
+        <img :src="`${$axios.defaults.baseURL}${img}`" alt="Post image" class="post-image" fluid-grow/>
         <div class="post-info">
           <h4>{{title}}</h4>
           <div v-html="preview"/>
@@ -16,8 +16,8 @@
             </nuxt-link>
             <nuxt-link :to="`/TextEditor/${id}`">
               <b-button style="margin: 0px;"
-                v-if="this.$auth.loggedIn &&  username=== this.$auth.user.username"
-                variant="contrast">Edit story 📝
+                        v-if="this.$auth.loggedIn &&  username=== this.$auth.user.username"
+                        variant="contrast">Edit story 📝
               </b-button>
             </nuxt-link>
           </div>
@@ -28,8 +28,6 @@
 </template>
 
 <script>
-  import axios from "axios";
-
   export default {
 
     props: {
@@ -56,8 +54,7 @@
     },
     methods: {
       async deletePost() {
-        const deleteResponse = await axios.delete(`http://localhost:5000/user/${this.username}/posts/`
-          + `${this.id}/`, {withCredentials: true});
+        const deleteResponse = await this.$axios.delete(`user/${this.username}/posts/${this.id}/`, {withCredentials: true});
         if (deleteResponse.status === 200) {
           this.$emit('delete-post', this.id);
         }

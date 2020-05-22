@@ -21,9 +21,7 @@
 
     export default {
         name: "OverlayComponent",
-        components: {ButtonComponent},
-        methods: {
-        }
+        components: {ButtonComponent}
     }
 </script>
 

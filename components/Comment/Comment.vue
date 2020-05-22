@@ -1,5 +1,5 @@
 <template>
-  <transition name="fade-out" mode="out-in">
+  <transition mode="out-in" name="fade-out">
     <div class="comment-edit" v-if="edit">
 
       <comment-editor :id="id" :value="content" event-message="Edit comment"
@@ -25,7 +25,7 @@
     <div class="comment-container" v-else>
       <div class="user-details">
         <div class="user-image">
-          <img :src="`http://localhost:5000/${img}`" alt="User image">
+          <img :src="`${$axios.defaults.baseURL}${img}`" alt="User image">
         </div>
 
         <p>{{user}}</p>
@@ -115,15 +115,14 @@
         this.editContent = event['value'];
       },
       async deleteComment() {
-        const deleteResponse = await axios.delete(`http://localhost:5000/user/${this.post.user.username}/posts/`
+        const deleteResponse = await axios.delete(`${this.post.user.username}/posts/`
           + `${this.post.id}/comments/${this.id}/`, {withCredentials: true});
         if (deleteResponse.status === 200) {
           this.$emit('delete-comment', this.id);
         }
       },
       async saveCommentEdit() {
-        const editResponse = await axios.patch(`http://localhost:5000/user/${this.post.user.username}/posts/`
-          + `${this.post.id}/comments/${this.id}/`,
+        const editResponse = await axios.patch(`${this.post.user.username}/posts/${this.post.id}/comments/${this.id}/`,
           {'content': this.editContent}, {withCredentials: true});
         if (editResponse.status === 200) {
           this.contentInfo = this.editContent;
@@ -147,6 +146,7 @@
 
     &:hover {
       background-color: var(--hover-soft-gray);
+
       button {
         display: initial;
       }

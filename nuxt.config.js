@@ -17,6 +17,10 @@ export default {
       {src: 'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js'},
     ],
   },
+  server: {
+    port: 3000, // default: 3000
+    host: '0.0.0.0' // default: localhost
+  },
   /*
   ** Customize the progress-bar color
   */
@@ -51,7 +55,7 @@ export default {
 
   ],
   axios: {
-    baseURL: 'http://localhost:5000/',
+    baseURL: process.platform==='win32'? 'http://localhost:5000/':'http://ec2-34-201-242-135.compute-1.amazonaws.com:5000/',
     withCredentials: true
   },
   /*

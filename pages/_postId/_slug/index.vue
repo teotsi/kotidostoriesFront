@@ -8,7 +8,7 @@
       <p class="date-info"><a href="#">{{post.category}}</a> {{new Date(this.post.date).toDateString()}}</p>
 
       <div class="image-container">
-        <img :src="'http://localhost:5000/'+post.img" alt="Story image" class="main-image">
+        <img :src="`${$axios.defaults.baseURL}${post.img}`" alt="Story image" class="main-image">
       </div>
 
       <div class="main-text" v-html="post.content"/>
@@ -106,7 +106,6 @@
 </template>
 
 <script>
-  import axios from "axios";
   import {addSlug, fadeSide} from "../../../assets/js/utils";
   import ReactionIcon from "../../../components/Reaction/ReactionIcon";
   import Comment from "../../../components/Comment/Comment";
@@ -132,11 +131,8 @@
         this.$set(this.reactions[index], 1, !state);
 
       },
-      isNumber() {
-
-      },
       createComment() {
-        this.$axios.$post(`http://localhost:5000/user/${this.post.user.username}/posts/${this.post.id}/comments/`,
+        this.$axios.$post(`user/${this.post.user.username}/posts/${this.post.id}/comments/`,
           {"content": this.commentContent},
           {withCredentials: true})
           .then((response) => {
@@ -187,7 +183,7 @@
         return this.reactionQuotes[Math.floor(Math.random() * this.reactionQuotes.length)];
       }
     },
-    async asyncData({params}) {
+    async asyncData({params, $axios}) {
       let reacted;
       let existingReaction;
       let existingId;
@@ -197,7 +193,7 @@
         ['lightbulb', false],
         ['laugh-beam', false]
       ];
-      const postData = await axios.get(`http://localhost:5000/post/${params.postId}`, {withCredentials: true})
+      const postData = await $axios.get(`post/${params.postId}`)
       const post = postData.data
       reacted = post.reacted;
       if (reacted) {
@@ -218,7 +214,7 @@
           }
         }
       }
-      const suggestionData = await axios.get(`http://localhost:5000/suggest?q=${post.user.username}`)
+      const suggestionData = await $axios.get(`suggest?q=${post.user.username}`)
       return {
         post: post,
         reactions: reactions,

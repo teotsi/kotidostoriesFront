@@ -199,12 +199,12 @@
     },
     mounted() {
       if (this.$route.params.postId) {
-        this.$axios.$get(`http://localhost:5000/post/${this.$route.params.postId}`)
+        this.$axios.$get(`post/${this.$route.params.postId}`)
           .then(response => {
             this.intro = this.post.content = response.content;
             this.post.title = response.title;
             this.disabled = true;
-            this.imageUrl = `http://localhost:5000/${response.img}`;
+            this.imageUrl = `${this.$axios.defaults.baseURL}/${response.img}`;
             for (let category of this.categories) {
               if (category.toLowerCase().startsWith(response.category)) {
                 this.selectedCategory = category;
