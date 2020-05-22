@@ -1,6 +1,7 @@
 <template>
-  <div class="post-details">
-    <nuxt-link :to="`/${id}/${slug}`" id="link">
+<div class="post-details">
+  <div  v-b-modal="id">
+    <!-- <nuxt-link :to="`/${id}/${slug}`" id="link"> -->
       <div class="content-image">
         <b-img :src="img+'#'+new Date().getTime()" class="post-img" fluid-grow/>
       </div>
@@ -32,15 +33,26 @@
         </div>
 
       </div>
-    </nuxt-link>
-
+    <!-- </nuxt-link> -->
   </div>
+  <PostPreviewModalComponent 
+                        :title="title"
+                        :id="id"
+                        :user="user"
+                        :img="img"
+                        :preview="preview"
+                        :reactions="reactions"
+                        :comments="comments"/>
+</div>
 </template>
 
 <script>
   import {truncate} from "../../assets/js/utils";
-
+  import PostPreviewModalComponent from "../PostPreview/PostPreviewModalComponent"
   export default {
+    components: {
+      PostPreviewModalComponent
+    },
     props: {
       title: {
         type: String,
