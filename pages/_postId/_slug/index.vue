@@ -5,7 +5,10 @@
       <h1 class="title">{{post.title}} <span class="inline">by <nuxt-link :to="'/user/'+ post.user.username">{{post.user.username}} </nuxt-link> </span>
       </h1>
 
-      <p class="date-info"><a href="#">{{post.category}}</a> {{new Date(this.post.date).toDateString()}}</p>
+      <p class="date-info">
+        <nuxt-link :to="`/?category=${post.category}`" no-prefetch>{{post.category}}</nuxt-link>
+        {{new Date(this.post.date).toDateString()}}
+      </p>
 
       <div class="image-container">
         <img :src="`${$axios.defaults.baseURL}${post.img}`" alt="Story image" class="main-image">
@@ -221,7 +224,7 @@
         existingId: existingId,
         slug: post.slug,
         // suggestions: suggestionData.data
-        suggestions:[]
+        suggestions: []
       }
 
     },

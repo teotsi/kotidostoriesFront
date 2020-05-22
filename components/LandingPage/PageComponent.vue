@@ -7,14 +7,14 @@
     <div class="widget-sidebar side">
       <div>
         <b-form-group>
-          <b-form-radio-group class="post-buttons"
-                              id="btn-radios-1"
-                              v-model="selected"
+          <b-form-radio-group :options="options"
                               @input="showPosts"
-                              :options="options"
-                              buttons
                               button-variant="purple"
-                              name="radios-btn-default">
+                              buttons
+                              class="post-buttons"
+                              id="btn-radios-1"
+                              name="radios-btn-default"
+                              v-model="selected">
           </b-form-radio-group>
         </b-form-group>
       </div>
@@ -68,12 +68,12 @@
     },
     middleware: 'auth',
     methods: {
-      showPosts(){
+      showPosts() {
         console.log(this.selected)
-        if (this.selected==='followed'){
-          this.posts=this.followedPosts.slice();
-        }else{
-          this.posts=this.discoveredPosts.slice();
+        if (this.selected === 'followed') {
+          this.posts = this.followedPosts.slice();
+        } else {
+          this.posts = this.discoveredPosts.slice();
         }
       },
       existingCategory: function (category) { //check if category exists in current dataset
@@ -89,12 +89,12 @@
           this.catfilter.splice(this.catfilter.indexOf(category), 1);
 
           if (this.catfilter.length === 0) { //if no more categories, show all posts
-            if (this.selected==="discover"){
+            if (this.selected === "discover") {
               this.discoveredPosts.forEach((post, index) => {
                 console.log(post);
                 this.posts[index] = post;
               })
-            }else {
+            } else {
               this.followedPosts.forEach((post, index) => {
                 this.posts[index] = post;
               })
@@ -143,28 +143,28 @@
       return {
         selected: 'discover',
         options: [
-          { text: 'Discover', value: 'discover' },
-          { text: 'Followed', value: 'followed' }
+          {text: 'Discover', value: 'discover'},
+          {text: 'Followed', value: 'followed'}
         ],
-        posts:[],
-        discoveredPosts:[],
-        followedPosts:[],
+        posts: [],
+        discoveredPosts: [],
+        followedPosts: [],
         catfilter: [],
         group: {},
         myToggle: false,
         buttons: [
-          {caption: 'Love', state: false},
-          {caption: 'Horror', state: false},
-          {caption: 'Funny', state: false},
-          {caption: 'Poems', state: false},
-          {caption: 'Sci-fi', state: false},
-          {caption: 'Mystery', state: false}
+          {caption: 'Love', state: false, normalized: 'love'},
+          {caption: 'Horror', state: false, normalized: 'horror'},
+          {caption: 'Funny', state: false, normalized: 'funny'},
+          {caption: 'Poems', state: false, normalized: 'poem'},
+          {caption: 'Sci-fi', state: false, normalized: 'sci-fi'},
+          {caption: 'Mystery', state: false, normalized: 'mystery'}
         ]
       }
     },
     computed: {
       categorizedPosts() { //create object with groups of posts based on shared category
-        if (this.selected==="discover"){
+        if (this.selected === "discover") {
           return this.discoveredPosts.reduce((cat, post) => {
             if (!cat[post.category]) {
               cat[post.category] = [];
@@ -172,7 +172,7 @@
             cat[post.category].push(post);
             return cat;
           }, {})
-        }else {
+        } else {
           return this.followedPosts.reduce((cat, post) => {
             if (!cat[post.category]) {
               cat[post.category] = [];
@@ -190,6 +190,17 @@
       this.discoveredPosts = postData.data.posts;
       this.followedPosts = followedPostData.data.posts;
       this.posts = this.discoveredPosts.slice();
+      if (this.$route.query.category) {
+        let category = normalizeCategory(this.$route.query.category)
+        if (this.categorizedPosts[category]) {
+          this.toggleCategory(this.$route.query.category)
+          this.buttons.forEach((button) => {
+            if (button.normalized === category) {
+              button.state = true;
+            }
+          })
+        }
+      }
     },
   }
 </script>
@@ -211,12 +222,12 @@
     grid-column: 1;
   }
 
-  .post-buttons{
+  .post-buttons {
     background-color: #7F828B;
     margin-bottom: 30px;
   }
 
-  .dis-follow-btn:focus{
+  .dis-follow-btn:focus {
     background-color: #950ca0;
   }
 
