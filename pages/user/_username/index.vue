@@ -35,6 +35,14 @@
            v-if="this.$auth.loggedIn && this.$auth.user.username===user.username">
         <b-button href="/account" style="background-color: #950ca0">Privacy</b-button>
       </div>
+      <div style="margin-top: 25px; display: flex; justify-content: center;"
+           v-else-if="!user.followers.includes(this.$auth.user.id)">
+        <b-button style="background-color: #950ca0" v-on:click="follow">Follow</b-button>
+      </div>
+      <div style="margin-top: 25px; display: flex; justify-content: center;"
+           v-else>
+        <b-button style="background-color: #950ca0" v-on:click="unfollow">Unfollow</b-button>
+      </div>
     </div>
 
     <div id="main_profile_section">
@@ -107,6 +115,16 @@
 
     },
     methods: {
+      async follow() {
+        const response = await this.$axios.get(`user/${this.user.username}/follow`, {withCredentials: true});
+        const userResponse = await this.$axios.get(`user/${this.user.username}`, {withCredentials: true});
+        this.user = userResponse.data.user;
+      },
+      async unfollow() {
+        const response = await this.$axios.delete(`user/${this.user.username}/follow`, {withCredentials: true});
+        const userResponse = await this.$axios.get(`user/${this.user.username}`, {withCredentials: true});
+        this.user = userResponse.data.user;
+        },
       removeFromList(event) {
         this.posts.forEach((post, index) => {
           if (post.id === event) {

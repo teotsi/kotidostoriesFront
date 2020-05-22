@@ -5,6 +5,19 @@
                      CATEGORIES
                 ======================-->
     <div class="widget-sidebar side">
+      <div>
+        <b-form-group>
+          <b-form-radio-group class="post-buttons"
+                              id="btn-radios-1"
+                              v-model="selected"
+                              @input="showPosts"
+                              :options="options"
+                              buttons
+                              button-variant="purple"
+                              name="radios-btn-default">
+          </b-form-radio-group>
+        </b-form-group>
+      </div>
       <h2 class="title-widget-sidebar">CATEGORIES</h2>
       <b-button-group size="sm">
         <div>
@@ -55,6 +68,14 @@
     },
     middleware: 'auth',
     methods: {
+      showPosts(){
+        console.log(this.selected)
+        if (this.selected==='followed'){
+          this.posts=this.followedPosts.slice();
+        }else{
+          this.posts=this.discoveredPosts.slice();
+        }
+      },
       existingCategory: function (category) { //check if category exists in current dataset
         category = normalizeCategory(category);
         if (this.categorizedPosts[category]) {
@@ -68,9 +89,16 @@
           this.catfilter.splice(this.catfilter.indexOf(category), 1);
 
           if (this.catfilter.length === 0) { //if no more categories, show all posts
-            this.$auth.user.posts.forEach((post, index) => {
-              this.posts[index] = post;
-            })
+            if (this.selected==="discover"){
+              this.discoveredPosts.forEach((post, index) => {
+                console.log(post);
+                this.posts[index] = post;
+              })
+            }else {
+              this.followedPosts.forEach((post, index) => {
+                this.posts[index] = post;
+              })
+            }
           } else {
             let j = 0;
             if (this.categorizedPosts[category]) { //if category exists
@@ -113,8 +141,14 @@
     },
     data() {
       return {
-        posts: this.$auth.user.posts.slice(),
-        currentPosts: this.$auth.user.posts.slice(),
+        selected: 'discover',
+        options: [
+          { text: 'Discover', value: 'discover' },
+          { text: 'Followed', value: 'followed' }
+        ],
+        posts:[],
+        discoveredPosts:[],
+        followedPosts:[],
         catfilter: [],
         group: {},
         myToggle: false,
@@ -130,21 +164,32 @@
     },
     computed: {
       categorizedPosts() { //create object with groups of posts based on shared category
-        return this.$auth.user.posts.reduce((cat, post) => {
-          if (!cat[post.category]) {
-            cat[post.category] = [];
-          }
-          cat[post.category].push(post);
-          return cat;
-        }, {})
-
-
+        if (this.selected==="discover"){
+          return this.discoveredPosts.reduce((cat, post) => {
+            if (!cat[post.category]) {
+              cat[post.category] = [];
+            }
+            cat[post.category].push(post);
+            return cat;
+          }, {})
+        }else {
+          return this.followedPosts.reduce((cat, post) => {
+            if (!cat[post.category]) {
+              cat[post.category] = [];
+            }
+            cat[post.category].push(post);
+            return cat;
+          }, {})
+        }
       }
     },
     async mounted() {
       fadeSide();
-      const postData = await this.$axios.get('user/me', {withCredentials: true});
-      this.posts = postData.data.user.posts;
+      const postData = await this.$axios.get(`discover/`)
+      const followedPostData = await this.$axios.get(`user/${this.$auth.user.username}/posts?filter=following`)
+      this.discoveredPosts = postData.data.posts;
+      this.followedPosts = followedPostData.data.posts;
+      this.posts = this.discoveredPosts.slice();
     },
   }
 </script>
@@ -166,10 +211,18 @@
     grid-column: 1;
   }
 
+  .post-buttons{
+    background-color: #7F828B;
+    margin-bottom: 30px;
+  }
+
+  .dis-follow-btn:focus{
+    background-color: #950ca0;
+  }
+
   /*recent-post-col////////////////////*/
   .widget-sidebar {
     padding: 20px;
-    margin-top: 30px;
     grid-column: 1;
   }
 

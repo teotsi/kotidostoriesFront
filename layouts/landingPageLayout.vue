@@ -144,10 +144,33 @@
       background-color: #9839a0;
       color: white;
     }
-
     &:focus {
       box-shadow: 0 0 0 0.2rem rgba(200, 51, 241, 0.47)
     }
+  }
+
+  .btn-purple {
+    background-color: #3A3A3A;
+    border-color: #8357a0;
+    color: white;
+
+    &:disabled {
+      border: none;
+    }
+
+    &:not(:disabled):hover {
+      background-color: #9839a0;
+      color: white;
+    }
+    &:focus {
+      box-shadow: 0 0 0 0.2rem rgba(200, 51, 241, 0.47)
+    }
+
+    &.active{
+      background-color: #9839a0;
+
+    }
+
   }
 
   .profile-dropdown a[role] {
