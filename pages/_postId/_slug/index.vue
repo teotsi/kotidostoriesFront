@@ -218,6 +218,8 @@
         }
       }
       // const suggestionData = await $axios.get(`suggest?q=${post.user.username}`)
+
+
       return {
         post: post,
         reactions: reactions,
@@ -233,6 +235,11 @@
       addSlug(this.$route.params, this.slug);
       this.url = window.location.href;
       fadeSide();
+    },
+    head () {
+      return {
+        title: this.post.title
+      }
     }
 
   }
@@ -320,6 +327,7 @@
     .content-container {
       grid-column: 2/3;
       max-width: initial;
+      width: 100%;
     }
 
     .sidebar-suggestions {

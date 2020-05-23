@@ -204,6 +204,7 @@
             this.intro = this.post.content = response.content;
             this.post.title = response.title;
             this.disabled = true;
+            this.previewInput = response.preview;
             this.imageUrl = `${this.$axios.defaults.baseURL}/${response.img}`;
             for (let category of this.categories) {
               if (category.toLowerCase().startsWith(response.category)) {

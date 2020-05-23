@@ -59,7 +59,7 @@
 
 <script>
   import Post from "./Post";
-  import {fadeSide, normalizeCategory} from "../../assets/js/utils";
+  import {estimateReadingTime, fadeSide, normalizeCategory} from "../../assets/js/utils";
 
   export default {
 
@@ -190,6 +190,14 @@
       this.discoveredPosts = postData.data.posts;
       this.followedPosts = followedPostData.data.posts;
       this.posts = this.discoveredPosts.slice();
+
+      this.discoveredPosts.forEach((post) => {
+        post['estimatedTime'] = estimateReadingTime(post.content);
+      })
+      this.followedPosts.forEach((post) => {
+        post['estimatedTime'] = estimateReadingTime(post.content);
+      })
+
       if (this.$route.query.category) {
         let category = normalizeCategory(this.$route.query.category)
         if (this.categorizedPosts[category]) {
@@ -215,7 +223,6 @@
   }
 
   .post-container {
-    align-content: center;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;

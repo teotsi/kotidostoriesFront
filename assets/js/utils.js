@@ -62,4 +62,11 @@ function loadUsers() {
     })
 }
 
-export {normalizeCategory, normalizeReaction, fadeSide, truncate, addSlug, loadUsers};
+function estimateReadingTime(text) {
+  const wordsPerMinute = 200; // Average case.
+  if (text) {
+    return Math.ceil(text.split(" ").length / wordsPerMinute);
+  }
+}
+
+export {normalizeCategory, normalizeReaction, fadeSide, truncate, addSlug, loadUsers, estimateReadingTime};

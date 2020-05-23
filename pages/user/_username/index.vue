@@ -132,6 +132,11 @@
           }
         })
       }
+    },
+    head(){
+      return{
+        title: `${this.user.username}'${this.user.username.substr(-1) ==='s'?'':'s'} profile`
+      }
     }
   }
 </script>
@@ -184,6 +189,7 @@
     height: 85%;
     width: 100%;
     overflow: scroll;
+    overflow-x: hidden;
   }
 
   .flex-container > div {
