@@ -65,7 +65,7 @@
           You have to select a category <i>and</i> a title first!
         </b-popover>
         <b-button @click="back" variant="outline-danger">Cancel</b-button>
-
+        <spinner :hide-spinner="hideSpinner" label="Posting story..."/>
       </div>
     </div>
   </transition>
@@ -75,10 +75,12 @@
   import UnfoldEditor from '../../../components/UnfoldEditor';
   import CommentEditor from "../../../components/Comment/CommentEditor";
   import ImageUpload from "../../../components/UploadImage/ImageUpload";
+  import Spinner from "../../../components/Spinner/Spinner";
 
 
   export default {
     components: {
+      Spinner,
       ImageUpload,
       UnfoldEditor,
       CommentEditor
@@ -121,6 +123,7 @@
         this.post.image = image;
       },
       publish() {
+        this.hideSpinner = false;
         let formData = new FormData();
         let data = {
           title: this.post.title,
@@ -153,6 +156,7 @@
     middleware: ['redirectLogin', 'loadUsers'],
     data: function () {
       return {
+        hideSpinner: true,
         disabled: false,
         results: "",
         imageUrl: null,

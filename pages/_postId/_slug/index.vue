@@ -66,14 +66,14 @@
           Comments
         </h1>
         <comment-editor :value="commentContent" v-on:comment-input="storeComment"/>
-        <div class="comment-buttons" id="comment-button-container"
-        >
+        <div class="comment-buttons" id="comment-button-container">
+          <Spinner :hide-spinner="hideSpinner" label="Posting comment..."></Spinner>
+
           <b-button :disabled="!this.$auth.loggedIn
           ||this.commentContent.length===0 || this.commentContent==='<p></p>'"
                     @click="createComment"
                     variant="light">Post Comment 💬
           </b-button>
-
           <b-popover
             :disabled="this.$auth.loggedIn"
             placement="right"
@@ -116,7 +116,7 @@
   import SidebarPost from "../../../components/Sidebar/SidebarPost";
   import ShareButton from "../../../components/Share/ShareButton";
   import DonateModal from "../../../components/Donate/DonateModal";
-
+  import Spinner from "../../../components/Spinner/Spinner";
   export default {
     components: {
       DonateModal,
@@ -124,7 +124,8 @@
       CommentEditor,
       SidebarPost,
       Comment,
-      ReactionIcon
+      ReactionIcon,
+      Spinner
     },
     methods: {
       toggleReaction(index, state) {
@@ -135,10 +136,12 @@
 
       },
       createComment() {
+        this.hideSpinner = false;
         this.$axios.$post(`user/${this.post.user.username}/posts/${this.post.id}/comments/`,
           {"content": this.commentContent},
           {withCredentials: true})
           .then((response) => {
+            this.hideSpinner = true;
             this.commentContent = '';
             this.post.comments.push(response.comment)
           })
@@ -178,7 +181,8 @@
         copyInfo: "Click to copy!",
         disabled: false,
         selected: null,
-        donateOther: null
+        donateOther: null,
+        hideSpinner:true
       }
     },
     computed: {
