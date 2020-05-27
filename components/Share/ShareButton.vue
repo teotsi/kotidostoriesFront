@@ -44,7 +44,7 @@
   a{
     padding-top: 7px;
     margin-right: 10px;
-    color: #212529;
+    color: var(--soft-primary-text);
   }
   a:hover{
     cursor: pointer;

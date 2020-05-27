@@ -75,7 +75,7 @@
 
   .post-title, .post-title a {
     font-family: var(--title-font);
-    color: var(--soft-black);
+    color: var(--soft-primary-text);
     font-size: 16px;
     font-weight: 600;
   }

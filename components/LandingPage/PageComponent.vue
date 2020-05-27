@@ -21,7 +21,7 @@
       <h2 class="title-widget-sidebar">CATEGORIES</h2>
       <b-button-group size="sm">
         <div>
-          <b-button :class="['categories-btn']" :disabled="!existingCategory(btn.caption)"
+          <b-button variant="category" :disabled="!existingCategory(btn.caption)"
                     :key="idx"
                     :pressed.sync="btn.state"
                     @click="toggleCategory(btn.caption)"
@@ -213,7 +213,7 @@
   }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 
   .grid-wrapper {
     display: grid;
@@ -246,77 +246,28 @@
 
 
   .title-widget-sidebar {
+    color: var(--soft-primary-text);
     font-size: 14pt;
     border-bottom: 2px solid #e5ebef;
     margin-bottom: 15px;
     padding-bottom: 10px;
     margin-top: 0px;
+
+    &:after{
+      border-bottom: 2px solid #950ca0;
+      width: 150px;
+      display: block;
+      position: absolute;
+      content: '';
+      padding-bottom: 10px;
+    }
   }
-
-  .title-widget-sidebar:after {
-    border-bottom: 2px solid #950ca0;
-    width: 150px;
-    display: block;
-    position: absolute;
-    content: '';
-    padding-bottom: 10px;
-  }
-
-  /*categories//////////////////////*/
-
-  .categories-btn {
-    background-color: #8357a0;
-    margin-top: 15px;
-    color: #fff;
-    cursor: pointer;
-    padding: 10px;
-    width: 100%;
-    border: none;
-    text-align: center;
-    outline: none;
-    font-size: 15px;
-    transition: 0.4s;
-    -webkit-box-shadow: 1px 4px 16px 3px rgba(199, 197, 199, 1);
-    -moz-box-shadow: 1px 4px 16px 3px rgba(199, 197, 199, 1);
-    box-shadow: 1px 4px 16px 3px rgba(199, 197, 199, 1);
-  }
-
-  /*.categories-btn:hover {*/
-  /*  background-color: #950ca0;*/
-  /*  color: #fff;*/
-  /*}*/
-
-  .categories-btn:disabled {
-    background-color: #1d191c;
-    color: #fff;
-  }
-
-  .btn-secondary:not(:disabled).active {
-    background-color: #950ca0;
-    color: #fff;
-  }
-
-
-  .btn-secondary:not(:disabled):hover {
-    background-color: #9839a0;
-    color: #fff;
-  }
-
-  .btn-secondary:disabled:hover {
-    cursor: default;
-  }
-
 
   @media (min-width: 800px) {
     .post-container {
       justify-content: space-between;
     }
 
-    .categories-btn {
-      margin-top: 30px;
-      padding: 18px;
-      text-align: left;
-    }
   }
 
   @media (min-width: 1200px) {
@@ -355,19 +306,4 @@
     transform: translateY(30px);
   }
 
-  .categories-btn:disabled:hover {
-    animation: shake 0.25s cubic-bezier(.36, .07, .19, .97) both;
-    transform: translate3d(0, 0, 0);
-    backface-visibility: hidden;
-    perspective: 1000px;
-  }
-
-  @keyframes shake {
-    20%, 80% {
-      transform: translate3d(-1px, 0, 0);
-    }
-    40%, 60% {
-      transform: translate3d(2px, 0, 0);
-    }
-  }
 </style>

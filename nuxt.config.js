@@ -30,7 +30,9 @@ export default {
   */
   css: [
     '@fortawesome/fontawesome-svg-core/styles.css',
-    '@/assets/css/tablestyles.scss'
+    '@/assets/css/tablestyles.scss',
+    '@/assets/css/btnstyles.scss',
+    '@/assets/css/main.scss',
   ],
   /*
   ** Plugins to load before mounting the App
@@ -42,7 +44,9 @@ export default {
   /*
   ** Nuxt.js dev-modules
   */
-  buildModules: [],
+  buildModules: [
+    '@nuxtjs/color-mode'
+  ],
   /*
   ** Nuxt.js modules
   */

@@ -1,6 +1,5 @@
 <template>
   <nav class="navbar">
-    <!--      <b-navbar-brand href="#">NavBar</b-navbar-brand>-->
     <nuxt-link :key="new Date().getDate()" no-prefetch style="text-decoration:none" to="/"><h1
       style="color: white; font-size: 40px; padding-left: 5px">
       Unfold</h1></nuxt-link>
@@ -40,13 +39,10 @@
     width: 100%;
     display: flex;
     justify-content: space-between;
+    background-color: var(--navbar-color);
     -webkit-box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.75);
     -moz-box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.75);
     box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.75);
-  }
-
-  #nav {
-    background-color: #950ca0;
   }
 
 

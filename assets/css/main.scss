@@ -1,0 +1,133 @@
+:root {
+  --color: #243746;
+  --color-primary: #158876;
+  --color-secondary: #0e2233;
+  --bg: #f3f5f4;
+  --bg-secondary: #fff;
+  --border-color: #ddd;
+  --navbar-color: #950ca0;
+  --soft-primary-text: #333;
+  --preview-color: #7F828B;
+  --link-color: #333;
+  --comment-editor-bg: #fafafa;
+  --soft-hover: #e9e9e9;
+  --blockquote-bg: #EDEDED;
+  --blockquote-color: #555555;
+  --dropdown-bg: white;
+  --category-input: inherit;
+  --category-btn-shadow: 1px 4px 16px 3px rgba(199, 197, 199, 1);
+  --primary-shadow-color: rgba(0, 0, 0, 0.75);
+  --spinner-color: #333;
+  --editor-bg:  initial;
+
+}
+
+.dark-mode {
+  --color: #ebf4f1;
+  --color-primary: #41b38a;
+  --color-secondary: #fdf9f3;
+  --bg: #091a28;
+  --bg-secondary: #071521;
+  --border-color: #0d2538;
+  --navbar-color: #0d2538;
+  --soft-primary-text: white;
+  --preview-color: #c0c2cd;
+  --link-color: #c4c4c4;
+  --comment-editor-bg: #20415c;
+  --soft-hover: #0d2538;
+  --blockquote-bg: #274966;
+  --dropdown-bg: #47709e;
+  --blockquote-color: #c0c2cd;
+  --category-input: #124b50;
+  --category-input-hover: #1c5e63;
+  --category-btn-shadow: 1px 2px 16px 0px rgb(82, 82, 82);
+  --primary-shadow-color: rgba(248, 248, 248, 0.75);
+  --spinner-color: white;
+  --editor-bg:  #20415c;
+--editor-item-color:white;
+}
+
+.sepia-mode {
+  --color: #433422;
+  --color-secondary: #504231;
+  --bg: #f1e7d0;
+  --bg-secondary: #eae0c9;
+  --border-color: #ded0bf;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--color);
+  transition: background-color .5s;
+}
+
+a {
+  text-decoration: none;
+  color: var(--link-color)
+}
+
+.story-form {
+  width: 100% !important;
+  color: #000000;
+}
+
+.ck.ck-toolbar {
+  background: var(--editor-bg)!important;
+  svg, span {
+    color: var(--editor-item-color)!important;
+    &:hover{
+      color: black!important;
+    }
+  }
+  *[aria-pressed="true"], ul {
+    svg, span{
+      color: black!important;
+    }
+  }
+}
+
+.ck.ck-content.ck-editor__editable.ck-rounded-corners.ck-editor__editable_inline {
+  background: inherit;
+}
+
+
+blockquote {
+  font-style: italic;
+  color: var(--blockquote-color);
+  padding: 2em !important;
+  padding-bottom: 0 !important;
+  border-left: 3px solid #656565 !important;
+  margin: 0;
+  position: relative;
+  background: var(--blockquote-bg);
+
+  &::before {
+    content: "\201C";
+    color: #555555;
+    font-size: 4em;
+    position: absolute;
+    left: 10px;
+    top: -10px;
+  }
+}
+
+#spinner {
+  color: var(--spinner-color);
+}
+
+.dropdown-menu {
+  background: var(--dropdown-bg);
+}
+
+.custom-file-label {
+  color: var(--soft-primary-text);
+  background-color: var(--bg);
+  &:after{
+    background-color: var(--category-input);
+    color: var(--soft-primary-text);
+    &:hover {
+      background-color: var(--category-input-hover);
+      color: var(--soft-primary-text);
+    }
+  }
+}

@@ -225,11 +225,11 @@
   }
 
   #stats, #about, #socials, #profile_pic {
-    background-color: white;
+    background-color: inherit;
     width: 190px;
     margin: 40px auto auto;
     border-radius: 15px;
-    border: 1.5px solid black;
+    border: 1.5px solid var(--soft-primary-text);
   }
 
   #socials {

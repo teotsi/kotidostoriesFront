@@ -150,7 +150,7 @@
     margin-left: 10px;
     margin-bottom: 0;
     padding-top: 2px;
-    color: #495057;
+    color: var(--soft-primary-text);
   }
 
   #boldB {
@@ -178,7 +178,7 @@
   }
 
   .menubar {
-    background: var(--ck-color-toolbar-background);
+    background: var(--comment-editor-bg);
     border-bottom: 1px solid #ced4da;
 
     .menubar__button {

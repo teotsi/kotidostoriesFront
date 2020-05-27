@@ -47,6 +47,7 @@
     "@babel/core": "^7.9.0",
     "@babel/preset-env": "^7.9.0",
     "@ckeditor/ckeditor5-editor-classic": "^18.0.0",
+    "@nuxtjs/color-mode": "^1.0.0",
     "@vue/test-utils": "^1.0.0-beta.32",
     "ava": "^3.6.0",
     "babel-core": "^7.0.0-bridge.0",

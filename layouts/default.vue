@@ -35,8 +35,6 @@
   :root {
     --soft-shadow: 0 0 5px 0 #888;
     --title-font: 'Zilla Slab', serif;
-    --soft-black: #333;
-    --hover-soft-gray: #e9e9e9;
   }
 
   .ProseMirror-focused {
@@ -58,34 +56,10 @@
     box-sizing: border-box;
   }
 
-  a {
-    color: #333;
-    text-decoration: none;
-  }
-
   .custom-nav {
     padding: 0;
   }
 
-  blockquote {
-    font-style: italic;
-    color: #555555 !important;
-    padding: 2em !important;
-    padding-bottom: 0 !important;
-    border-left: 3px solid #656565 !important;
-    margin: 0;
-    position: relative;
-    background: #EDEDED !important;
-  }
-
-  blockquote::before {
-    content: "\201C";
-    color: #555555;
-    font-size: 4em;
-    position: absolute;
-    left: 10px;
-    top: -10px;
-  }
 
   .email-button-container {
     padding: 5px !important;
@@ -104,49 +78,13 @@
       text-decoration: none;
 
       &:hover {
-        color: var(--soft-black);
+        color: var(--soft-primary-text);
 
       }
     }
   }
 
-  .btn-contrast {
-    background-color: #efefef;
-    border-color: #000000;
-    color: #000000;
 
-    &:disabled {
-      border: none;
-    }
-
-    &:not(:disabled):hover {
-      background-color: #000000;
-      color: white;
-    }
-
-    &:focus {
-      box-shadow: 0 0 0 0.2rem rgba(83, 95, 109, 0.25)
-    }
-  }
-
-  .btn-donate {
-    background-color: #950ca0;
-    border-color: #8357a0;
-    color: white;
-
-    &:disabled {
-      border: none;
-      color: white;
-    }
-
-    &:not(:disabled):hover {
-      background-color: #9839a0;
-    }
-
-    &:focus {
-      box-shadow: 0 0 0 0.2rem rgba(96, 83, 109, 0.25)
-    }
-  }
 
   .profile-dropdown a[role] {
     &:hover {

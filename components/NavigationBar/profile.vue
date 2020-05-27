@@ -1,6 +1,7 @@
 <template>
   <div class="dropprof">
-    <b-dropdown no-caret right size="lg" class="profile-dropdown" toggle-class="text-decoration-none" variant="link">
+    <font-awesome-icon :icon="icon" @click="toggleTheme" id="theme-icon" size="2x"/>
+    <b-dropdown class="profile-dropdown" no-caret right size="lg" toggle-class="text-decoration-none" variant="link">
       <template v-slot:button-content>
         <div id="icon-container">
           <b-icon icon="person" id="icon"></b-icon>
@@ -34,11 +35,21 @@
         this.$auth.logout();
         this.$router.push('/')
 
+      },
+      toggleTheme() {
+        if (this.$colorMode.preference === "dark") {
+          this.$colorMode.preference = "light";
+          this.icon = ['fas', 'moon']
+        } else {
+          this.$colorMode.preference = "dark";
+          this.icon = ['fas', 'sun']
+        }
       }
     },
-    data(){
-      return{
-        profile_name: this.$auth.loggedIn? this.$auth.user.username:''
+    data() {
+      return {
+        profile_name: this.$auth.loggedIn ? this.$auth.user.username : '',
+        icon: ['fas', 'moon']
       }
     }
   }
@@ -62,6 +73,10 @@
     padding-right: 5px;
   }
 
-
+  #theme-icon {
+    color: white;
+    margin-bottom: -6px;
+    transition: ease-in 0.5s;
+  }
 
 </style>

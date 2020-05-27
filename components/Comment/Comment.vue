@@ -145,7 +145,7 @@
     }
 
     &:hover {
-      background-color: var(--hover-soft-gray);
+      background-color: var(--soft-hover);
 
       button {
         display: initial;

@@ -35,29 +35,47 @@
   }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 
   .autocomplete-item {
     display: flex;
     width: 100%;
-    background: white;
+    background: var(--bg);
+
+    &:hover {
+      background-color: var(--soft-hover)
+    }
+
+    &:active {
+      background: gray;
+    }
+
+    &:not(:last-child) {
+      border-bottom: 1px solid gray;
+    }
   }
 
 
-  .post-details {
-    padding: 0 10px;
-    text-align: center;
-    margin-right: 10px;
-  }
+  .post {
+    &-details {
+      padding: 0 10px;
+      text-align: center;
+      margin-right: 10px;
 
-  .post-details p {
-    font-size: 14px;
-    margin: 0;
-  }
+      p {
+        font-size: 14px;
+        margin: 0;
+      }
+    }
 
-  .post-image {
-    border-radius: 50%;
-    width: 6em;
+    &-image {
+      border-radius: 50%;
+      width: 6em;
+    }
+
+    &-link {
+      width: 100%;
+    }
   }
 
   img {
@@ -72,10 +90,6 @@
     padding: 5px 0;
   }
 
-  .post-link {
-    width: 100%;
-  }
-
   .item-content-container {
     display: -webkit-box;
     width: 100%;
@@ -83,30 +97,21 @@
     text-overflow: ellipsis;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
+
+    h4 {
+      font-family: var(--title-font);
+      font-size: 22px;
+      color: var(--soft-primary-text);
+    }
+
+    h4, .preview-content {
+      overflow: hidden;
+    }
+
+    .preview-content {
+      font-size: 15px;
+      color: var(--preview-color);
+    }
   }
 
-  .item-content-container h4 {
-    font-family: var(--title-font);
-    font-size: 22px;
-  }
-
-  .item-content-container h4, .item-content-container .preview-content {
-    overflow: hidden;
-  }
-
-  .item-content-container .preview-content {
-    font-size: 15px;
-  }
-
-  .autocomplete-item:hover {
-    background-color: var(--hover-soft-gray)
-  }
-
-  .autocomplete-item:active {
-    background: gray;
-  }
-
-  .autocomplete-item:not(:last-child) {
-    border-bottom: 1px solid gray;
-  }
 </style>

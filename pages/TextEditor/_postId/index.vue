@@ -40,7 +40,7 @@
           </template>
 
           <template v-slot:append>
-            <b-dropdown text=" ">
+            <b-dropdown variant="light-dropdown" text=" ">
               <b-dropdown-item
                 :key="`category-${index}`"
                 @click="disableByRef(category)"
@@ -53,6 +53,7 @@
 
         <b-dropdown :disabled="!disabled"
                     @click="publish"
+                    variant="light-dropdown"
                     id="popover-target-1"
                     split text="Publish!">
           <b-dropdown-item @click="saveDraft" href="#">Save draft</b-dropdown-item>
@@ -238,7 +239,8 @@
   }
 
   .input-group-text {
-    background-color: inherit;
+    background-color: var(--category-input);
+    color: var(--soft-primary-text);
   }
 
   .input-group {
@@ -252,6 +254,8 @@
 
   #title-input {
     font-family: var(--title-font);
+    color: var(--soft-primary-text);
+    background-color: var(--bg);
   }
 
   .save-buttons {

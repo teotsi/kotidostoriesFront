@@ -95,6 +95,8 @@
     border-top-left-radius: 20px;
     border-bottom-left-radius: 20px;
     box-shadow: 0 0 1px 0px white inset, 0 0 1px 0px white;
+    color: var(--soft-primary-text);
+    background-color: var(--bg);
   }
 
 </style>

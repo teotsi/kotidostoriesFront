@@ -1,7 +1,7 @@
 <template>
-<div class="post-details">
-  <div  v-b-modal="id">
-    <!-- <nuxt-link :to="`/${id}/${slug}`" id="link"> -->
+  <div class="post-details">
+    <div v-b-modal="id">
+      <!-- <nuxt-link :to="`/${id}/${slug}`" id="link"> -->
       <div class="content-image">
         <b-img :src="img+'#'+new Date().getTime()" class="post-img" fluid-grow/>
       </div>
@@ -33,22 +33,23 @@
         </div>
 
       </div>
-    <!-- </nuxt-link> -->
+      <!-- </nuxt-link> -->
+    </div>
+    <PostPreviewModalComponent
+      :comments="comments"
+      :id="id"
+      :img="img"
+      :preview="preview"
+      :reactions="reactions"
+      :title="title"
+      :user="user"/>
   </div>
-  <PostPreviewModalComponent 
-                        :title="title"
-                        :id="id"
-                        :user="user"
-                        :img="img"
-                        :preview="preview"
-                        :reactions="reactions"
-                        :comments="comments"/>
-</div>
 </template>
 
 <script>
   import {truncate} from "../../assets/js/utils";
   import PostPreviewModalComponent from "../PostPreview/PostPreviewModalComponent"
+
   export default {
     components: {
       PostPreviewModalComponent
@@ -94,7 +95,7 @@
   }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
   .post-details {
     width: 100%;
     /*height: 430px;*/
@@ -110,14 +111,14 @@
     }
   }
 
-  @media (min-width: 1200px ) {
+  @media (min-width: 1200px) {
     .post-details {
       width: 30%;
     }
 
   }
 
-  .shadowclass{
+  .shadowclass {
     /*text-align: center;*/
     /*-webkit-box-shadow: 0px 0px 5px 1px rgba(0,0,0,0.75);*/
     /*-moz-box-shadow: 0px 0px 5px 1px rgba(0,0,0,0.75);*/
@@ -138,32 +139,29 @@
     color: black;
   }
 
+
   .content-title {
     /*padding: 5px;*/
-    background-color: #fff;
     text-align: center;
     height: 56px;
-    display: flex;
     flex-direction: column;
     justify-content: center;
-  }
+    display: inline-block;
+    margin: -2rem 10% 0 10%;
 
-  .content-title h2 {
-    vertical-align: middle;
+    h2 {
+      vertical-align: middle;
+      font-size: 24px;
+      font-family: var(--title-font);
+      color: var(--soft-primary-text);
+      -webkit-line-clamp: 2;
+    }
 
-    font-size: 24px;
-    font-family: var(--title-font);
-    color: var(--soft-black);
   }
 
   .content-title, .content-preview {
-    background-color: white;
+    background-color: var(--bg);
     width: 80%;
-  }
-
-  .content-title {
-    display: inline-block;
-    margin: -2rem 10% 0 10%;
   }
 
   .content-preview {
@@ -172,22 +170,18 @@
     align-items: center;
     padding: 5px;
     text-align: center;
-    color: #7F828B;
+    color: var(--preview-color);
     margin: auto;
+
+    div {
+      -webkit-line-clamp: 3;
+    }
   }
 
   .content-preview div, .content-title h2 {
     display: -webkit-box;
     -webkit-box-orient: vertical;
     overflow: hidden;
-  }
-
-  .content-preview div {
-    -webkit-line-clamp: 3;
-  }
-
-  .content-title h2 {
-    -webkit-line-clamp: 2;
   }
 
 
@@ -198,24 +192,26 @@
     width: 80%;
     display: flex;
     justify-content: space-between;
+
+    &::before {
+      content: '';
+      position: absolute;
+      width: 95.5%;
+      height: 3px;
+      bottom: 0;
+      left: 8px;
+      z-index: -1;
+      box-shadow: 0px 0px 10px 1px var(--primary-shadow-color);
+    }
   }
 
-  .content-footer::before {
-    content: '';
-    position: absolute;
-    width: 95.5%;
-    height: 3px;
-    bottom: 0;
-    left: 8px;
-    z-index: -1;
-    box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.75);
-  }
 
-  .footer-container{
+  .footer-container {
     width: 100%;
     display: flex;
     justify-content: center;
   }
+
   .pull-right {
     float: right;
   }

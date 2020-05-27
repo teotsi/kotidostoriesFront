@@ -4,7 +4,7 @@
       <img :src="imagePreviewUrl" alt="selected image" id="post-image" v-if="imagePreviewUrl">
       <b-input-group>
         <b-input-group-prepend>
-          <b-input-group-text accept="image/jpeg, image/png, image/gif" variant="light">Image 📷
+          <b-input-group-text accept="image/jpeg, image/png, image/gif" class="prepend-text">Image 📷
           </b-input-group-text>
         </b-input-group-prepend>
         <b-form-file
@@ -54,7 +54,7 @@
   }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 
   #post-image {
     z-index: 5;
@@ -64,13 +64,12 @@
     max-height: 250px;
     transition: ease 0.5s;
     box-shadow: var(--soft-shadow);
-  }
 
-  #post-image:hover {
-    transform: scale(1.5);
-    transition: ease 0.5s;
+    &:hover {
+      transform: scale(1.5);
+      transition: ease 0.5s;
+    }
   }
-
 
   .image-wrapper {
     display: flex;
@@ -83,4 +82,9 @@
   .file-input{
     text-align: left;
   }
+  .prepend-text{
+    background-color: var(--category-input);
+    color: var(--soft-primary-text);
+  }
+
 </style>

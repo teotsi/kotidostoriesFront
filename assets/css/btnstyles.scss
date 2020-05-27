@@ -1,0 +1,139 @@
+.btn-contrast {
+  background-color: #efefef;
+  border-color: #000000;
+  color: #000000;
+
+  &:disabled {
+    border: none;
+  }
+
+  &:not(:disabled):hover {
+    background-color: #000000;
+    color: white;
+  }
+
+  &:focus {
+    box-shadow: 0 0 0 0.2rem rgba(83, 95, 109, 0.25)
+  }
+}
+
+.btn-donate {
+  background-color: #950ca0;
+  border-color: #8357a0;
+  color: white;
+
+  &:disabled {
+    border: none;
+    color: white;
+  }
+
+  &:not(:disabled):hover {
+    background-color: #9839a0;
+  }
+
+  &:focus {
+    box-shadow: 0 0 0 0.2rem rgba(96, 83, 109, 0.25)
+  }
+}
+
+.btn-purple {
+  background-color: #3A3A3A;
+  border-color: #8357a0;
+  color: white;
+
+  &:disabled {
+    border: none;
+  }
+
+  &:not(:disabled):hover {
+    background-color: #9839a0;
+    color: white;
+  }
+
+  &:focus {
+    box-shadow: 0 0 0 0.2rem rgba(200, 51, 241, 0.47)
+  }
+
+  &.active {
+    background-color: #9839a0;
+
+  }
+
+}
+
+.btn-light-dropdown {
+  background-color: var(--category-input);
+  border-color: var(--soft-primary-text);
+  color: var(--soft-primary-text);
+
+  &:disabled {
+    border: none;
+    color: var(--soft-primary-text);
+  }
+
+  &:not(:disabled):hover {
+    background-color: var(--category-input-hover);
+    color: var(--soft-primary-text);
+  }
+
+}
+
+.btn-category {
+  background-color: #8357a0;
+  margin-top: 15px;
+  padding: 10px;
+  width: 100%;
+  border: none;
+  text-align: center;
+  outline: none;
+  font-size: 15px;
+  transition: 0.4s;
+  -webkit-box-shadow: var(--category-btn-shadow);
+  -moz-box-shadow: var(--category-btn-shadow);
+  box-shadow: var(--category-btn-shadow);
+  color: #fff;
+
+  &:disabled {
+    background-color: #1d191c;
+
+    &:hover {
+      cursor: default;
+      animation: shake 0.25s cubic-bezier(.36, .07, .19, .97) both;
+      transform: translate3d(0, 0, 0);
+      backface-visibility: hidden;
+      perspective: 1000px;
+    }
+  }
+
+  &:not(:disabled) {
+
+    &.active {
+      background-color: #950ca0;
+
+      &:hover {
+        background-color: #950ca0;
+      }
+    }
+
+    &:hover {
+      color: #fff;
+      background-color: #9839a0;
+    }
+  }
+
+  @media (min-width: 800px) {
+    margin-top: 30px;
+    padding: 18px;
+    text-align: left;
+  }
+
+}
+
+@keyframes shake {
+  20%, 80% {
+    transform: translate3d(-1px, 0, 0);
+  }
+  40%, 60% {
+    transform: translate3d(2px, 0, 0);
+  }
+}

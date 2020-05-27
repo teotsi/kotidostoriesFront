@@ -287,7 +287,7 @@
 
   .title, .comments-header, .reaction-section h2, .sidebar-suggestions h2 {
     font-family: var(--title-font);
-    color: var(--soft-black);
+    color: var(--soft-primary-text);
   }
 
   .title {
@@ -298,9 +298,6 @@
     text-align: justify;
   }
 
-  .story-form {
-    width: 100% !important;
-  }
 
   .email-button-container {
     height: 42px !important;
@@ -310,7 +307,7 @@
   #clipboard-icon {
     margin-top: 0;
     height: initial !important;
-    color: #212529;
+    color:var(--soft-primary-text);
   }
 
   #clipboard-icon:hover {
@@ -346,7 +343,7 @@
   }
 
   hr {
-    border: 1px solid var(--soft-black);
+    border: 1px solid var(--soft-primary-text);
   }
 
   .reaction-box, .post-options-container {

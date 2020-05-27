@@ -72,9 +72,9 @@
     height: 140px;
     border-radius: 15px;
     word-wrap: break-word;
-    -webkit-box-shadow: 0px 0px 4px 1px rgba(0, 0, 0, 0.75);
-    -moz-box-shadow: 0px 0px 4px 1px rgba(0, 0, 0, 0.75);
-    box-shadow: 0px 0px 4px 1px rgba(0, 0, 0, 0.75);
+    -webkit-box-shadow: 0px 0px 4px 1px var(--primary-shadow-color);
+    -moz-box-shadow: 0px 0px 4px 1px var(--primary-shadow-color);
+    box-shadow: 0px 0px 4px 1px var(--primary-shadow-color);
   }
 
   h4 {
@@ -95,7 +95,7 @@
 
   .post-info {
     margin-top: 15px;
-    color: black;
+    color: var(--soft-primary-text);
     position: relative;
   }
 
