@@ -5,7 +5,12 @@
               variant="donate"
     >Donate! 💫
     </b-button>
-    <b-modal id="donate-modal">
+    <b-modal
+      header-bg-variant="modal"
+      body-bg-variant="modal"
+      footer-bg-variant="modal"
+      header-text-variant="info"
+      id="donate-modal">
       <transition mode="out-in" name="fade-out">
         <b-form-group class="donate-container" label="Select an amount below!" v-if="show">
           <b-form-radio-group id="radio-group-2" name="radio-sub-component" v-model="selected">
@@ -61,7 +66,7 @@
     methods: {
       async donate() {
         let amount = this.selected !== 'other' ? this.selected : this.donateOther;
-        const donateResponse = await this.$axios.post(`${this.user}/donation/`, {'amount': amount}, {withCredentials: true})
+        const donateResponse = await this.$axios.post(`user/${this.user}/donation/`, {'amount': amount}, {withCredentials: true})
         if (donateResponse.status === 200) {
           this.show = false;
         }

@@ -20,6 +20,7 @@
   --spinner-color: #333;
   --editor-bg:  initial;
   --gradient-soft: linear-gradient(35deg, #CCFFFF, #FFCCCC);
+  --bg-modal: white;
 
 }
 
@@ -47,6 +48,7 @@
   --editor-bg:  #20415c;
   --gradient-soft:linear-gradient(35deg, #67b3b3, #ff8d8d);
   --editor-item-color:white;
+  --bg-modal: #0d2538;
 }
 
 .sepia-mode {
@@ -132,4 +134,8 @@ blockquote {
       color: var(--soft-primary-text);
     }
   }
+}
+
+.bg-modal{
+  background-color: var(--bg-modal);
 }

@@ -221,7 +221,7 @@
           }
         }
       }
-      // const suggestionData = await $axios.get(`suggest?q=${post.user.username}`)
+      const suggestionData = await $axios.get(`suggest?q=${post.user.username}`)
 
 
       return {
@@ -229,8 +229,7 @@
         reactions: reactions,
         existingId: existingId,
         slug: post.slug,
-        // suggestions: suggestionData.data
-        suggestions: []
+        suggestions: suggestionData.data
       }
 
     },

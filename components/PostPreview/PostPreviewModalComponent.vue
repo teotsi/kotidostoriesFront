@@ -1,8 +1,14 @@
 <template>
-      <b-modal :id="id" size="xl">
+      <b-modal
+        header-bg-variant="modal"
+        body-bg-variant="modal"
+        footer-bg-variant="modal"
+        header-text-variant="info"
+        :id="id"
+        size="xl">
                 <div class="image-container">
                     <b-img :src="img+'#'+new Date().getTime()" class="post-img" fluid-grow/>
-                </div> 
+                </div>
                 <div class="preview-container">
                     <h1 v-html="title" id="title"/>
                     <p v-html="preview" id="preview"/>
@@ -34,7 +40,7 @@ export default {
             type: String
         },
         user: {
-            type: String, 
+            type: String,
             required: true
         },
         img: {
@@ -51,7 +57,7 @@ export default {
     }
 }
 </script>
-    
+
 
 <style scoped>
 
@@ -65,11 +71,11 @@ export default {
 }
 
 .preview-container{
-    
+
 }
 
 .info-container{
-    
+
 }
 
 #preview{
