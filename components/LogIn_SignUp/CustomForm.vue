@@ -96,7 +96,7 @@
 
 <style scoped>
   .form-container form {
-    background-color: #FFFFFF;
+    background-color: var(--bg);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -126,4 +126,7 @@
     outline: none;
   }
 
+  h1{
+    color: var(--soft-primary-text);
+  }
 </style>

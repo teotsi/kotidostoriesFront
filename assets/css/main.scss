@@ -19,6 +19,7 @@
   --primary-shadow-color: rgba(0, 0, 0, 0.75);
   --spinner-color: #333;
   --editor-bg:  initial;
+  --gradient-soft: linear-gradient(35deg, #CCFFFF, #FFCCCC);
 
 }
 
@@ -44,7 +45,8 @@
   --primary-shadow-color: rgba(248, 248, 248, 0.75);
   --spinner-color: white;
   --editor-bg:  #20415c;
---editor-item-color:white;
+  --gradient-soft:linear-gradient(35deg, #67b3b3, #ff8d8d);
+  --editor-item-color:white;
 }
 
 .sepia-mode {

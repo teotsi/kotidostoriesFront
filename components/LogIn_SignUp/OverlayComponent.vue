@@ -27,11 +27,11 @@
 
 <style scoped>
     .overlay {
-        background: linear-gradient(35deg, #CCFFFF, #FFCCCC);
+        background: var(--gradient-soft);
         background-repeat: no-repeat;
         background-size: cover;
         background-position: 0 0;
-        color: #FFFFFF;
+        color: var(--bg);
         position: relative;
         left: -100%;
         height: 100%;

@@ -49,7 +49,8 @@
     data() {
       return {
         profile_name: this.$auth.loggedIn ? this.$auth.user.username : '',
-        icon: ['fas', 'moon']
+        icon: this.$colorMode.value==="dark"? ['fas', 'sun'] :['fas','moon']
+
       }
     }
   }
