@@ -22,6 +22,8 @@
   --gradient-soft: linear-gradient(35deg, #CCFFFF, #FFCCCC);
   --bg-modal: white;
   --contrast-btn-color: black;
+  --selection-bg: #950ca0;
+  --selection-color: white;
 }
 
 .dark-mode {
@@ -50,6 +52,8 @@
   --editor-item-color: white;
   --bg-modal: #0d2538;
   --contrast-btn-color: #20415c;
+  --selection-bg:#41b38a;
+  --selection-color: #363131;
 }
 
 .sepia-mode {
@@ -60,6 +64,12 @@
   --border-color: #ded0bf;
 }
 
+
+::selection{
+  color: var(--selection-color);
+  background: var(--selection-bg);
+  border-radius: 4px;
+}
 body {
   background-color: var(--bg);
   color: var(--color);

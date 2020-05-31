@@ -222,7 +222,7 @@
           }
         }
       }
-      const suggestionData = await $axios.get(`suggest?q=${post.user.username}`)
+      const suggestionData = await $axios.get(`suggest?pid=${post.id}`)
 
 
       return {

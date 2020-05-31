@@ -29,6 +29,7 @@ export default {
   ** Global CSS
   */
   css: [
+    '@/assets/css/fonts.css',
     '@fortawesome/fontawesome-svg-core/styles.css',
     '@/assets/css/tablestyles.scss',
     '@/assets/css/btnstyles.scss',
