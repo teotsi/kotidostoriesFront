@@ -1,16 +1,22 @@
 .table {
   table {
-    border-collapse: collapse;
-    border-spacing: 0;
-    background-color: blue;
+
+    border-collapse: collapse !important;
+    border-spacing: 0 !important;
+    background-color: blue !important;
     /* Table width and height are set on the parent <figure>. Make sure the table inside stretches
     to the full dimensions of the container (https://github.com/ckeditor/ckeditor5/issues/6186). */
-    height: 100%;
-    width: 200px;
-    max-width: 200px;
+    height: 100% !important;
+    width: 300px !important;
+    max-width: 300px !important;
 
-    td{
-      border: none!important;
+    td {
+      border: none !important;
+
+      div[class^='bubble-'] {
+        text-align: left !important;
+      }
     }
   }
+
 }
