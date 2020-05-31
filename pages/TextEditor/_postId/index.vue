@@ -40,7 +40,7 @@
           </template>
 
           <template v-slot:append>
-            <b-dropdown variant="light-dropdown" text=" ">
+            <b-dropdown text=" " variant="light-dropdown">
               <b-dropdown-item
                 :key="`category-${index}`"
                 @click="disableByRef(category)"
@@ -53,9 +53,9 @@
 
         <b-dropdown :disabled="!disabled"
                     @click="publish"
-                    variant="light-dropdown"
                     id="popover-target-1"
-                    split text="Publish!">
+                    split
+                    text="Publish!" variant="light-dropdown">
           <b-dropdown-item @click="saveDraft" href="#">Save draft</b-dropdown-item>
         </b-dropdown>
         <b-popover
@@ -77,6 +77,7 @@
   import CommentEditor from "../../../components/Comment/CommentEditor";
   import ImageUpload from "../../../components/UploadImage/ImageUpload";
   import Spinner from "../../../components/Spinner/Spinner";
+  import {fixMystery} from "../../../assets/js/utils";
 
 
   export default {
@@ -130,7 +131,7 @@
           title: this.post.title,
           content: this.post.content,
           preview: this.post.preview,
-          category: this.selectedCategory.slice(0, -2).toLowerCase().trim(),
+          category: fixMystery(this.selectedCategory).split(" ")[0].toLowerCase().trim(),
           published: this.published,
           featured: this.post.featured
         };
@@ -167,7 +168,8 @@
           'Funny 😂',
           'Poem 🧾',
           'Sci-fi 👾',
-          'Horror 👻'
+          'Horror 👻',
+          'Mystery 🕵️‍'
         ],
         validTitle: null,
         intro: `
@@ -179,7 +181,7 @@
           </p>
           <ul>
             <li>
-              Write something big, or random sories of yours.
+              Write something big, or random stories of yours.
             </li>
             <li>
               Make your text interesting by using the tools above.

@@ -98,14 +98,12 @@
 </template>
 <script>
   import CustomForm from "../../components/LogIn_SignUp/CustomForm";
-  import Post from "../../components/LandingPage/Post";
   import ImageUpload from "../../components/UploadImage/ImageUpload";
 
   export default {
     components: {
       ImageUpload,
       CustomForm,
-      Post
     },
     middleware: "redirectLogin",
 
@@ -129,7 +127,7 @@
           this.valid_username = false;
         })
       },
-      submitForm() {
+      async submitForm() {
         let formData = new FormData;
         let form = this.form;
         for (let attr in form) {
@@ -142,7 +140,8 @@
           formData.append('image', this.form.image);
         }
 
-        this.$axios.$put('user/' + this.$auth.user.username + "/", formData, {withCredentials: true});
+        await this.$axios.$put('user/' + this.$auth.user.username + "/", formData, {withCredentials: true});
+        await this.$router.push(`/user/${this.$auth.user.username}`)
       },
       storeImage(image) {
         this.form.image = image;

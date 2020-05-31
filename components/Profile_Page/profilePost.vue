@@ -5,7 +5,7 @@
         <img :src="`${$axios.defaults.baseURL}${img}`" alt="Post image" class="post-image" fluid-grow/>
         <div class="post-info">
           <h4>{{title}}</h4>
-          <div v-html="preview"/>
+          <div class="post-preview" v-html="preview"/>
           <div class="button-container" v-if="this.$auth.loggedIn &&  username=== this.$auth.user.username">
             <nuxt-link :to="`/user/${this.$auth.user.username}`">
               <b-button
@@ -125,5 +125,17 @@
     text-decoration: none;
   }
 
+  .post-preview {
+    height: 4.5rem;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    -webkit-line-clamp: 3;
+    text-overflow: ellipsis;
+
+    p{
+      text-overflow: ellipsis;
+    }
+  }
 
 </style>

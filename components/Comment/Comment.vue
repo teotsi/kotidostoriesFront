@@ -25,7 +25,7 @@
     <div class="comment-container" v-else>
       <div class="user-details">
         <div class="user-image">
-          <img :src="`${$axios.defaults.baseURL}${img}`" alt="User image">
+          <img :src="`${$axios.defaults.baseURL}${userImg}#${new Date().getTime()}`" alt="User image">
         </div>
 
         <p>{{user}}</p>
@@ -95,6 +95,7 @@
     },
     data() {
       return {
+        userImg: this.img,
         dateObj: null,
         dateInfo: null,
         timeInfo: null,

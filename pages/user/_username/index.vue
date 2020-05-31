@@ -55,6 +55,8 @@
                 :date="post.date"
                 :id="post.id"
                 :img="$axios.defaults.baseURL+post.img"
+                :estimated-time="post.estimatedTime"
+                :user-img="post.user.img"
                 :key="post.id"
                 :preview="post.preview"
                 :reactions="post.reactions.length"
@@ -89,6 +91,7 @@
   import profilePost from '../../../components/Profile_Page/profilePost';
   import Post from "../../../components/LandingPage/Post";
   import ShareButton from "../../../components/Share/ShareButton";
+  import {estimateReadingTime} from "../../../assets/js/utils";
 
   export default {
     components: {
@@ -137,6 +140,11 @@
       return{
         title: `${this.user.username}'${this.user.username.substr(-1) ==='s'?'':'s'} profile`
       }
+    },
+    mounted() {
+      this.featuredPosts.forEach((post) => {
+        post['estimatedTime'] = estimateReadingTime(post.content);
+      })
     }
   }
 </script>

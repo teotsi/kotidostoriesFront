@@ -8,7 +8,7 @@
   }
 
   &:not(:disabled):hover {
-    background-color: #000000;
+    background-color:var(--contrast-btn-color);
     color: white;
   }
 
@@ -28,6 +28,7 @@
   }
 
   &:not(:disabled):hover {
+    color: white;
     background-color: #9839a0;
   }
 

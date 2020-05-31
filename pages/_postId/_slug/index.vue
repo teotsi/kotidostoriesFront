@@ -88,6 +88,7 @@
             :id="comment.id"
             :key="comment.id"
             :post="post"
+            :img="comment.user.img"
             :user="comment.user.username"
             class="comment-item"
             v-for="comment in post.comments"

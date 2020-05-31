@@ -18,10 +18,10 @@
   --category-btn-shadow: 1px 4px 16px 3px rgba(199, 197, 199, 1);
   --primary-shadow-color: rgba(0, 0, 0, 0.75);
   --spinner-color: #333;
-  --editor-bg:  initial;
+  --editor-bg: #f3f5f4;
   --gradient-soft: linear-gradient(35deg, #CCFFFF, #FFCCCC);
   --bg-modal: white;
-
+  --contrast-btn-color: black;
 }
 
 .dark-mode {
@@ -45,10 +45,11 @@
   --category-btn-shadow: 1px 2px 16px 0px rgb(82, 82, 82);
   --primary-shadow-color: rgba(248, 248, 248, 0.75);
   --spinner-color: white;
-  --editor-bg:  #20415c;
-  --gradient-soft:linear-gradient(35deg, #67b3b3, #ff8d8d);
-  --editor-item-color:white;
+  --editor-bg: #20415c;
+  --gradient-soft: linear-gradient(35deg, #67b3b3, #ff8d8d);
+  --editor-item-color: white;
   --bg-modal: #0d2538;
+  --contrast-btn-color: #20415c;
 }
 
 .sepia-mode {
@@ -76,17 +77,27 @@ a {
 }
 
 .ck.ck-toolbar {
-  background: var(--editor-bg)!important;
+  background: var(--editor-bg) !important;
+
   svg, span {
-    color: var(--editor-item-color)!important;
-    &:hover{
-      color: black!important;
+    color: var(--editor-item-color) !important;
+
+    &:hover {
+      color: black !important;
     }
   }
-  *[aria-pressed="true"], ul {
-    svg, span{
-      color: black!important;
+
+  button:hover {
+    svg, span {
+      color: black !important;
     }
+  }
+
+  *[aria-pressed="true"], ul {
+    svg, span {
+      color: black !important;
+    }
+
   }
 }
 
@@ -126,9 +137,11 @@ blockquote {
 .custom-file-label {
   color: var(--soft-primary-text);
   background-color: var(--bg);
-  &:after{
+
+  &:after {
     background-color: var(--category-input);
     color: var(--soft-primary-text);
+
     &:hover {
       background-color: var(--category-input-hover);
       color: var(--soft-primary-text);
@@ -136,6 +149,6 @@ blockquote {
   }
 }
 
-.bg-modal{
+.bg-modal {
   background-color: var(--bg-modal);
 }

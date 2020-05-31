@@ -1,7 +1,22 @@
 import axios from "axios";
 
 function normalizeCategory(category) {
+switch (category.toLowerCase()) {
+  case 'poems':
+    return 'poem'
+  case 'mystery':
+    return 'whodunit'
+  default:
+    return category.toLowerCase();
+}
   return category.toLowerCase() === "poems" ? "poem" : category.toLowerCase();
+}
+
+function fixMystery(category) {
+  if (category.startsWith("Mystery")) {
+    return 'whodunit 🕵️‍'
+  } else
+    return category
 }
 
 function normalizeReaction(reaction) {
@@ -69,4 +84,4 @@ function estimateReadingTime(text) {
   }
 }
 
-export {normalizeCategory, normalizeReaction, fadeSide, truncate, addSlug, loadUsers, estimateReadingTime};
+export {normalizeCategory, fixMystery, normalizeReaction, fadeSide, truncate, addSlug, loadUsers, estimateReadingTime};

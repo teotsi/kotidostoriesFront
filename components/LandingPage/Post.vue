@@ -12,7 +12,6 @@
         <div class="content-preview">
           <div v-html="preview">
           </div>
-          <!--        <p>{{truncate(preview, 'preview')}}</p>-->
         </div>
 
         <div class="footer-container">
@@ -41,8 +40,11 @@
       :img="img"
       :preview="preview"
       :reactions="reactions"
+      :length="estimatedTime"
       :title="title"
-      :user="user"/>
+      :user="user"
+      :userImg="userImg"
+    />
   </div>
 </template>
 
@@ -79,13 +81,18 @@
         type: String,
         required: true
       },
+      userImg:{
+        type:String,
+        default: 'http://localhost:5000/profile/default.png'
+      },
       img: {
         type: String,
         default: 'http://localhost:5000/post/default.jpg'
       },
       comments: Number,
       reactions: Number,
-      slug: String
+      slug: String,
+      estimatedTime: Number
     },
     methods: {
       truncate(str, type) {

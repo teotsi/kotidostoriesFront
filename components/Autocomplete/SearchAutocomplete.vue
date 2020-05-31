@@ -67,7 +67,7 @@
 
 <style scoped>
   .autocomplete-container, .autocomplete-list {
-    width: 20%;
+    min-width: 30%;
     transition: ease 0.2s;
   }
 

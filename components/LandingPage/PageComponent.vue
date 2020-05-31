@@ -5,7 +5,7 @@
                      CATEGORIES
                 ======================-->
     <div class="widget-sidebar side">
-      <div>
+      <div class="discover-followed-options">
         <b-form-group>
           <b-form-radio-group :options="options"
                               @input="showPosts"
@@ -48,7 +48,9 @@
             :reactions="post.reactions.length"
             :slug="post.slug"
             :title="post.title"
+            :estimated-time="post.estimatedTime"
             :user="post.user.username"
+            :userImg="post.user.img"
             class="post"
             v-for="post in this.posts"/>
     </transition-group>
@@ -158,7 +160,7 @@
           {caption: 'Funny', state: false, normalized: 'funny'},
           {caption: 'Poems', state: false, normalized: 'poem'},
           {caption: 'Sci-fi', state: false, normalized: 'sci-fi'},
-          {caption: 'Mystery', state: false, normalized: 'mystery'}
+          {caption: 'Mystery', state: false, normalized: 'whodunit'}
         ]
       }
     },
@@ -238,12 +240,14 @@
     background-color: #950ca0;
   }
 
-  /*recent-post-col////////////////////*/
   .widget-sidebar {
     padding: 20px;
     grid-column: 1;
   }
-
+  .discover-followed-options{
+    display: flex;
+    justify-content: center;
+  }
 
   .title-widget-sidebar {
     color: var(--soft-primary-text);
