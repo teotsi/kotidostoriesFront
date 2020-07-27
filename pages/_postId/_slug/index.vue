@@ -118,6 +118,7 @@
   import ShareButton from "../../../components/Share/ShareButton";
   import DonateModal from "../../../components/Donate/DonateModal";
   import Spinner from "../../../components/Spinner/Spinner";
+
   export default {
     components: {
       DonateModal,
@@ -222,7 +223,6 @@
           }
         }
       }
-      const suggestionData = await $axios.get(`suggest?pid=${post.id}`)
 
 
       return {
@@ -230,15 +230,16 @@
         reactions: reactions,
         existingId: existingId,
         slug: post.slug,
-        suggestions: suggestionData.data
+        suggestions: []
       }
 
     },
-    mounted() {
+    async mounted() {
       //weird solution to add slug on url, if there's such a need
       addSlug(this.$route.params, this.slug);
       this.url = window.location.href;
       fadeSide();
+      this.suggestions = await this.$axios.$get(`suggest?pid=${this.post.id}`)
     },
     head () {
       return {

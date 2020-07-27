@@ -2,9 +2,7 @@
   <div>
     <transition name="fade">
       <login-component v-if="!this.$auth.loggedIn"></login-component>
-      <section id="posts" v-else>
-        <PageComponent/>
-      </section>
+      <PageComponent v-else/>
     </transition>
   </div>
 </template>
@@ -16,7 +14,6 @@
 
   export default {
     components: {
-
       LoginComponent,
       ModalComponent,
       PageComponent
