@@ -1,5 +1,5 @@
 export default {
-  mode: 'spa',
+  mode: 'universal',
   /*
   ** Headers of the page
   */
@@ -12,10 +12,7 @@ export default {
     ],
     link: [
       {rel: 'icon', type: 'image/x-icon', href: '/favicon.ico'}
-    ],
-    script: [
-      {src: 'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js'},
-    ],
+    ]
   },
   server: {
     port: 3000, // default: 3000
@@ -34,12 +31,13 @@ export default {
     '@/assets/css/tablestyles.scss',
     '@/assets/css/btnstyles.scss',
     '@/assets/css/main.scss',
+    '@/assets/css/storyForm.scss',
+
   ],
   /*
   ** Plugins to load before mounting the App
   */
   plugins: [
-    {src: '~plugins/rich-editor', ssr: false},
     '~/plugins/fontawesome.js'
   ],
   /*

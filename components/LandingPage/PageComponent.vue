@@ -5,19 +5,7 @@
                      CATEGORIES
                 ======================-->
     <div class="widget-sidebar side">
-      <div class="discover-followed-options">
-        <b-form-group>
-          <b-form-radio-group :options="options"
-                              @input="showPosts"
-                              button-variant="purple"
-                              buttons
-                              class="post-buttons"
-                              id="btn-radios-1"
-                              name="radios-btn-default"
-                              v-model="selected">
-          </b-form-radio-group>
-        </b-form-group>
-      </div>
+      <category-radio @input="showPosts" v-model="selected"/>
       <h2 class="title-widget-sidebar">CATEGORIES</h2>
       <b-button-group size="sm">
         <div>
@@ -30,7 +18,6 @@
           >
             {{ btn.caption }}
           </b-button>
-
         </div>
       </b-button-group>
     </div>
@@ -62,21 +49,18 @@
 <script>
   import Post from "./Post";
   import {estimateReadingTime, fadeSide, normalizeCategory} from "../../assets/js/utils";
+  import CategoryRadio from "../CategoryRadio/CategoryRadio";
 
   export default {
 
     components: {
+      CategoryRadio,
       Post
     },
     middleware: 'auth',
     methods: {
-      showPosts() {
-        console.log(this.selected)
-        if (this.selected === 'followed') {
-          this.posts = this.followedPosts.slice();
-        } else {
-          this.posts = this.discoveredPosts.slice();
-        }
+      showPosts(selected) {
+        this.posts = selected === 'followed' ? this.followedPosts.slice() : this.discoveredPosts.slice();
       },
       existingCategory: function (category) { //check if category exists in current dataset
         category = normalizeCategory(category);
@@ -143,7 +127,7 @@
     },
     data() {
       return {
-        selected: 'discover',
+        selected:'discover',
         options: [
           {text: 'Discover', value: 'discover'},
           {text: 'Followed', value: 'followed'}
@@ -231,10 +215,7 @@
     grid-column: 1;
   }
 
-  .post-buttons {
-    background-color: #7F828B;
-    margin-bottom: 30px;
-  }
+
 
   .dis-follow-btn:focus {
     background-color: #950ca0;
@@ -244,10 +225,7 @@
     padding: 20px;
     grid-column: 1;
   }
-  .discover-followed-options{
-    display: flex;
-    justify-content: center;
-  }
+
 
   .title-widget-sidebar {
     color: var(--soft-primary-text);

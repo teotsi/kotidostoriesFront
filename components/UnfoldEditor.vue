@@ -10,8 +10,16 @@
 </template>
 
 <script>
-  import CKEditor from '@ckeditor/ckeditor5-vue'
-  import UnfoldEditor from '@teotsi/unfold-ckeditor'
+  import SpinnerPlaceholder from "./SpinnerPlaceholder/SpinnerPlaceholder";
+
+  let UnfoldEditor;
+  let CKEditor;
+  if (process.client) {
+    UnfoldEditor = require('@teotsi/unfold-ckeditor');
+    CKEditor = require("@ckeditor/ckeditor5-vue");
+  } else {
+    CKEditor = { component: SpinnerPlaceholder};
+  }
 
   export default {
     name: 'UnfoldEditor',

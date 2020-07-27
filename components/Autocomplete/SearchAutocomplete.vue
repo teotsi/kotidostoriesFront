@@ -1,7 +1,7 @@
 <template>
   <div class="autocomplete-container">
     <b-input-group class="search">
-      <b-form-input @mouseup="toggleWidth" @blur="toggleWidth" autocomplete="off" id="autocomplete-input"
+      <b-form-input @mouseup="toggleWidth" @blur="toggleWidth" id="autocomplete-input"
                     v-model="input"></b-form-input>
       <b-input-group-append>
         <b-button>Search</b-button>
