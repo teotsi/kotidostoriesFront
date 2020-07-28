@@ -7,19 +7,7 @@
     <div class="widget-sidebar side">
       <category-radio @input="showPosts" v-model="selected"/>
       <h2 class="title-widget-sidebar">CATEGORIES</h2>
-      <b-button-group size="sm">
-        <div>
-          <b-button variant="category" :disabled="!existingCategory(btn.caption)"
-                    :key="idx"
-                    :pressed.sync="btn.state"
-                    @click="toggleCategory(btn.caption)"
-                    squared
-                    v-for="(btn, idx) in buttons"
-          >
-            {{ btn.caption }}
-          </b-button>
-        </div>
-      </b-button-group>
+      <CategoryButtonGroup :buttons="buttons" :pre-selected="preSelected" v-model="catfilter"/>
     </div>
     <!--=====================
                     POSTS
@@ -28,6 +16,7 @@
       <Post :comments="post.comments.length"
             :content="post.content"
             :date="post.date"
+            :estimated-time="post.estimatedTime"
             :id="post.id"
             :img="$axios.defaults.baseURL+post.img"
             :key="post.id"
@@ -35,11 +24,11 @@
             :reactions="post.reactions.length"
             :slug="post.slug"
             :title="post.title"
-            :estimated-time="post.estimatedTime"
             :user="post.user.username"
             :userImg="post.user.img"
             class="post"
-            v-for="post in this.posts"/>
+            v-for="post in this.posts"
+            v-if="valid(post.category)"/>
     </transition-group>
   </div>
 
@@ -50,84 +39,41 @@
   import Post from "./Post";
   import {estimateReadingTime, fadeSide, normalizeCategory} from "../../assets/js/utils";
   import CategoryRadio from "../CategoryRadio/CategoryRadio";
+  import CategoryButtonGroup from "../CategoryButtonGroup/CategoryButtonGroup";
 
   export default {
 
     components: {
+      CategoryButtonGroup,
       CategoryRadio,
       Post
     },
     middleware: 'auth',
     methods: {
+      valid(category) {
+        this.buttons.find((button, index) => {
+          if (button.value === category) {
+            button.disabled = false
+            return true;
+          }
+        });
+        if (this.catfilter.length !== 0) {
+          return this.catfilter.includes(category);
+        }
+        return true;
+      },
       showPosts(selected) {
         this.posts = selected === 'followed' ? this.followedPosts.slice() : this.discoveredPosts.slice();
-      },
-      existingCategory: function (category) { //check if category exists in current dataset
-        category = normalizeCategory(category);
-        if (this.categorizedPosts[category]) {
-          return this.categorizedPosts[category].length > 0;
-        }
-      },
-      toggleCategory: function (category) { //filter posts
-        category = normalizeCategory(category);
-        if (this.catfilter.includes(category)) { //in case category is being removed from filter
-
-          this.catfilter.splice(this.catfilter.indexOf(category), 1);
-
-          if (this.catfilter.length === 0) { //if no more categories, show all posts
-            if (this.selected === "discover") {
-              this.discoveredPosts.forEach((post, index) => {
-                console.log(post);
-                this.posts[index] = post;
-              })
-            } else {
-              this.followedPosts.forEach((post, index) => {
-                this.posts[index] = post;
-              })
-            }
-          } else {
-            let j = 0;
-            if (this.categorizedPosts[category]) { //if category exists
-              let postsToRemove = [];
-              this.posts.forEach((post, index) => {
-                if (post.category === category) {
-                  postsToRemove.push(post) //collect posts to be removed
-                }
-              });
-              postsToRemove.forEach((post, count) => {
-                let indexToRemove = this.posts.indexOf(post);
-                this.posts.splice(indexToRemove, 1) //remove said posts
-              });
-
-            }
-          }
-        } else {  //insert new category
-          this.catfilter.push(category);
-
-
-          let j = 0;
-          if (this.categorizedPosts[category]) { //if category exists
-            if (this.catfilter.length === 1) { //if first category, just show entire category
-              this.categorizedPosts[category].forEach((post, index) => {
-                if (post.category === category) {
-                  this.posts[j] = post;
-                  j++;
-                }
-              });
-
-              this.posts.length = j;
-            } else {
-              this.posts.push(...this.categorizedPosts[category]) //append category
-            }
-          }
-        }
-        console.log(this.catfilter);
-
-      },
+        const uniqueCategories = [...new Set(this.posts.map(post => post.category))]
+        this.buttons.forEach((button, index) => {
+          this.buttons[index].disabled = !uniqueCategories.includes(button.value);
+        });
+      }
     },
     data() {
       return {
-        selected:'discover',
+        preSelected: [],
+        selected: 'discover',
         options: [
           {text: 'Discover', value: 'discover'},
           {text: 'Followed', value: 'followed'}
@@ -136,37 +82,16 @@
         discoveredPosts: [],
         followedPosts: [],
         catfilter: [],
-        group: {},
+        uniqueCategories: new Set(),
         myToggle: false,
         buttons: [
-          {caption: 'Love', state: false, normalized: 'love'},
-          {caption: 'Horror', state: false, normalized: 'horror'},
-          {caption: 'Funny', state: false, normalized: 'funny'},
-          {caption: 'Poems', state: false, normalized: 'poem'},
-          {caption: 'Sci-fi', state: false, normalized: 'sci-fi'},
-          {caption: 'Mystery', state: false, normalized: 'whodunit'}
+          {text: 'Love', value: 'love', disabled: true},
+          {text: 'Horror', value: 'horror', disabled: true},
+          {text: 'Funny', value: 'funny', disabled: true},
+          {text: 'Poems', value: 'poem', disabled: true},
+          {text: 'Sci-fi', value: 'sci-fi', disabled: true},
+          {text: 'Mystery', value: 'whodunit', disabled: true}
         ]
-      }
-    },
-    computed: {
-      categorizedPosts() { //create object with groups of posts based on shared category
-        if (this.selected === "discover") {
-          return this.discoveredPosts.reduce((cat, post) => {
-            if (!cat[post.category]) {
-              cat[post.category] = [];
-            }
-            cat[post.category].push(post);
-            return cat;
-          }, {})
-        } else {
-          return this.followedPosts.reduce((cat, post) => {
-            if (!cat[post.category]) {
-              cat[post.category] = [];
-            }
-            cat[post.category].push(post);
-            return cat;
-          }, {})
-        }
       }
     },
     async mounted() {
@@ -186,20 +111,13 @@
 
       if (this.$route.query.category) {
         let category = normalizeCategory(this.$route.query.category)
-        if (this.categorizedPosts[category]) {
-          this.toggleCategory(this.$route.query.category)
-          this.buttons.forEach((button) => {
-            if (button.normalized === category) {
-              button.state = true;
-            }
-          })
-        }
+        this.preSelected.push(category);
       }
     },
   }
 </script>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
 
   .grid-wrapper {
     display: grid;
@@ -215,15 +133,14 @@
     grid-column: 1;
   }
 
-
-
-  .dis-follow-btn:focus {
-    background-color: #950ca0;
-  }
-
   .widget-sidebar {
     padding: 20px;
     grid-column: 1;
+    width: 70%;
+  }
+
+  .dis-follow-btn:focus {
+    background-color: #950ca0;
   }
 
 
@@ -235,7 +152,7 @@
     padding-bottom: 10px;
     margin-top: 0px;
 
-    &:after{
+    &:after {
       border-bottom: 2px solid #950ca0;
       width: 150px;
       display: block;
@@ -248,6 +165,9 @@
   @media (min-width: 800px) {
     .post-container {
       justify-content: space-between;
+    }
+    .widget-sidebar {
+      width: 50%;
     }
 
   }
@@ -267,6 +187,7 @@
     .widget-sidebar {
       grid-row: 1/2;
       grid-column: 2/3;
+      width: 100%;
     }
   }
 
