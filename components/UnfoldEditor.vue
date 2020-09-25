@@ -1,16 +1,16 @@
 <template>
-  <transition name="fade">
     <ckeditor
+      v-if="showy"
+      class="editor-fade"
       :config="editorConfig"
       :editor="editor"
       :value="intro"
       @input="ev => $emit('input', ev)"
     />
-  </transition>
 </template>
 
 <script>
-  import SpinnerPlaceholder from "./SpinnerPlaceholder/SpinnerPlaceholder";
+  import SpinnerPlaceholder from "../components/SpinnerPlaceholder/SpinnerPlaceholder";
 
   let UnfoldEditor;
   let CKEditor;
@@ -73,6 +73,7 @@
           }
         },
         editorData: this.intro,
+        showy:false
       }
     },
     computed: {
@@ -83,20 +84,12 @@
       }
     },
     mounted() {
+      this.showy = true;
       this.value = this.intro;
       this.$emit('input', this.value)
     }
   }
 </script>
 
-<style>
-
-  .fade-enter-active, .fade-leave-active {
-    transition: opacity .5s;
-  }
-
-  .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */
-  {
-    opacity: 0;
-  }
+<style scoped>
 </style>
