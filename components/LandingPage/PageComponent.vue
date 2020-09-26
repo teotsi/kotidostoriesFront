@@ -97,7 +97,7 @@
     async mounted() {
       fadeSide();
       const postData = await this.$axios.get(`discover/`)
-      const followedPostData = await this.$axios.get(`user/${this.$auth.user.username}/posts?filter=following`)
+      const followedPostData = await this.$axios.get(`user/${this.$auth.user.username}/posts/?filter=following`)
       this.discoveredPosts = postData.data.posts;
       this.followedPosts = followedPostData.data.posts;
       this.posts = this.discoveredPosts.slice();

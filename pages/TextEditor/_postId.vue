@@ -152,7 +152,7 @@ export default {
       }
     }
   },
-  middleware: ['redirectLogin', 'loadUsers'],
+  middleware: ['auth', 'loadUsers'],
   data: function () {
     return {
       hideSpinner: true,

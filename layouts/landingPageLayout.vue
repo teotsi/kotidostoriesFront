@@ -1,5 +1,6 @@
 <template>
   <div @mouseup="closePopUp" class="content">
+    {{ this.$auth.loggedIn }}
     <navbar :show="show" id="nav" v-if="this.$auth.loggedIn"/>
     <nuxt/>
   </div>

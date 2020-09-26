@@ -1,5 +1,5 @@
 export default {
-  mode: 'universal',
+  ssr: false,
   /*
   ** Headers of the page
   */
@@ -78,10 +78,11 @@ export default {
           login: {
             url: 'login/',
             method: 'post',
+            propertyName:'token',
             withCredentials: true
           },
           user: {
-            url: 'user/me',
+            url: 'user/me/',
             method: 'get',
             withCredentials: true,
             propertyName: 'user'
@@ -92,14 +93,6 @@ export default {
             withCredentials: true
           }
         },
-        tokenRequired: false,
-        tokenType: false
-      }
-    },
-    cookie: {
-      prefix: 'auth.',
-      options: {
-        httpOnly: true
       }
     }
   },
