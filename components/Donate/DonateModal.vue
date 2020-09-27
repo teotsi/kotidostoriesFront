@@ -2,7 +2,7 @@
   <div class="donate-wrapper">
     <b-button @click="show=true"
               v-b-modal.donate-modal
-              variant="donate"
+              variant="lilac"
     >Donate! 💫
     </b-button>
     <b-modal
@@ -41,7 +41,7 @@
           <b-button @click="cancel()" variant="light">Cancel</b-button>
           <b-button :disabled="!selected"
                     @click="donate"
-                    variant="donate">Donate!
+                    variant="lilac">Donate!
           </b-button>
         </div>
         <div v-else>

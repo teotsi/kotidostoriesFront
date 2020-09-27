@@ -203,19 +203,24 @@ export default {
       ['lightbulb', false],
       ['laugh-beam', false]
     ];
-    const postData = await $axios.get(`post/${params.postId}`)
+    const postData = await $axios.get(`post/${params.postId}/`)
     const post = postData.data
     reacted = post.reacted;
     if (reacted) {
       existingId = post.reacted_id;
-      if (reacted === 'love') {
-        existingReaction = 'heart'
-      } else if (reacted === 'like') {
-        existingReaction = 'thumbs-up'
-      } else if (reacted === 'laugh') {
-        existingReaction = 'laugh-beam'
-      } else {
-        existingReaction = 'lightbulb'
+      switch (reacted) {
+        case 'love':
+          existingReaction = 'heart'
+          break;
+        case 'like':
+          existingReaction = 'thumbs-up'
+          break;
+        case 'laugh':
+          existingReaction = 'laugh-beam'
+          break;
+        default:
+          existingReaction = 'lightbulb'
+          break;
       }
       for (let [index, reaction] of reactions.entries()) {
         if (reaction[0] === existingReaction) {

@@ -3,7 +3,7 @@
     <b-form-group>
       <b-form-radio-group :options="options"
                           @input="$emit('input',selected)"
-                          button-variant="purple"
+                          button-variant="purple-radio"
                           buttons
                           :value="selected"
                           class="post-buttons"

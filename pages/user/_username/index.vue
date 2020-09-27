@@ -37,11 +37,11 @@
       </div>
       <div v-else-if="!user.followers.includes(this.$auth.user.id)"
            style="margin-top: 25px; display: flex; justify-content: center;">
-        <b-button style="background-color: #950ca0" v-on:click="follow">Follow</b-button>
+        <b-button variant="lilac" v-on:click="follow">Follow</b-button>
       </div>
       <div v-else
            style="margin-top: 25px; display: flex; justify-content: center;">
-        <b-button style="background-color: #950ca0" v-on:click="unfollow">Unfollow</b-button>
+        <b-button variant="lilac" v-on:click="unfollow">Unfollow</b-button>
       </div>
     </div>
 
@@ -91,7 +91,7 @@
 import profilePost from '../../../components/Profile_Page/profilePost';
 import Post from "../../../components/LandingPage/Post";
 import ShareButton from "../../../components/Share/ShareButton";
-import {estimateReadingTime} from "../../../assets/js/utils";
+import {estimateReadingTime} from "assets/js/utils";
 
 export default {
   components: {
@@ -105,7 +105,7 @@ export default {
     }
   },
   async asyncData({params, $axios}) {
-    const response = await $axios.get(`user/${params.username}`);
+    const response = await $axios.get(`user/${params.username}/`);
     const {data} = response;
     const {user, user: {posts}} = data;
     const featuredPosts = posts.filter(post => post.featured)
@@ -119,8 +119,8 @@ export default {
   },
   methods: {
     async follow() {
-      const response = await this.$axios.get(`user/${this.user.username}/follow`, {withCredentials: true});
-      const userResponse = await this.$axios.get(`user/${this.user.username}`, {withCredentials: true});
+      const response = await this.$axios.get(`user/${this.user.username}/follow/`, {withCredentials: true});
+      const userResponse = await this.$axios.get(`user/${this.user.username}/`, {withCredentials: true});
       this.user = userResponse.data.user;
     },
     async unfollow() {
