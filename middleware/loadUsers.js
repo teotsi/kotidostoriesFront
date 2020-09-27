@@ -1,7 +1,6 @@
 
 export default async function ({store, $axios}) {
-  console.log("load")
-  const userResponse  = $axios.get('user/')
-  store.commit('SET_USERS', userResponse.users)
+  const userResponse  =await $axios.$get('user/')
+  await store.commit('SET_USERS', userResponse.users)
 
 }

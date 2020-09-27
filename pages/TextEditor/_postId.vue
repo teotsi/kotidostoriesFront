@@ -203,7 +203,7 @@ export default {
   },
   mounted() {
     if (this.$route.params.postId) {
-      this.$axios.$get(`post/${this.$route.params.postId}`)
+      this.$axios.$get(`post/${this.$route.params.postId}/`)
         .then(response => {
           this.intro = this.post.content = response.content;
           this.post.title = response.title;

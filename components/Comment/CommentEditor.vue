@@ -1,5 +1,5 @@
 <template>
-  <div class="editor">
+  <div class="editor" v-if="showy">
 
     <editor-menu-bar :editor="editor" v-slot="{ commands, isActive }">
       <div class="menubar">
@@ -92,7 +92,8 @@
     },
     data() {
       return {
-        editor: null
+        editor: null,
+        showy:false
       }
     },
     beforeDestroy() {
@@ -118,7 +119,8 @@
           vm.$emit(`${this.eventName}-input`, {"value": getHTML(), "id": this.id});
         },
         content: this.value
-      })
+      });
+      this.showy=true;
     },
     watch: {
       value(val) {
@@ -201,6 +203,7 @@
   }
 
   .editor {
+    transition: ease-in;
     position: relative;
     margin: 0 auto 1rem auto;
     border: 1px solid #ced4da;

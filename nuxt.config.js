@@ -93,6 +93,7 @@ export default {
             withCredentials: true
           }
         },
+        // autoFetchUser:false
       }
     }
   },

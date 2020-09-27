@@ -7,6 +7,7 @@
       :value="intro"
       @input="ev => $emit('input', ev)"
     />
+    <spinner-placeholder v-else/>
 </template>
 
 <script>
@@ -56,6 +57,7 @@
       }
     },
     components: {
+      SpinnerPlaceholder,
       ckeditor: CKEditor.component
     },
     data() {
@@ -70,23 +72,21 @@
                 minimumCharacters: 1
               }
             ]
-          }
+          },
+          toolbar:['heading']
         },
         editorData: this.intro,
         showy:false
       }
     },
     computed: {
-      async users() {
-        const userResponse = this.$axios.get('user/')
-        console.log(userResponse);
-        return userResponse.data.users;
+      users() {
+        return this.$store.state.users;
       }
     },
     mounted() {
       this.showy = true;
-      this.value = this.intro;
-      this.$emit('input', this.value)
+      this.$emit('input', this.intro)
     }
   }
 </script>

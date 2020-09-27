@@ -17,10 +17,10 @@
 </template>
 
 <script>
-  import OverlayComponent from "../../components/LogIn_SignUp/OverlayComponent";
-  import CustomForm from "../../components/LogIn_SignUp/CustomForm";
+import OverlayComponent from "../../components/LogIn_SignUp/OverlayComponent";
+import CustomForm from "../../components/LogIn_SignUp/CustomForm";
 
-  export default {
+export default {
     name: 'LoginComponent',
     components: {
       CustomForm,
@@ -41,13 +41,10 @@
       },
        async register (form) {
         await this.$axios.post('register', form, {withCredentials: true})
-         this.$auth.loginWith('local', {
+        const response = await this.$auth.loginWith('local', {
            data: form
-         }).then(function (response) {
-           console.log(response)
          })
-
-      }
+       }
     },
     data: function () {
       return {
