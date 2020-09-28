@@ -31,17 +31,10 @@
           </share-button>
         </div>
       </div>
-      <div v-if="this.$auth.loggedIn && this.$auth.user.username===user.username"
-           style="margin-top: 25px; display: flex; justify-content: center;">
-        <b-button href="/account" style="background-color: #950ca0">Privacy</b-button>
-      </div>
-      <div v-else-if="!user.followers.includes(this.$auth.user.id)"
-           style="margin-top: 25px; display: flex; justify-content: center;">
-        <b-button variant="lilac" v-on:click="follow">Follow</b-button>
-      </div>
-      <div v-else
-           style="margin-top: 25px; display: flex; justify-content: center;">
-        <b-button variant="lilac" v-on:click="unfollow">Unfollow</b-button>
+      <div class="follow-container">
+        <b-button v-if="isOwnProfile" href="/account" style="background-color: #950ca0">Privacy</b-button>
+        <b-button v-else-if="!isFollowing" variant="lilac" v-on:click="follow">Follow</b-button>
+        <b-button v-else variant="lilac" v-on:click="unfollow">Unfollow</b-button>
       </div>
     </div>
 
@@ -119,13 +112,13 @@ export default {
   },
   methods: {
     async follow() {
-      const response = await this.$axios.get(`user/${this.user.username}/follow/`, {withCredentials: true});
+      const response = await this.$axios.get(`user/${this.user.username}/follow`, {withCredentials: true});
       const userResponse = await this.$axios.get(`user/${this.user.username}/`, {withCredentials: true});
       this.user = userResponse.data.user;
     },
     async unfollow() {
       const response = await this.$axios.delete(`user/${this.user.username}/follow`, {withCredentials: true});
-      const userResponse = await this.$axios.get(`user/${this.user.username}`, {withCredentials: true});
+      const userResponse = await this.$axios.get(`user/${this.user.username}/`, {withCredentials: true});
       this.user = userResponse.data.user;
     },
     removeFromList(event) {
@@ -134,7 +127,9 @@ export default {
           this.posts.splice(index, 1);
         }
       })
-    }
+    },
+
+
   },
   head() {
     return {
@@ -145,6 +140,14 @@ export default {
     this.featuredPosts.forEach((post) => {
       post['estimatedTime'] = estimateReadingTime(post.content);
     })
+  },
+  computed:{
+    isFollowing() {
+      return this.$auth.loggedIn && this.user.followers.includes(this.$auth.user.id);
+    },
+    isOwnProfile(){
+      return this.$auth.loggedIn && this.$auth.user.username===this.user.username;
+    }
   }
 }
 </script>
@@ -173,6 +176,12 @@ export default {
 .section-title {
   margin: 0;
   padding-left: 7%;
+}
+
+.follow-container {
+  margin-top: 25px;
+  display: flex;
+  justify-content: center;
 }
 
 #main_profile_section {

@@ -75,12 +75,12 @@
             this.emailAlert()
           })
       },
-      countDownChanged(dismissCountDown) {
+     async countDownChanged(dismissCountDown) {
         this.dismissCountDown = dismissCountDown;
         this.minutesLeft = parseInt(dismissCountDown / 60);
         if (this.token) {
           if (this.dismissCountDown === 0) {
-            this.$router.push('/')
+          await  this.$router.push('/')
           }
         }
       },

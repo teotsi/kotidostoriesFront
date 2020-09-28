@@ -108,8 +108,8 @@ export default {
         this.$refs.popover.$emit('disable')
       }
     },
-    back() {
-      this.$router.push('/');
+    async back() {
+      await this.$router.push('/');
     },
     store(event) {
       this.post.content = event;

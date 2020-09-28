@@ -31,9 +31,9 @@
   Vue.use(BootstrapVueIcons);
   export default {
     methods: {
-      logout() {
-        this.$auth.logout();
-        this.$router.push('/')
+      async logout() {
+        await this.$auth.logout();
+        await this.$router.push('/')
 
       },
       toggleTheme() {
