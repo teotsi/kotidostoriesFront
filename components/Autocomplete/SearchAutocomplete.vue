@@ -1,8 +1,12 @@
 <template>
   <div class="autocomplete-container">
     <b-input-group class="search">
-      <b-form-input @mouseup="toggleWidth" @blur="toggleWidth" id="autocomplete-input"
-                    v-model="input"></b-form-input>
+      <b-form-input
+        id="autocomplete-input"
+        v-model="input"
+        @mouseup="toggleWidth"
+        @blur="toggleWidth"
+      />
       <b-input-group-append>
         <b-button>Search</b-button>
       </b-input-group-append>
@@ -11,7 +15,8 @@
       <auto-complete-item
         v-for="suggestion in matches"
         :key="suggestion.id"
-        :post="suggestion"/>
+        :post="suggestion"
+      />
     </div>
   </div>
 </template>
@@ -26,18 +31,6 @@
       show: {
         type: Boolean,
         default: false
-      }
-    },
-    methods: {
-      toggleWidth(event) {
-        if (event.type === 'mouseup') {
-          event.target.parentElement.parentElement.style.width =
-            event.target.parentElement.nextElementSibling.style.width = "40%";
-        } else {
-          event.target.parentElement.parentElement.style.width =
-            event.target.parentElement.nextElementSibling.style.width = "20%";
-
-        }
       }
     },
     data() {
@@ -59,6 +52,18 @@
               })
           }
           this.matches = [];
+        }
+      }
+    },
+    methods: {
+      toggleWidth(event) {
+        if (event.type === 'mouseup') {
+          event.target.parentElement.parentElement.style.width =
+            event.target.parentElement.nextElementSibling.style.width = "40%";
+        } else {
+          event.target.parentElement.parentElement.style.width =
+            event.target.parentElement.nextElementSibling.style.width = "20%";
+
         }
       }
     },

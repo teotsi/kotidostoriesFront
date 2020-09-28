@@ -1,18 +1,18 @@
 <template>
-    <div>
-      <b-form-group >
-        <b-form-checkbox-group
-          class="category-group"
-          v-model="selected"
-          :options="buttons"
-          stacked
-          :value="selected"
-          @input="$emit('input',selected)"
-          buttons
-          button-variant="category"
-        ></b-form-checkbox-group>
-      </b-form-group>
-    </div>
+  <div>
+    <b-form-group>
+      <b-form-checkbox-group
+        v-model="selected"
+        class="category-group"
+        :options="buttons"
+        stacked
+        :value="selected"
+        buttons
+        button-variant="category"
+        @input="$emit('input',selected)"
+      />
+    </b-form-group>
+  </div>
 </template>
 
 <script>

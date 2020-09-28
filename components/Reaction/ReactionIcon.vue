@@ -1,11 +1,11 @@
 <template>
   <font-awesome-icon
-    :icon="iconType"
     :id="icon"
+    :icon="iconType"
+    size="2x"
     @click="toggleReaction"
     @mouseout="toggleReaction"
     @mouseover="toggleReaction"
-    size="2x"
   />
 </template>
 
@@ -26,6 +26,25 @@
       existingId: {
         type: String,
         default: null
+      }
+    },
+    data() {
+      return {
+        iconType: this.enabled ? ['fas', this.icon] : ['far', this.icon],
+        reactionId: this.existingId,
+        test: 'test'
+      }
+    },
+    watch: {
+      enabled: function () {
+        if (this.enabled) {
+          this.iconType = ['fas', this.icon];
+        } else {
+          this.iconType = ['far', this.icon];
+        }
+      },
+      existingId: function () {
+        console.log(this.existingId)
       }
     },
     methods: {
@@ -53,25 +72,6 @@
             }
           }
         }
-      }
-    },
-    data() {
-      return {
-        iconType: this.enabled ? ['fas', this.icon] : ['far', this.icon],
-        reactionId: this.existingId,
-        test: 'test'
-      }
-    },
-    watch: {
-      enabled: function () {
-        if (this.enabled) {
-          this.iconType = ['fas', this.icon];
-        } else {
-          this.iconType = ['far', this.icon];
-        }
-      },
-      existingId: function () {
-        console.log(this.existingId)
       }
     }
   }

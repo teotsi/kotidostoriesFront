@@ -1,17 +1,26 @@
 <template>
   <div class="image-wrapper">
     <div class="preview-image">
-      <img :src="imagePreviewUrl" alt="selected image" id="post-image" v-if="imagePreviewUrl">
+      <img
+        v-if="imagePreviewUrl"
+        id="post-image"
+        :src="imagePreviewUrl"
+        alt="selected image"
+      >
       <b-input-group>
         <b-input-group-prepend>
-          <b-input-group-text accept="image/jpeg, image/png, image/gif" class="prepend-text">Image 📷
+          <b-input-group-text
+            accept="image/jpeg, image/png, image/gif"
+            class="prepend-text"
+          >
+            Image 📷
           </b-input-group-text>
         </b-input-group-prepend>
         <b-form-file
           class="file-input"
-          @change="previewImage"
           drop-placeholder="Drop image here..."
           :placeholder="caption"
+          @change="previewImage"
         />
       </b-input-group>
     </div>
@@ -31,6 +40,17 @@
         required: true
       }
     },
+    data() {
+      return {
+        imagePreviewUrl: this.imageUrl
+      }
+
+    },
+    watch: {
+      imageUrl(val) {
+        this.imagePreviewUrl = val;
+      }
+    },
     methods: {
       previewImage(event) {
         if (event.target.files[0]) {
@@ -39,17 +59,6 @@
           this.$emit('image-upload', file);
         }
       }
-    },
-    watch: {
-      imageUrl(val) {
-        this.imagePreviewUrl = val;
-      }
-    },
-    data() {
-      return {
-        imagePreviewUrl: this.imageUrl
-      }
-
     }
   }
 </script>

@@ -1,24 +1,37 @@
 <template>
   <div
-    @mouseup="$emit('toggle-width',$event)" class="autocomplete-item">
-    <nuxt-link :to="`/user/${post.user.username}`" no-prefetch>
+    class="autocomplete-item"
+    @mouseup="$emit('toggle-width',$event)"
+  >
+    <nuxt-link
+      :to="`/user/${post.user.username}`"
+      no-prefetch
+    >
       <div class="post-details">
         <div class="post-image">
-          <img :src="`${$axios.defaults.baseURL}${post.img}`" alt="Post image">
+          <img
+            :src="`${$axios.defaults.baseURL}${post.img}`"
+            alt="Post image"
+          >
         </div>
 
-        <p>{{post.user.username}}</p>
+        <p>{{ post.user.username }}</p>
       </div>
     </nuxt-link>
 
-    <nuxt-link :to="`/${post.id}`" class="post-link" prefetch>
+    <nuxt-link
+      :to="`/${post.id}`"
+      class="post-link"
+      prefetch
+    >
       <div class="item-content-container">
         <h4> {{ post.title }}</h4>
-        <div class="preview-content" v-html="post.preview"/>
+        <div
+          class="preview-content"
+          v-html="post.preview"
+        />
       </div>
     </nuxt-link>
-
-
   </div>
 </template>
 

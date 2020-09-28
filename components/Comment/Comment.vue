@@ -1,63 +1,85 @@
 <template>
-  <transition mode="out-in" name="fade-out">
-    <div class="comment-edit" v-if="edit">
-
-      <comment-editor :id="id" :value="content" event-message="Edit comment"
-                      event-name="comment-edit"
-                      v-on:comment-edit-input="storeEdit"/>
+  <transition
+    mode="out-in"
+    name="fade-out"
+  >
+    <div
+      v-if="edit"
+      class="comment-edit"
+    >
+      <comment-editor
+        :id="id"
+        :value="content"
+        event-message="Edit comment"
+        event-name="comment-edit"
+        @comment-edit-input="storeEdit"
+      />
       <div class="save-button-container">
         <b-button
-          @click="edit=false"
           size="sm"
-          variant="outline-danger">Cancel ❌
+          variant="outline-danger"
+          @click="edit=false"
+        >
+          Cancel ❌
         </b-button>
         <b-button
           :disabled="!editContent"
-          @click="saveCommentEdit"
           class="save-button"
           size="sm"
-          variant="contrast">Save 💾
+          variant="contrast"
+          @click="saveCommentEdit"
+        >
+          Save 💾
         </b-button>
-
       </div>
     </div>
 
-    <div class="comment-container" v-else>
+    <div
+      v-else
+      class="comment-container"
+    >
       <div class="user-details">
         <div class="user-image">
-          <img :src="`${$axios.defaults.baseURL}${userImg}#${new Date().getTime()}`" alt="User image">
+          <img
+            :src="`${$axios.defaults.baseURL}${userImg}#${new Date().getTime()}`"
+            alt="User image"
+          >
         </div>
 
-        <p>{{user}}</p>
+        <p>{{ user }}</p>
       </div>
 
       <div class="comment-content-container">
-        <div class="comment-content" v-html="contentInfo">
-        </div>
+        <div
+          class="comment-content"
+          v-html="contentInfo"
+        />
         <span class="date-info">
-            {{this.dateInfo}},{{this.timeInfo}}
-      </span>
-
+          {{ dateInfo }},{{ timeInfo }}
+        </span>
       </div>
 
-      <div class="edit-delete-container" v-if="this.$auth.loggedIn &&  user=== this.$auth.user.username">
+      <div
+        v-if="this.$auth.loggedIn && user=== this.$auth.user.username"
+        class="edit-delete-container"
+      >
         <b-button
+          size="sm"
+          variant="danger"
           @click="deleteComment"
-          size="sm"
-          variant="danger">Delete
+        >
+          Delete
         </b-button>
         <b-button
-          @click="edit=!edit"
           size="sm"
-          variant="contrast">Edit 📝
+          variant="contrast"
+          @click="edit=!edit"
+        >
+          Edit 📝
         </b-button>
       </div>
-
-
     </div>
   </transition>
-
-
 </template>
 
 <script>

@@ -5,32 +5,67 @@
     footer-bg-variant="modal"
     header-bg-variant="modal"
     header-text-variant="info"
-    size="xl">
+    size="xl"
+  >
     <div class="image-container">
-      <b-img :src="img+'#'+new Date().getTime()" class="post-img" fluid-grow/>
+      <b-img
+        :src="img+'#'+new Date().getTime()"
+        class="post-img"
+        fluid-grow
+      />
     </div>
     <div class="preview-container">
-      <h1 class="modal-title" v-html="title"><span class="inline">by </span></h1>
+      <h1
+        class="modal-title"
+        v-html="title"
+      >
+        <span class="inline">by </span>
+      </h1>
       <div class="author-details">
-          <p>by
-            <nuxt-link :to="`/user/${user}`" no-prefetch>{{user}}</nuxt-link>
-          </p>
-        <nuxt-link :to="`/user/${user}`" no-prefetch>
+        <p>
+          by
+          <nuxt-link
+            :to="`/user/${user}`"
+            no-prefetch
+          >
+            {{ user }}
+          </nuxt-link>
+        </p>
+        <nuxt-link
+          :to="`/user/${user}`"
+          no-prefetch
+        >
           <div class="author-image">
-            <img :src="`${$axios.defaults.baseURL}${userImg}#${new Date().getTime()}`" alt="User image">
+            <img
+              :src="`${$axios.defaults.baseURL}${userImg}#${new Date().getTime()}`"
+              alt="User image"
+            >
           </div>
         </nuxt-link>
-
       </div>
     </div>
-    <div class="modal-preview" v-html="preview"/>
+    <div
+      class="modal-preview"
+      v-html="preview"
+    />
     <div class="info-container">
-      <span class="reactions"><font-awesome-icon size="lg" :icon="['far', 'heart']"/>{{reactions}}</span>
-      <span class="comments"><font-awesome-icon size="lg" :icon="['far', 'comments']"/>{{comments}}</span>
-      <span class="length">{{estimate(length)}}</span>
+      <span class="reactions"><font-awesome-icon
+        size="lg"
+        :icon="['far', 'heart']"
+      />{{ reactions }}</span>
+      <span class="comments"><font-awesome-icon
+        size="lg"
+        :icon="['far', 'comments']"
+      />{{ comments }}</span>
+      <span class="length">{{ estimate(length) }}</span>
     </div>
-    <template v-slot:modal-footer>
-      <b-button :href="`/${id}`" variant="contrast">Read 📚</b-button>
+    <template #modal-footer>
+      <b-button
+        :href="`/${id}`"
+        variant="contrast"
+      >
+        Read 📚
+      </b-button>
     </template>
   </b-modal>
 </template>

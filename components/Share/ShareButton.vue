@@ -1,6 +1,12 @@
 <template>
-  <a :href="`${media[name]['url']}`" target="_blank">
-    <font-awesome-icon :icon="media[name]['class']" size="2x"/>
+  <a
+    :href="`${media[name]['url']}`"
+    target="_blank"
+  >
+    <font-awesome-icon
+      :icon="media[name]['class']"
+      size="2x"
+    />
   </a>
 </template>
 

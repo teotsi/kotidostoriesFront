@@ -2,7 +2,11 @@
   <div class="grid-container">
     <div id="side_bar">
       <div id="profile_pic">
-        <b-img :src="image+'#'+new Date().getTime()" class="profile-img" fluid-grow/>
+        <b-img
+          :src="image+'#'+new Date().getTime()"
+          class="profile-img"
+          fluid-grow
+        />
       </div>
       <div id="stats">
         <div id="username">
@@ -25,54 +29,84 @@
           Social Media
         </div>
         <div class="social-icons">
-          <share-button v-for="(site, index) in media"
-                        id="hey"
-                        :key="index" :name="site">
-          </share-button>
+          <share-button
+            v-for="(site, index) in media"
+            id="hey"
+            :key="index"
+            :name="site"
+          />
         </div>
       </div>
       <div class="follow-container">
-        <b-button v-if="isOwnProfile" href="/account" style="background-color: #950ca0">Privacy</b-button>
-        <b-button v-else-if="!isFollowing" variant="lilac" v-on:click="follow">Follow</b-button>
-        <b-button v-else variant="lilac" v-on:click="unfollow">Unfollow</b-button>
+        <b-button
+          v-if="isOwnProfile"
+          href="/account"
+          style="background-color: #950ca0"
+        >
+          Privacy
+        </b-button>
+        <b-button
+          v-else-if="!isFollowing"
+          variant="lilac"
+          @click="follow"
+        >
+          Follow
+        </b-button>
+        <b-button
+          v-else
+          variant="lilac"
+          @click="unfollow"
+        >
+          Unfollow
+        </b-button>
       </div>
     </div>
 
     <div id="main_profile_section">
       <!--      The 3 featured stories     -->
       <div id="featured_stories">
-        <h3 class="section-title">Featured Stories</h3>
-        <transition-group class="post-container" name="list-complete" tag="div">
-          <Post v-for="post in this.featuredPosts.slice(0,3)"
-                :id="post.id"
-                :key="post.id"
-                :comments="post.comments.length"
-                :content="post.content"
-                :date="post.date"
-                :estimated-time="post.estimatedTime"
-                :img="$axios.defaults.baseURL+post.img"
-                :preview="post.preview"
-                :reactions="post.reactions.length"
-                :slug="post.slug"
-                :title="post.title"
-                :user="post.user.username"
-                :user-img="post.user.img"
-                class="post"/>
+        <h3 class="section-title">
+          Featured Stories
+        </h3>
+        <transition-group
+          class="post-container"
+          name="list-complete"
+          tag="div"
+        >
+          <Post
+            v-for="post in featuredPosts.slice(0,3)"
+            :id="post.id"
+            :key="post.id"
+            :comments="post.comments.length"
+            :content="post.content"
+            :date="post.date"
+            :estimated-time="post.estimatedTime"
+            :img="$axios.defaults.baseURL+post.img"
+            :preview="post.preview"
+            :reactions="post.reactions.length"
+            :slug="post.slug"
+            :title="post.title"
+            :user="post.user.username"
+            :user-img="post.user.img"
+            class="post"
+          />
         </transition-group>
       </div>
       <!--            The list with all the user's posts   -->
       <div id="post-list">
-        <h3 class="section-title">User's Posts</h3>
+        <h3 class="section-title">
+          User's Posts
+        </h3>
         <div class="post-grid-container">
           <profile-post
-            v-for="post in this.posts"
+            v-for="post in posts"
             :id="post.id"
             :key="post.id"
             :img="post.img"
             :preview="post.preview"
             :title="post.title"
             :username="user.username"
-            v-on:delete-post="removeFromList"
+            @delete-post="removeFromList"
           />
         </div>
       </div>
@@ -92,11 +126,6 @@ export default {
     Post,
     profilePost
   },
-  data() {
-    return {
-      media: ['facebook', 'twitter', 'email']
-    }
-  },
   async asyncData({params, $axios}) {
     const response = await $axios.get(`user/${params.username}/`);
     const {data} = response;
@@ -109,6 +138,29 @@ export default {
       featuredPosts
     }
 
+  },
+  data() {
+    return {
+      media: ['facebook', 'twitter', 'email']
+    }
+  },
+  head() {
+    return {
+      title: `${this.user.username}'${this.user.username.substr(-1) === 's' ? '' : 's'} profile`
+    }
+  },
+  computed:{
+    isFollowing() {
+      return this.$auth.loggedIn && this.user.followers.includes(this.$auth.user.id);
+    },
+    isOwnProfile(){
+      return this.$auth.loggedIn && this.$auth.user.username===this.user.username;
+    }
+  },
+  mounted() {
+    this.featuredPosts.forEach((post) => {
+      post['estimatedTime'] = estimateReadingTime(post.content);
+    })
   },
   methods: {
     async follow() {
@@ -130,24 +182,6 @@ export default {
     },
 
 
-  },
-  head() {
-    return {
-      title: `${this.user.username}'${this.user.username.substr(-1) === 's' ? '' : 's'} profile`
-    }
-  },
-  mounted() {
-    this.featuredPosts.forEach((post) => {
-      post['estimatedTime'] = estimateReadingTime(post.content);
-    })
-  },
-  computed:{
-    isFollowing() {
-      return this.$auth.loggedIn && this.user.followers.includes(this.$auth.user.id);
-    },
-    isOwnProfile(){
-      return this.$auth.loggedIn && this.$auth.user.username===this.user.username;
-    }
   }
 }
 </script>

@@ -1,32 +1,65 @@
 <template>
   <div :class="[{'form-container':cls},cls]">
-    <form @submit="$emit('submit-'+id, form)" v-on:submit.prevent>
-      <h1>{{msg}}</h1>
-      <b-form-input :state="valid_username"
-                    @update="checkUsername"
-                    id="username"
-                    placeholder="Username"
-                    type="text"
-                    v-if="hasName"
-                    v-model="form.username"/>
+    <form
+      @submit="$emit('submit-'+id, form)"
+      @submit.prevent
+    >
+      <h1>{{ msg }}</h1>
+      <b-form-input
+        v-if="hasName"
+        id="username"
+        v-model="form.username"
+        :state="valid_username"
+        placeholder="Username"
+        type="text"
+        @update="checkUsername"
+      />
       <b-form-invalid-feedback id="username-feedback">
         Username is taken!
       </b-form-invalid-feedback>
       <b-form-valid-feedback id="username-feedback">
         Username is available
       </b-form-valid-feedback>
-      <b-input placeholder="Email" type="email" v-if="hasEmail" v-model="form.email"/>
-      <b-input :placeholder="newPass ? 'Enter new password':'Password'"
-               type="password" v-if="hasPassword"
-               v-model="form.password"/>
-      <b-input :state="this.matchingPass?null:false" placeholder="Confirm password" type="password" v-if="newPass"
-               v-model="form.confirm_password"/>
-      <b-form-checkbox v-if="id==='log-in'" v-model="form.remember_me" value="true">Remember me?</b-form-checkbox>
-      <nuxt-link to="reset" v-if="id==='log-in'">Forgot your password?</nuxt-link>
-      <button-component :disabled="!this.matchingPass" :is-ghost="false" :msg="msg" @click="$emit('button-clickz')"/>
+      <b-input
+        v-if="hasEmail"
+        v-model="form.email"
+        placeholder="Email"
+        type="email"
+      />
+      <b-input
+        v-if="hasPassword"
+        v-model="form.password"
+        :placeholder="newPass ? 'Enter new password':'Password'"
+        type="password"
+      />
+      <b-input
+        v-if="newPass"
+        v-model="form.confirm_password"
+        :state="matchingPass?null:false"
+        placeholder="Confirm password"
+        type="password"
+      />
+      <b-form-checkbox
+        v-if="id==='log-in'"
+        v-model="form.remember_me"
+        value="true"
+      >
+        Remember me?
+      </b-form-checkbox>
+      <nuxt-link
+        v-if="id==='log-in'"
+        to="reset"
+      >
+        Forgot your password?
+      </nuxt-link>
+      <button-component
+        :disabled="!matchingPass"
+        :is-ghost="false"
+        :msg="msg"
+        @click="$emit('button-clickz')"
+      />
     </form>
   </div>
-
 </template>
 
 <script>
@@ -58,18 +91,6 @@
         default: false
       },
     },
-    methods: {
-      checkUsername() {
-        this.$axios.$get('checkUsername/' + this.form.username)
-          .then(() => {
-              this.valid_username = true
-            }
-          ).catch(() => {
-          this.valid_username = false
-        })
-      }
-
-    },
     data() {
       return {
         form: {
@@ -90,6 +111,18 @@
         }
         return this.form.password === this.form.confirm_password;
       }
+    },
+    methods: {
+      checkUsername() {
+        this.$axios.$get('checkUsername/' + this.form.username)
+          .then(() => {
+              this.valid_username = true
+            }
+          ).catch(() => {
+          this.valid_username = false
+        })
+      }
+
     }
   }
 </script>

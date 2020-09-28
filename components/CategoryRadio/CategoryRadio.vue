@@ -1,14 +1,15 @@
 <template>
   <div class="discover-followed-options">
     <b-form-group>
-      <b-form-radio-group :options="options"
-                          @input="$emit('input',selected)"
-                          button-variant="purple-radio"
-                          buttons
-                          :value="selected"
-                          class="post-buttons"
-                          v-model="selected">
-      </b-form-radio-group>
+      <b-form-radio-group
+        v-model="selected"
+        :options="options"
+        button-variant="purple-radio"
+        buttons
+        :value="selected"
+        class="post-buttons"
+        @input="$emit('input',selected)"
+      />
     </b-form-group>
   </div>
 </template>
@@ -25,13 +26,13 @@
             ]
           }
       },
-      methods: {
-
-      },
       data(){
           return{
             selected: 'discover',
           }
+      },
+      methods: {
+
       }
     }
 </script>

@@ -1,29 +1,31 @@
 <template>
-  <div @mouseup="closePopUp" class="content">
-    {{ this.$auth.loggedIn }}
-    <navbar :show="show" id="nav"/>
-    <nuxt/>
+  <div
+    class="content"
+    @mouseup="closePopUp"
+  >
+    <navbar
+      id="nav"
+      :show="show"
+    />
+    <nuxt />
   </div>
-
 </template>
 
 <script>
   import navbar from "../components/NavigationBar/navbar";
-  import SearchAutocomplete from "../components/Autocomplete/SearchAutocomplete";
 
   export default {
     components: {
-      SearchAutocomplete,
       navbar
-    },
-    methods: {
-      closePopUp(event) {
-        this.show = event.target.id === 'autocomplete-input'
-      }
     },
     data() {
       return {
         show: false
+      }
+    },
+    methods: {
+      closePopUp(event) {
+        this.show = event.target.id === 'autocomplete-input'
       }
     }
   }

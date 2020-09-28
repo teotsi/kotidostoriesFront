@@ -3,47 +3,61 @@
     <div v-b-modal="id">
       <!-- <nuxt-link :to="`/${id}/${slug}`" id="link"> -->
       <div class="content-image">
-        <b-img :src="img+'#'+new Date().getTime()" class="post-img" fluid-grow/>
+        <b-img
+          :src="img+'#'+new Date().getTime()"
+          class="post-img"
+          fluid-grow
+        />
       </div>
       <div class="shadowclass">
         <div class="content-title">
-          <h2>{{title}}</h2>
+          <h2>{{ title }}</h2>
         </div>
         <div class="content-preview">
-          <div v-html="preview">
-          </div>
+          <div v-html="preview" />
         </div>
 
         <div class="footer-container">
           <div class="content-footer">
             <div class="user-info">
-              <b-icon class="user-small-img" icon="person-fill"></b-icon>
-              <span style="font-size: 16px;color: #fff;">{{user}}</span>
+              <b-icon
+                class="user-small-img"
+                icon="person-fill"
+              />
+              <span style="font-size: 16px;color: #fff;">{{ user }}</span>
             </div>
             <span class="pull-right">
-                <a data-placement="left" data-toggle="tooltip" href="#" title="Comments">
-                  <font-awesome-icon :icon="['far', 'comments']"/>{{comments}}</a>
-                <a data-placement="right" data-toggle="tooltip" href="#" title="Loved">
-                   <font-awesome-icon :icon="['far', 'heart']"/>
-                   {{reactions}}</a>
-                </span>
+              <a
+                data-placement="left"
+                data-toggle="tooltip"
+                href="#"
+                title="Comments"
+              >
+                <font-awesome-icon :icon="['far', 'comments']" />{{ comments }}</a>
+              <a
+                data-placement="right"
+                data-toggle="tooltip"
+                href="#"
+                title="Loved"
+              >
+                <font-awesome-icon :icon="['far', 'heart']" />
+                {{ reactions }}</a>
+            </span>
           </div>
-
         </div>
-
       </div>
       <!-- </nuxt-link> -->
     </div>
     <PostPreviewModalComponent
-      :comments="comments"
       :id="id"
+      :comments="comments"
       :img="img"
       :preview="preview"
       :reactions="reactions"
       :length="estimatedTime"
       :title="title"
       :user="user"
-      :userImg="userImg"
+      :user-img="userImg"
     />
   </div>
 </template>

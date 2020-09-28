@@ -1,64 +1,70 @@
 <template>
-  <div class="editor" v-if="showy">
-
-    <editor-menu-bar :editor="editor" v-slot="{ commands, isActive }">
+  <div
+    v-if="showy"
+    class="editor"
+  >
+    <editor-menu-bar
+      v-slot="{ commands, isActive }"
+      :editor="editor"
+    >
       <div class="menubar">
-        <p class="preview-title" v-if="eventName!=='comment'">{{eventMessage}}</p>
+        <p
+          v-if="eventName!=='comment'"
+          class="preview-title"
+        >
+          {{ eventMessage }}
+        </p>
         <b-button
-          :class="{ 'is-active': isActive.bold() }"
-          @click="commands.bold"
-          class="menubar__button"
           id="boldB"
+          :class="{ 'is-active': isActive.bold() }"
+          class="menubar__button"
           variant="white"
-        >
-        </b-button>
+          @click="commands.bold"
+        />
 
         <b-button
-          :class="{ 'is-active': isActive.italic() }"
-          @click="commands.italic"
-          class="menubar__button"
           id="italic"
+          :class="{ 'is-active': isActive.italic() }"
+          class="menubar__button"
           variant="white"
-        >
-        </b-button>
+          @click="commands.italic"
+        />
 
         <b-button
-          :class="{ 'is-active': isActive.underline() }"
-          @click="commands.underline"
-          class="menubar__button"
           id="underline"
+          :class="{ 'is-active': isActive.underline() }"
+          class="menubar__button"
           variant="white"
-        >
-        </b-button>
+          @click="commands.underline"
+        />
 
         <b-button
-          :class="{ 'is-active': isActive.bullet_list() }"
-          @click="commands.bullet_list"
-          class="menubar__button"
           id="bullet_list"
+          :class="{ 'is-active': isActive.bullet_list() }"
+          class="menubar__button"
           variant="white"
-        >
-        </b-button>
+          @click="commands.bullet_list"
+        />
 
         <b-button
-          @click="commands.undo"
-          class="menubar__button"
           id="undo"
-          variant="white"
-        >
-        </b-button>
-        <b-button
-          @click="commands.redo"
           class="menubar__button"
-          id="redo"
           variant="white"
-        >
-        </b-button>
-
+          @click="commands.undo"
+        />
+        <b-button
+          id="redo"
+          class="menubar__button"
+          variant="white"
+          @click="commands.redo"
+        />
       </div>
     </editor-menu-bar>
 
-    <editor-content :editor="editor" class="editor__content"/>
+    <editor-content
+      :editor="editor"
+      class="editor__content"
+    />
   </div>
 </template>
 
@@ -96,7 +102,15 @@
         showy:false
       }
     },
-    beforeDestroy() {
+    watch: {
+      value(val) {
+        if (this.editor && !this.editorChange) {
+          this.editor.setContent(val, true);
+        }
+        this.editorChange = false;
+      }
+    },
+    beforeUnmount() {
       this.editor.destroy()
     },
     mounted: function () {
@@ -121,14 +135,6 @@
         content: this.value
       });
       this.showy=true;
-    },
-    watch: {
-      value(val) {
-        if (this.editor && !this.editorChange) {
-          this.editor.setContent(val, true);
-        }
-        this.editorChange = false;
-      }
     }
   }
 </script>

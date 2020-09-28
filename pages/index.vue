@@ -1,8 +1,8 @@
 <template>
   <div>
     <transition name="fade">
-      <login-component v-if="!this.$auth.loggedIn"></login-component>
-      <PageComponent v-else/>
+      <login-component v-if="!this.$auth.loggedIn" />
+      <PageComponent v-else />
     </transition>
   </div>
 </template>
@@ -15,7 +15,6 @@
   export default {
     components: {
       LoginComponent,
-      ModalComponent,
       PageComponent
     },
     layout: 'landingPageLayout',

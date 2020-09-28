@@ -1,50 +1,65 @@
 <template>
   <div>
-    <div class="container" v-if="!token">
-      <custom-form :has-password="false"
-                   id="reset"
-                   msg="Send reset email"
-                   v-on:submit-reset="resetEmail"></custom-form>
+    <div
+      v-if="!token"
+      class="container"
+    >
+      <custom-form
+        id="reset"
+        :has-password="false"
+        msg="Send reset email"
+        @submit-reset="resetEmail"
+      />
     </div>
-    <div class="container" v-else-if="validToken">
-      <custom-form :has-email="false"
-                   :new-pass="true"
-                   id="new-pass"
-                   msg="Reset your password"
-                   v-on:submit-new-pass="setPass"></custom-form>
+    <div
+      v-else-if="validToken"
+      class="container"
+    >
+      <custom-form
+        id="new-pass"
+        :has-email="false"
+        :new-pass="true"
+        msg="Reset your password"
+        @submit-new-pass="setPass"
+      />
     </div>
-    <div class="container" v-else>
+    <div
+      v-else
+      class="container"
+    >
       <p>invalid token or link or whatever</p>
     </div>
-    <b-alert :show="dismissCountDown"
-             @dismiss-count-down="countDownChanged"
-             @dismissed="dismissCountDown=0"
-             dismissible
-             v-if="!token"
-             variant="warning"
+    <b-alert
+      v-if="!token"
+      :show="dismissCountDown"
+      dismissible
+      variant="warning"
+      @dismiss-count-down="countDownChanged"
+      @dismissed="dismissCountDown=0"
     >
-      Check your inbox and click the password reset link. It is only valid for {{minutesLeft}} more minutes.
+      Check your inbox and click the password reset link. It is only valid for {{ minutesLeft }} more minutes.
       <b-progress
         :max="resetDismissSecs"
         :value="dismissCountDown"
         height="4px"
         variant="warning"
-      ></b-progress>
+      />
     </b-alert>
-    <b-alert :show="dismissCountDown"
-             @dismiss-count-down="countDownChanged"
-             @dismissed="dismissCountDown=0"
-             dismissible
-             v-else
-             variant="success"
+    <b-alert
+      v-else
+      :show="dismissCountDown"
+      dismissible
+      variant="success"
+      @dismiss-count-down="countDownChanged"
+      @dismissed="dismissCountDown=0"
     >
-      Redirecting you to home page in {{dismissCountDown}}...
+      Redirecting you to home page in {{ dismissCountDown }}...
       <b-progress
         :max="redirectDismissSecs"
         :value="dismissCountDown"
         height="4px"
         variant="warning"
-      ></b-progress>
+      />
     </b-alert>
   </div>
 </template>
@@ -55,9 +70,24 @@
   import Axios from "axios";
 
   export default {
-    name: "index.vue",
+    name: "Index",
     components: {
       CustomForm
+    },
+    async asyncData({query, $axios}) {
+      const response = await $axios.$post('http://localhost:5000/verifyToken/',
+        {'token': query.token}, {errorHandle: false});
+      return {validToken: response.status}
+    },
+    data: function () {
+      return {
+        showPrompt: false,
+        resetDismissSecs: 1799,
+        dismissCountDown: 0,
+        minutesLeft: 0,
+        token: this.$route.query.token,
+        redirectDismissSecs: 5,
+      }
     },
     // middleware: 'resetEmail' ,
     methods: {
@@ -90,21 +120,6 @@
       redirectAlert() {
         this.dismissCountDown = this.redirectDismissSecs
       }
-    },
-    data: function () {
-      return {
-        showPrompt: false,
-        resetDismissSecs: 1799,
-        dismissCountDown: 0,
-        minutesLeft: 0,
-        token: this.$route.query.token,
-        redirectDismissSecs: 5,
-      }
-    },
-    async asyncData({query, $axios}) {
-      const response = await $axios.$post('http://localhost:5000/verifyToken/',
-        {'token': query.token}, {errorHandle: false});
-      return {validToken: response.status}
     },
   }
 </script>

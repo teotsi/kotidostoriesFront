@@ -1,66 +1,117 @@
 <template>
   <div class="donate-wrapper">
-    <b-button @click="show=true"
-              v-b-modal.donate-modal
-              variant="lilac"
-    >Donate! 💫
+    <b-button
+      v-b-modal.donate-modal
+      variant="lilac"
+      @click="show=true"
+    >
+      Donate! 💫
     </b-button>
     <b-modal
+      id="donate-modal"
       header-bg-variant="modal"
       body-bg-variant="modal"
       footer-bg-variant="modal"
       header-text-variant="info"
-      id="donate-modal">
-      <transition mode="out-in" name="fade-out">
-        <b-form-group class="donate-container" label="Select an amount below!" v-if="show">
-          <b-form-radio-group id="radio-group-2" name="radio-sub-component" v-model="selected">
-            <b-form-radio value="1">$1</b-form-radio>
-            <b-form-radio value="5">$5</b-form-radio>
-            <b-form-radio value="20">$20</b-form-radio>
-            <b-form-radio value="other">other</b-form-radio>
+    >
+      <transition
+        mode="out-in"
+        name="fade-out"
+      >
+        <b-form-group
+          v-if="show"
+          class="donate-container"
+          label="Select an amount below!"
+        >
+          <b-form-radio-group
+            id="radio-group-2"
+            v-model="selected"
+            name="radio-sub-component"
+          >
+            <b-form-radio value="1">
+              $1
+            </b-form-radio>
+            <b-form-radio value="5">
+              $5
+            </b-form-radio>
+            <b-form-radio value="20">
+              $20
+            </b-form-radio>
+            <b-form-radio value="other">
+              other
+            </b-form-radio>
             <b-input-group prepend="💲">
-              <b-form-input :disabled="selected!=='other'"
-                            class="donate-input"
-                            min="1"
-                            type="number"
-                            v-model.number="donateOther"/>
+              <b-form-input
+                v-model.number="donateOther"
+                :disabled="selected!=='other'"
+                class="donate-input"
+                min="1"
+                type="number"
+              />
             </b-input-group>
           </b-form-radio-group>
         </b-form-group>
 
-        <div class="success-container" v-else>
+        <div
+          v-else
+          class="success-container"
+        >
           <h3>Success!</h3>
           <p>Your donation was sent ✔ Thank you for showing your support to both the writers and Unfold.</p>
         </div>
       </transition>
 
 
-      <template v-slot:modal-footer="{cancel}">
-        <Transition mode="out-in" name="fade-out"></Transition>
-        <div class="donate-options" v-if="show">
-          <b-button @click="cancel()" variant="light">Cancel</b-button>
-          <b-button :disabled="!selected"
-                    @click="donate"
-                    variant="lilac">Donate!
+      <template #modal-footer="{cancel}">
+        <Transition
+          mode="out-in"
+          name="fade-out"
+        />
+        <div
+          v-if="show"
+          class="donate-options"
+        >
+          <b-button
+            variant="light"
+            @click="cancel()"
+          >
+            Cancel
+          </b-button>
+          <b-button
+            :disabled="!selected"
+            variant="lilac"
+            @click="donate"
+          >
+            Donate!
           </b-button>
         </div>
         <div v-else>
-          <b-button @click="cancel()" variant="light">Return</b-button>
+          <b-button
+            variant="light"
+            @click="cancel()"
+          >
+            Return
+          </b-button>
         </div>
-
       </template>
     </b-modal>
   </div>
-
 </template>
 
 <script>
   export default {
-    name: 'donateModal',
+    name: 'DonateModal',
     props: {
       user: {
         type: String,
         required: true
+      }
+    },
+    data() {
+      return {
+        selected: null,
+        donateOther: 50,
+        show: true
       }
     },
     methods: {
@@ -70,13 +121,6 @@
         if (donateResponse.status === 200) {
           this.show = false;
         }
-      }
-    },
-    data() {
-      return {
-        selected: null,
-        donateOther: 50,
-        show: true
       }
     }
   }

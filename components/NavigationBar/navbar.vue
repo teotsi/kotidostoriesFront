@@ -1,12 +1,20 @@
 <template>
   <nav class="navbar">
-    <nuxt-link :key="new Date().getDate()" no-prefetch style="text-decoration:none" to="/"><h1
-      style="color: white; font-size: 40px; padding-left: 5px">
-      Unfold</h1></nuxt-link>
-    <search-autocomplete :show="show"/>
+    <nuxt-link
+      :key="new Date().getDate()"
+      no-prefetch
+      style="text-decoration:none"
+      to="/"
+    >
+      <h1
+        style="color: white; font-size: 40px; padding-left: 5px"
+      >
+        Unfold
+      </h1>
+    </nuxt-link>
+    <search-autocomplete :show="show" />
 
-    <profile/>
-
+    <profile />
   </nav>
 </template>
 

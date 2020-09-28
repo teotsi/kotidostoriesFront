@@ -1,26 +1,26 @@
 <template>
   <div class="sidebar-post">
-
     <div class="post-content">
-
       <h4 class="post-title">
         <a :href="`/${post.id}`">
-          {{post.title}}
+          {{ post.title }}
         </a>
       </h4>
       <p class="post-author">
         <a :href="`/user/${post.user.username}`">
-          {{post.user.username}}
+          {{ post.user.username }}
         </a>
-
       </p>
       <span class="date-info">
-            {{this.dateInfo}},{{this.timeInfo}}
+        {{ dateInfo }},{{ timeInfo }}
       </span>
     </div>
 
     <div class="post-image">
-      <img :src="`${$axios.defaults.baseURL}${post.img}`" alt="User image">
+      <img
+        :src="`${$axios.defaults.baseURL}${post.img}`"
+        alt="User image"
+      >
     </div>
   </div>
 </template>

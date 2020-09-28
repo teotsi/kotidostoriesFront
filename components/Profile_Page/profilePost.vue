@@ -2,19 +2,34 @@
   <div class="post-container">
     <nuxt-link :to="`/${id}/`">
       <div class="posts">
-        <img :src="`${$axios.defaults.baseURL}${img}`" alt="Post image" class="post-image" fluid-grow/>
+        <img
+          :src="`${$axios.defaults.baseURL}${img}`"
+          alt="Post image"
+          class="post-image"
+          fluid-grow
+        >
         <div class="post-info">
-fix i          <h4>{{ title }}</h4>
-          <div class="post-preview" v-html="preview"/>
-          <div v-if="this.$auth.loggedIn &&  username=== this.$auth.user.username" class="button-container">
+          fix i          <h4>{{ title }}</h4>
+          <div
+            class="post-preview"
+            v-html="preview"
+          />
+          <div
+            v-if="this.$auth.loggedIn && username=== this.$auth.user.username"
+            class="button-container"
+          >
             <b-button
               variant="danger"
-              @click="deletePost">Delete
+              @click="deletePost"
+            >
+              Delete
             </b-button>
             <b-button
-                      @click="editPost"
-                      style="margin: 0px;"
-                      variant="contrast">Edit story 📝
+              style="margin: 0px;"
+              variant="contrast"
+              @click="editPost"
+            >
+              Edit story 📝
             </b-button>
           </div>
         </div>

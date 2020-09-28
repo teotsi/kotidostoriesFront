@@ -1,5 +1,10 @@
 <template>
-  <b-spinner :class="{'hidden':hideSpinner}" id="spinner" :label="label" small></b-spinner>
+  <b-spinner
+    id="spinner"
+    :class="{'hidden':hideSpinner}"
+    :label="label"
+    small
+  />
 </template>
 
 <script>

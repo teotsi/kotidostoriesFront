@@ -1,110 +1,151 @@
 <template>
   <div class="grid-wrapper">
     <div class="content-container">
-
-      <h1 class="title">{{post.title}} <span class="inline">by <nuxt-link :to="'/user/'+ post.user.username">{{post.user.username}} </nuxt-link> </span>
+      <h1 class="title">
+        {{ post.title }} <span class="inline">by <nuxt-link :to="'/user/'+ post.user.username">{{ post.user.username }} </nuxt-link> </span>
       </h1>
 
       <p class="date-info">
-        <nuxt-link :to="`/?category=${post.category}`" no-prefetch>{{post.category}}</nuxt-link>
-        {{new Date(this.post.date).toDateString()}}
+        <nuxt-link
+          :to="`/?category=${post.category}`"
+          no-prefetch
+        >
+          {{ post.category }}
+        </nuxt-link>
+        {{ new Date(post.date).toDateString() }}
       </p>
 
       <div class="image-container">
-        <img :src="`${$axios.defaults.baseURL}${post.img}`" alt="Story image" class="main-image">
+        <img
+          :src="`${$axios.defaults.baseURL}${post.img}`"
+          alt="Story image"
+          class="main-image"
+        >
       </div>
 
-      <div class="main-text" v-html="post.content"/>
-
+      <div
+        class="main-text"
+        v-html="post.content"
+      />
       <div class="post-options-container">
-        <b-button :href="`/TextEditor/${post.id}`"
-                  v-if="this.$auth.loggedIn && post.user.username === this.$auth.user.username"
-                  variant="contrast">Edit story 📝
+        <b-button
+          v-if="this.$auth.loggedIn && post.user.username === this.$auth.user.username"
+          :href="`/TextEditor/${post.id}`"
+          variant="contrast"
+        >
+          Edit story 📝
         </b-button>
 
-        <DonateModal :user="post.user.username"
-                     v-else-if="this.$auth.loggedIn && post.user.username !== this.$auth.user.username"/>
+        <DonateModal
+          v-else-if="this.$auth.loggedIn && post.user.username !== this.$auth.user.username"
+          :user="post.user.username"
+        />
 
-        <share-button :key="index"
-                      :name="site"
-                      id="hey" v-for="(site, index) in media">
-        </share-button>
+        <share-button
+          v-for="(site, index) in media"
+          id="hey"
+          :key="index"
+          :name="site"
+        />
 
         <font-awesome-icon
+          id="clipboard-icon"
           :icon="['fas','clipboard']"
+          size="2x"
           @click="copyToClipboard"
           @mouseover="copyToClipboard"
-          id="clipboard-icon"
-          size="2x"/>
+        />
 
         <b-popover
           placement="right"
-          target="clipboard-icon" triggers="hover">
-          {{copyInfo}}
+          target="clipboard-icon"
+          triggers="hover"
+        >
+          {{ copyInfo }}
         </b-popover>
       </div>
       <section class="reaction-section">
         <h2 class="header">
-          {{reactionQuote}}
+          {{ reactionQuote }}
         </h2>
         <div class="reaction-box">
           <reaction-icon
-            :enabled="reaction[1]"
-            :existingId="existingId"
-            :icon="reaction[0]"
+            v-for="(reaction,index) in reactions"
             :key="index"
             :ref="reaction[0]"
-            v-for="(reaction,index) in reactions"
-            v-on:toggle-reaction="toggleReaction(index,reaction[1])"
+            :enabled="reaction[1]"
+            :existing-id="existingId"
+            :icon="reaction[0]"
+            @toggle-reaction="toggleReaction(index,reaction[1])"
           />
         </div>
       </section>
-      <hr/>
+      <hr>
 
       <section class="comment-section">
         <h1 class="comments-header">
           Comments
         </h1>
-        <comment-editor :value="commentContent" v-on:comment-input="storeComment"/>
-        <div class="comment-buttons" id="comment-button-container">
-          <Spinner :hide-spinner="hideSpinner" label="Posting comment..."></Spinner>
+        <comment-editor
+          :value="commentContent"
+          @comment-input="storeComment"
+        />
+        <div
+          id="comment-button-container"
+          class="comment-buttons"
+        >
+          <Spinner
+            :hide-spinner="hideSpinner"
+            label="Posting comment..."
+          />
 
-          <b-button :disabled="!this.$auth.loggedIn
-          ||this.commentContent.length===0 || this.commentContent==='<p></p>'"
-                    @click="createComment"
-                    variant="light">Post Comment 💬
+          <b-button
+            :disabled="!this.$auth.loggedIn
+              ||commentContent.length===0 || commentContent==='<p></p>'"
+            variant="light"
+            @click="createComment"
+          >
+            Post Comment 💬
           </b-button>
           <b-popover
             :disabled="this.$auth.loggedIn"
             placement="right"
-            target="comment-button-container" triggers="hover">
+            target="comment-button-container"
+            triggers="hover"
+          >
             You need to be signed in!
           </b-popover>
         </div>
-        <transition-group name="fade-out" tag="div">
+        <transition-group
+          name="fade-out"
+          tag="div"
+        >
           <comment
-            :content="comment.content"
-            :date="comment.date"
+            v-for="comment in post.comments"
             :id="comment.id"
             :key="comment.id"
+            :content="comment.content"
+            :date="comment.date"
             :post="post"
             :img="comment.user.img"
             :user="comment.user.username"
             class="comment-item"
-            v-for="comment in post.comments"
-            v-on:delete-comment="removeFromList"
+            @delete-comment="removeFromList"
           />
         </transition-group>
       </section>
     </div>
     <section class="sidebar-suggestions">
       <div class="side">
-        <h2 class="header">Check out...</h2>
-        <sidebar-post :key="post.id"
-                      :post="post"
-                      v-for="post in suggestions"/>
+        <h2 class="header">
+          Check out...
+        </h2>
+        <sidebar-post
+          v-for="post in suggestions"
+          :key="post.id"
+          :post="post"
+        />
       </div>
-
     </section>
   </div>
 </template>
@@ -120,7 +161,7 @@ import DonateModal from "../../components/Donate/DonateModal";
 import Spinner from "../../components/Spinner/Spinner";
 
 export default {
-  name: 'index',
+  name: 'Index',
   components: {
     DonateModal,
     ShareButton,
@@ -129,69 +170,6 @@ export default {
     Comment,
     ReactionIcon,
     Spinner
-  },
-  methods: {
-    toggleReaction(index, state) {
-      for (let reaction of this.reactions) {
-        reaction[1] = false;
-      }
-      this.$set(this.reactions[index], 1, !state);
-
-    },
-    createComment() {
-      this.hideSpinner = false;
-      this.$axios.$post(`user/${this.post.user.username}/posts/${this.post.id}/comments/`,
-        {"content": this.commentContent},
-        {withCredentials: true})
-        .then((response) => {
-          this.hideSpinner = true;
-          this.commentContent = '';
-          this.post.comments.push(response.comment)
-        })
-    },
-    storeComment(event) {
-      this.commentContent = event['value'];
-    },
-    removeFromList(event) {
-      console.log(this.post.comments.length)
-      this.post.comments.forEach((comment, index) => {
-        if (comment.id === event) {
-          this.post.comments.splice(index, 1);
-        }
-      })
-      console.log(this.post.comments.length)
-    },
-    copyToClipboard(event) {
-      if (event.type === 'click') {
-        navigator.clipboard.writeText(this.url);
-        this.copyInfo = "Copied!"
-      } else {
-        this.copyInfo = "Click to copy!"
-      }
-    }
-  },
-  data() {
-    return {
-      editCommentContent: {},
-      reactionQuotes: [
-        'What did you think?',
-        'Show some appreciation!',
-        'Your feedback matters!'
-      ],
-      commentContent: '',
-      media: ['facebook', 'twitter', 'email'],
-      url: "",
-      copyInfo: "Click to copy!",
-      disabled: false,
-      selected: null,
-      donateOther: null,
-      hideSpinner:true
-    }
-  },
-  computed: {
-    reactionQuote() {
-      return this.reactionQuotes[Math.floor(Math.random() * this.reactionQuotes.length)];
-    }
   },
   async asyncData({params, $axios}) {
     let reacted;
@@ -240,6 +218,34 @@ export default {
     }
 
   },
+  data() {
+    return {
+      editCommentContent: {},
+      reactionQuotes: [
+        'What did you think?',
+        'Show some appreciation!',
+        'Your feedback matters!'
+      ],
+      commentContent: '',
+      media: ['facebook', 'twitter', 'email'],
+      url: "",
+      copyInfo: "Click to copy!",
+      disabled: false,
+      selected: null,
+      donateOther: null,
+      hideSpinner:true
+    }
+  },
+  head () {
+    return {
+      title: this.post.title
+    }
+  },
+  computed: {
+    reactionQuote() {
+      return this.reactionQuotes[Math.floor(Math.random() * this.reactionQuotes.length)];
+    }
+  },
   async mounted() {
     //weird solution to add slug on url, if there's such a need
     addSlug(this.$route.params, this.slug);
@@ -247,9 +253,44 @@ export default {
     fadeSide();
     this.suggestions = await this.$axios.$get(`suggest/?pid=${this.post.id}`)
   },
-  head () {
-    return {
-      title: this.post.title
+  methods: {
+    toggleReaction(index, state) {
+      for (let reaction of this.reactions) {
+        reaction[1] = false;
+      }
+      this.$set(this.reactions[index], 1, !state);
+
+    },
+    createComment() {
+      this.hideSpinner = false;
+      this.$axios.$post(`user/${this.post.user.username}/posts/${this.post.id}/comments/`,
+        {"content": this.commentContent},
+        {withCredentials: true})
+        .then((response) => {
+          this.hideSpinner = true;
+          this.commentContent = '';
+          this.post.comments.push(response.comment)
+        })
+    },
+    storeComment(event) {
+      this.commentContent = event['value'];
+    },
+    removeFromList(event) {
+      console.log(this.post.comments.length)
+      this.post.comments.forEach((comment, index) => {
+        if (comment.id === event) {
+          this.post.comments.splice(index, 1);
+        }
+      })
+      console.log(this.post.comments.length)
+    },
+    copyToClipboard(event) {
+      if (event.type === 'click') {
+        navigator.clipboard.writeText(this.url);
+        this.copyInfo = "Copied!"
+      } else {
+        this.copyInfo = "Click to copy!"
+      }
     }
   }
 
@@ -300,11 +341,6 @@ export default {
 .title {
   margin-bottom: 0;
 }
-
-.main-text {
-  text-align: justify;
-}
-
 
 .email-button-container {
   height: 42px !important;

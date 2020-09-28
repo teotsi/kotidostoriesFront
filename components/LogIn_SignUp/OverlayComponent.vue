@@ -1,19 +1,32 @@
 <template>
-    <div class="overlay-container">
-        <div class="overlay">
-            <div class="overlay-panel overlay-left">
-                <h1>Hello There!</h1>
-                <p style="margin:10px;">If you already have an account then just sign back in</p>
-                <button-component v-on:click.native="$emit('toggle-class')" is-ghost msg="Sign in" id="signUp" />
-            </div>
-            <div class="overlay-panel overlay-right">
-                <h1>Good to have you back!</h1>
-                <p style="margin:10px;">If you don't have an account, go make one... it's free! </p>
-                <button-component v-on:click.native="$emit('toggle-class')" is-ghost msg="Sign up" id="signIn"/>
-            </div>
-
-        </div>
+  <div class="overlay-container">
+    <div class="overlay">
+      <div class="overlay-panel overlay-left">
+        <h1>Hello There!</h1>
+        <p style="margin:10px;">
+          If you already have an account then just sign back in
+        </p>
+        <button-component
+          id="signUp"
+          is-ghost
+          msg="Sign in"
+          @click.native="$emit('toggle-class')"
+        />
+      </div>
+      <div class="overlay-panel overlay-right">
+        <h1>Good to have you back!</h1>
+        <p style="margin:10px;">
+          If you don't have an account, go make one... it's free!
+        </p>
+        <button-component
+          id="signIn"
+          is-ghost
+          msg="Sign up"
+          @click.native="$emit('toggle-class')"
+        />
+      </div>
     </div>
+  </div>
 </template>
 
 <script>

@@ -1,5 +1,11 @@
 <template>
-  <button :disabled="disable" :id="id" v-bind:class="{ghost:isGhost}">{{msg}}</button>
+  <button
+    :id="id"
+    :disabled="disable"
+    :class="{ghost:isGhost}"
+  >
+    {{ msg }}
+  </button>
 </template>
 
 <script>

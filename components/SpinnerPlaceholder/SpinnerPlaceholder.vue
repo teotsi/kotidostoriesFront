@@ -1,5 +1,5 @@
 <template>
-  <spinner label="loading"/>
+  <spinner label="loading" />
 </template>
 
 <script>

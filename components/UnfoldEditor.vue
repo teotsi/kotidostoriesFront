@@ -1,13 +1,13 @@
 <template>
-    <ckeditor
-      v-if="showy"
-      class="editor-fade"
-      :config="editorConfig"
-      :editor="editor"
-      :value="intro"
-      @input="ev => $emit('input', ev)"
-    />
-    <spinner-placeholder v-else/>
+  <ckeditor
+    v-if="showy"
+    class="editor-fade"
+    :config="editorConfig"
+    :editor="editor"
+    :value="intro"
+    @input="ev => $emit('input', ev)"
+  />
+  <spinner-placeholder v-else />
 </template>
 
 <script>
@@ -24,6 +24,10 @@
 
   export default {
     name: 'UnfoldEditor',
+    components: {
+      SpinnerPlaceholder,
+      ckeditor: CKEditor.component
+    },
     props: {
       value: [String],
       options: {
@@ -55,10 +59,6 @@
           </blockquote>
         `,
       }
-    },
-    components: {
-      SpinnerPlaceholder,
-      ckeditor: CKEditor.component
     },
     data() {
       return {

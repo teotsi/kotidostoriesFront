@@ -1,24 +1,44 @@
 <template>
   <div class="dropprof">
-    <font-awesome-icon :icon="icon" @click="toggleTheme" id="theme-icon" size="2x"/>
-    <b-dropdown class="profile-dropdown" no-caret right size="lg" toggle-class="text-decoration-none" variant="link">
-      <template v-slot:button-content>
+    <font-awesome-icon
+      id="theme-icon"
+      :icon="icon"
+      size="2x"
+      @click="toggleTheme"
+    />
+    <b-dropdown
+      class="profile-dropdown"
+      no-caret
+      right
+      size="lg"
+      toggle-class="text-decoration-none"
+      variant="link"
+    >
+      <template #button-content>
         <div id="icon-container">
-          <b-icon icon="person" id="icon"></b-icon>
+          <b-icon
+            id="icon"
+            icon="person"
+          />
         </div>
-
       </template>
       <div v-if="this.$auth.loggedIn">
-        <a></a>
-        <b-dropdown-item v-bind:href="'/user/'+profile_name">Profile</b-dropdown-item>
-        <b-dropdown-item href="/TextEditor">New Post</b-dropdown-item>
-        <b-dropdown-item @click="logout">Logout
-          <font-awesome-icon :icon="['fas', 'sign-out-alt']"/>
+        <a />
+        <b-dropdown-item :href="'/user/'+profile_name">
+          Profile
+        </b-dropdown-item>
+        <b-dropdown-item href="/TextEditor">
+          New Post
+        </b-dropdown-item>
+        <b-dropdown-item @click="logout">
+          Logout
+          <font-awesome-icon :icon="['fas', 'sign-out-alt']" />
         </b-dropdown-item>
       </div>
       <div v-else>
-        <b-dropdown-item href="/">Log in / Sign up!</b-dropdown-item>
-
+        <b-dropdown-item href="/">
+          Log in / Sign up!
+        </b-dropdown-item>
       </div>
     </b-dropdown>
   </div>
@@ -30,6 +50,13 @@
 
   Vue.use(BootstrapVueIcons);
   export default {
+    data() {
+      return {
+        profile_name: this.$auth.loggedIn ? this.$auth.user.username : '',
+        icon: this.$colorMode.value==="dark"? ['fas', 'sun'] :['fas','moon']
+
+      }
+    },
     methods: {
       async logout() {
         await this.$auth.logout();
@@ -44,13 +71,6 @@
           this.$colorMode.preference = "dark";
           this.icon = ['fas', 'sun']
         }
-      }
-    },
-    data() {
-      return {
-        profile_name: this.$auth.loggedIn ? this.$auth.user.username : '',
-        icon: this.$colorMode.value==="dark"? ['fas', 'sun'] :['fas','moon']
-
       }
     }
   }

@@ -1,38 +1,49 @@
 <template>
-
   <div class="grid-wrapper">
     <!--=====================
                      CATEGORIES
                 ======================-->
     <div class="widget-sidebar side">
-      <category-radio @input="showPosts" v-model="selected"/>
-      <h2 class="title-widget-sidebar">CATEGORIES</h2>
-      <CategoryButtonGroup :buttons="buttons" :pre-selected="preSelected" v-model="catfilter"/>
+      <category-radio
+        v-model="selected"
+        @input="showPosts"
+      />
+      <h2 class="title-widget-sidebar">
+        CATEGORIES
+      </h2>
+      <CategoryButtonGroup
+        v-model="catfilter"
+        :buttons="buttons"
+        :pre-selected="preSelected"
+      />
     </div>
     <!--=====================
                     POSTS
                ======================-->
-    <transition-group class="post-container" name="list-complete" tag="div">
-      <Post :comments="post.comments.length"
-            :content="post.content"
-            :date="post.date"
-            :estimated-time="post.estimatedTime"
-            :id="post.id"
-            :img="$axios.defaults.baseURL+post.img"
-            :key="post.id"
-            :preview="post.preview"
-            :reactions="post.reactions.length"
-            :slug="post.slug"
-            :title="post.title"
-            :user="post.user.username"
-            :userImg="post.user.img"
-            class="post"
-            v-for="post in this.posts"
-            v-if="valid(post.category)"/>
+    <transition-group
+      class="post-container"
+      name="list-complete"
+      tag="div"
+    >
+      <Post
+        v-for="post in filteredPosts"
+        :id="post.id"
+        :key="post.id"
+        :comments="post.comments.length"
+        :content="post.content"
+        :date="post.date"
+        :estimated-time="post.estimatedTime"
+        :img="$axios.defaults.baseURL+post.img"
+        :preview="post.preview"
+        :reactions="post.reactions.length"
+        :slug="post.slug"
+        :title="post.title"
+        :user="post.user.username"
+        :user-img="post.user.img"
+        class="post"
+      />
     </transition-group>
   </div>
-
-
 </template>
 
 <script>
@@ -49,27 +60,6 @@
       Post
     },
     middleware: 'auth',
-    methods: {
-      valid(category) {
-        this.buttons.find((button, index) => {
-          if (button.value === category) {
-            button.disabled = false
-            return true;
-          }
-        });
-        if (this.catfilter.length !== 0) {
-          return this.catfilter.includes(category);
-        }
-        return true;
-      },
-      showPosts(selected) {
-        this.posts = selected === 'followed' ? this.followedPosts.slice() : this.discoveredPosts.slice();
-        const uniqueCategories = [...new Set(this.posts.map(post => post.category))]
-        this.buttons.forEach((button, index) => {
-          this.buttons[index].disabled = !uniqueCategories.includes(button.value);
-        });
-      }
-    },
     data() {
       return {
         preSelected: [],
@@ -94,6 +84,13 @@
         ]
       }
     },
+    computed:{
+      filteredPosts(){
+        return this.posts.filter(post=>{
+          return this.valid(post.category);
+        })
+      }
+    },
     async mounted() {
       fadeSide();
       const postData = await this.$axios.get(`discover/`)
@@ -114,6 +111,27 @@
         this.preSelected.push(category);
       }
     },
+    methods: {
+      valid(category) {
+        this.buttons.find((button, index) => {
+          if (button.value === category) {
+            button.disabled = false
+            return true;
+          }
+        });
+        if (this.catfilter.length !== 0) {
+          return this.catfilter.includes(category);
+        }
+        return true;
+      },
+      showPosts(selected) {
+        this.posts = selected === 'followed' ? this.followedPosts.slice() : this.discoveredPosts.slice();
+        const uniqueCategories = [...new Set(this.posts.map(post => post.category))]
+        this.buttons.forEach((button, index) => {
+          this.buttons[index].disabled = !uniqueCategories.includes(button.value);
+        });
+      }
+    }
   }
 </script>
 

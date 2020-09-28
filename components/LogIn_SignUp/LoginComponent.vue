@@ -1,18 +1,29 @@
 <template>
   <div id="login">
-    <div id="back">
-    </div>
+    <div id="back" />
     <div class="intro-content">
-      <div class="container"
-           id="container"
-           v-bind:class="{'right-panel-active':rightPanelActive}">
-        <custom-form cls="sign-in-container" id="log-in" msg="Sign in" v-on:submit-log-in="logIn"/>
-        <custom-form :has-name="true" :new-pass="true" cls="sign-up-container" id="register" msg="Sign up"
-                     v-on:submit-register="register"/>
-        <overlay-component v-on:toggle-class="rightPanelActive =!rightPanelActive"/>
+      <div
+        id="container"
+        class="container"
+        :class="{'right-panel-active':rightPanelActive}"
+      >
+        <custom-form
+          id="log-in"
+          cls="sign-in-container"
+          msg="Sign in"
+          @submit-log-in="logIn"
+        />
+        <custom-form
+          id="register"
+          :has-name="true"
+          :new-pass="true"
+          cls="sign-up-container"
+          msg="Sign up"
+          @submit-register="register"
+        />
+        <overlay-component @toggle-class="rightPanelActive =!rightPanelActive" />
       </div>
     </div>
-
   </div>
 </template>
 
@@ -25,6 +36,11 @@ export default {
     components: {
       CustomForm,
       OverlayComponent,
+    },
+    data: function () {
+      return {
+        rightPanelActive: false
+      };
     },
     methods: {
       logIn: function (form) {
@@ -45,11 +61,6 @@ export default {
            data: form
          })
        }
-    },
-    data: function () {
-      return {
-        rightPanelActive: false
-      };
     }
 
   }
