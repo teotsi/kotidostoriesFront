@@ -39,7 +39,8 @@
         @preview-input="storePreview"
       />
       <unfold-editor
-        :intro="intro"
+        :intro="post.content"
+        :users="users"
         @input="store"
       />
       <div class="save-buttons">
@@ -131,6 +132,31 @@ export default {
     CommentEditor
   },
   middleware: ['auth', 'loadUsers'],
+  async asyncData({params,$axios}){
+    const {users} = await $axios.$get('user/')
+    if (params.postId){
+      const {content,title,preview,img,category, featured, published} = await $axios.$get(`post/${params.postId}/`)
+      return {
+        users,
+        intro:content,
+        post:{
+          title,
+          content,
+          preview,
+          featured,
+          published,
+          img:`${$axios.defaults.baseURL}/${img}`
+        },
+        selectedCategory:category,
+        disabled:true,
+        previewInput:preview,
+        imageUrl:`${$axios.defaults.baseURL}/${img}`
+      }
+    }
+    return {
+      users
+    }
+  },
   data: function () {
     return {
       hideSpinner: true,
@@ -168,34 +194,19 @@ export default {
             – Unfold Team
           </blockquote>
         `,
-      post: {
-        title: "",
-        content: this.intro,
-        preview: this.previewInput,
-        published: true,
-        featured: true,
-        image: null
-      },
+      // post: {
+      //   title: "",
+      //   content: this.intro,
+      //   preview: this.previewInput,
+      //   published: true,
+      //   featured: true,
+      //   img: null
+      // },
       previewInput: ``
     }
   },
   mounted() {
-    if (this.$route.params.postId) {
-      this.$axios.$get(`post/${this.$route.params.postId}/`)
-        .then(response => {
-          this.intro = this.post.content = response.content;
-          this.post.title = response.title;
-          this.disabled = true;
-          this.previewInput = response.preview;
-          this.imageUrl = `${this.$axios.defaults.baseURL}/${response.img}`;
-          for (let category of this.categories) {
-            if (category.toLowerCase().startsWith(response.category)) {
-              this.selectedCategory = category;
-              break;
-            }
-          }
-        })
-    } else {
+    if (!this.$route.params.postId) {
       this.post.content = this.intro;
     }
   },
@@ -205,8 +216,8 @@ export default {
       this.checkDisabled();
     },
     checkDisabled() {
-      console.log(this.post.preview === "<p></p>");
-      this.disabled = !!(this.post.title && this.post.preview && this.post.preview !== "<p></p>" & !this.selectedCategory.includes('Category'));
+      this.disabled = !!(this.post.title && this.post.preview && this.post.preview !== "<p></p>"
+        && !this.selectedCategory.includes('Category'));
       return this.disabled;
     },
     saveDraft() {
@@ -230,7 +241,7 @@ export default {
       this.checkDisabled();
     },
     storeImage(image) {
-      this.post.image = image;
+      this.post.img = image;
     },
     publish() {
       this.hideSpinner = false;
@@ -244,8 +255,8 @@ export default {
         featured: this.post.featured
       };
       formData.append('data', JSON.stringify(data));
-      if (this.post.image) {
-        formData.append('image', this.post.image);
+      if (this.post.img) {
+        formData.append('image', this.post.img);
       }
 
       if (!this.$route.params.postId) { //in case of new post

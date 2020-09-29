@@ -74,7 +74,7 @@
           tag="div"
         >
           <Post
-            v-for="post in featuredPosts.slice(0,3)"
+            v-for="post in featuredPosts"
             :id="post.id"
             :key="post.id"
             :comments="post.comments.length"
@@ -135,7 +135,7 @@ export default {
       user,
       image: $axios.defaults.baseURL + user.img,
       posts,
-      featuredPosts
+      featuredPosts: featuredPosts.slice(0,3)
     }
 
   },
@@ -160,6 +160,7 @@ export default {
   mounted() {
     this.featuredPosts.forEach((post) => {
       post['estimatedTime'] = estimateReadingTime(post.content);
+      console.log(post.estimatedTime)
     })
   },
   methods: {

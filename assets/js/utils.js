@@ -79,6 +79,7 @@ function loadUsers() {
 
 function estimateReadingTime(text) {
   const wordsPerMinute = 200; // Average case.
+  console.log(text)
   if (text) {
     return Math.ceil(text.split(" ").length / wordsPerMinute);
   }

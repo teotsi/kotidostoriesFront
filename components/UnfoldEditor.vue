@@ -32,8 +32,11 @@
       value: [String],
       options: {
         type: [Object],
-        default: () => {
-        }
+        default: () => {}
+      },
+      users:{
+        type:Array,
+        default:()=>[]
       },
       intro: {
         type: String,
@@ -77,11 +80,6 @@
         },
         editorData: this.intro,
         showy:false
-      }
-    },
-    computed: {
-      users() {
-        return this.$store.state.users;
       }
     },
     mounted() {

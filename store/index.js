@@ -3,7 +3,7 @@ export const state = () => ({
   valid_token: true,
   active: 'dashboard',
   users: [],
-  options: ['hey','new','test'],
+  options: ['hey', 'new', 'test'],
 });
 export const mutations = {
   SET_TOKEN(state, reset_token) {
@@ -19,3 +19,10 @@ export const mutations = {
     state.users = users;
   }
 };
+
+export const actions = {
+  async getUsers({commit}) {
+    const userResponse = await this.$axios.$get('user/')
+    commit('SET_USERS', userResponse.users);
+  }
+}
