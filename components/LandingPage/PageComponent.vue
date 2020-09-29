@@ -48,7 +48,7 @@
 
 <script>
   import Post from "./Post";
-  import {estimateReadingTime, fadeSide, normalizeCategory} from "../../assets/js/utils";
+  import {estimateReadingTime, fadeSide, normalizeCategory} from "assets/js/utils";
   import CategoryRadio from "../CategoryRadio/CategoryRadio";
   import CategoryButtonGroup from "../CategoryButtonGroup/CategoryButtonGroup";
 

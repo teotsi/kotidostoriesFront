@@ -2,7 +2,8 @@
   <div class="grid-wrapper">
     <div class="content-container">
       <h1 class="title">
-        {{ post.title }} <span class="inline">by <nuxt-link :to="'/user/'+ post.user.username">{{ post.user.username }} </nuxt-link> </span>
+        {{ post.title }} <span class="inline">by <nuxt-link :to="'/user/'+ post.user.username">{{ post.user.username }}
+      </nuxt-link> </span>
       </h1>
 
       <p class="date-info">
@@ -171,7 +172,7 @@ export default {
     ReactionIcon,
     Spinner
   },
-  async asyncData({params, $axios}) {
+  async asyncData({params:{postId}, $axios}) {
     let reacted;
     let existingReaction;
     let existingId;
@@ -181,8 +182,7 @@ export default {
       ['lightbulb', false],
       ['laugh-beam', false]
     ];
-    const postData = await $axios.get(`post/${params.postId}/`)
-    const post = postData.data
+    const post = await $axios.$get(`post/${postId}/`)
     reacted = post.reacted;
     if (reacted) {
       existingId = post.reacted_id;
@@ -207,14 +207,15 @@ export default {
         }
       }
     }
+    const suggestions = await $axios.$get(`suggest/?pid=${postId}`)
 
 
     return {
-      post: post,
-      reactions: reactions,
-      existingId: existingId,
+      post,
+      reactions,
+      existingId,
       slug: post.slug,
-      suggestions: []
+      suggestions
     }
 
   },
@@ -251,7 +252,6 @@ export default {
     addSlug(this.$route.params, this.slug);
     this.url = window.location.href;
     fadeSide();
-    this.suggestions = await this.$axios.$get(`suggest/?pid=${this.post.id}`)
   },
   methods: {
     toggleReaction(index, state) {

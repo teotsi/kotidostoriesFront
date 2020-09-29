@@ -9,7 +9,7 @@
           fluid-grow
         >
         <div class="post-info">
-          fix i          <h4>{{ title }}</h4>
+          <h4>{{ title }}</h4>
           <div
             class="post-preview"
             v-html="preview"
@@ -71,7 +71,7 @@ export default {
         this.$emit('delete-post', this.id);
       }
     },
-    async editPost(event){
+    async editPost(event) {
       event.preventDefault()
       await this.$router.push(`/TextEditor/${this.id}`)
     }

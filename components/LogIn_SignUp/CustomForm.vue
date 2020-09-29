@@ -29,6 +29,7 @@
       <b-input
         v-if="hasPassword"
         v-model="form.password"
+        autocomplete="on"
         :placeholder="newPass ? 'Enter new password':'Password'"
         type="password"
       />
@@ -37,6 +38,7 @@
         v-model="form.confirm_password"
         :state="matchingPass?null:false"
         placeholder="Confirm password"
+        autocomplete="on"
         type="password"
       />
       <b-form-checkbox
