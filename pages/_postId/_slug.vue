@@ -3,7 +3,7 @@
     <div class="content-container">
       <h1 class="title">
         {{ post.title }} <span class="inline">by <nuxt-link :to="'/user/'+ post.user.username">{{ post.user.username }}
-      </nuxt-link> </span>
+        </nuxt-link> </span>
       </h1>
 
       <p class="date-info">
@@ -65,22 +65,27 @@
           {{ copyInfo }}
         </b-popover>
       </div>
-      <section class="reaction-section">
-        <h2 class="header">
-          {{ reactionQuote }}
-        </h2>
-        <div class="reaction-box">
-          <reaction-icon
-            v-for="(reaction,index) in reactions"
-            :key="index"
-            :ref="reaction[0]"
-            :enabled="reaction[1]"
-            :existing-id="existingId"
-            :icon="reaction[0]"
-            @toggle-reaction="toggleReaction(index,reaction[1])"
-          />
-        </div>
-      </section>
+      <reaction-bar
+        :reactions="reactions"
+        :existing-reaction="existingId"
+        :post-id="post.id"
+      />
+      <!--      <section class="reaction-section">-->
+      <!--        <h2 class="header">-->
+      <!--          {{ reactionQuote }}-->
+      <!--        </h2>-->
+      <!--        <div class="reaction-box">-->
+      <!--          <reaction-icon-->
+      <!--            v-for="(reaction,index) in reactions"-->
+      <!--            :key="index"-->
+      <!--            :ref="reaction[0]"-->
+      <!--            :enabled="reaction[1]"-->
+      <!--            :existing-id="existingId"-->
+      <!--            :icon="reaction[0]"-->
+      <!--            @toggle-reaction="toggleReaction(index,reaction[1])"-->
+      <!--          />-->
+      <!--        </div>-->
+      <!--      </section>-->
       <hr>
 
       <section class="comment-section">
@@ -127,8 +132,8 @@
             :key="comment.id"
             :content="comment.content"
             :date="comment.date"
-            :post="post"
             :img="comment.user.img"
+            :post="post"
             :user="comment.user.username"
             class="comment-item"
             @delete-comment="removeFromList"
@@ -152,7 +157,7 @@
 </template>
 
 <script>
-import {addSlug, fadeSide} from "../../assets/js/utils";
+import {addSlug, fadeSide} from "assets/js/utils";
 import ReactionIcon from "../../components/Reaction/ReactionIcon";
 import Comment from "../../components/Comment/Comment";
 import CommentEditor from "../../components/Comment/CommentEditor";
@@ -160,10 +165,12 @@ import SidebarPost from "../../components/Sidebar/SidebarPost";
 import ShareButton from "../../components/Share/ShareButton";
 import DonateModal from "../../components/Donate/DonateModal";
 import Spinner from "../../components/Spinner/Spinner";
+import ReactionBar from "@/components/Reaction/ReactionBar";
 
 export default {
   name: 'Index',
   components: {
+    ReactionBar,
     DonateModal,
     ShareButton,
     CommentEditor,
@@ -172,48 +179,22 @@ export default {
     ReactionIcon,
     Spinner
   },
-  async asyncData({params:{postId}, $axios}) {
-    let reacted;
-    let existingReaction;
-    let existingId;
-    let reactions = [
-      ['thumbs-up', false],
-      ['heart', false],
-      ['lightbulb', false],
-      ['laugh-beam', false]
-    ];
+  async asyncData({params: {postId}, $axios, store }) {
     const post = await $axios.$get(`post/${postId}/`)
-    reacted = post.reacted;
+    const {reacted, reacted_id:reactedId} = post;
+    console.log(reactedId)
+    const reactions = store.state.reactions
     if (reacted) {
-      existingId = post.reacted_id;
-      switch (reacted) {
-        case 'love':
-          existingReaction = 'heart'
-          break;
-        case 'like':
-          existingReaction = 'thumbs-up'
-          break;
-        case 'laugh':
-          existingReaction = 'laugh-beam'
-          break;
-        default:
-          existingReaction = 'lightbulb'
-          break;
-      }
-      for (let [index, reaction] of reactions.entries()) {
-        if (reaction[0] === existingReaction) {
-          reactions[index][1] = true;
-          break
-        }
-      }
+      console.log(reactions)
+      reactions[reacted].enabled = true
+      console.log(reactions)
     }
     const suggestions = await $axios.$get(`suggest/?pid=${postId}`)
-
 
     return {
       post,
       reactions,
-      existingId,
+      existingId: reactedId,
       slug: post.slug,
       suggestions
     }
@@ -222,11 +203,6 @@ export default {
   data() {
     return {
       editCommentContent: {},
-      reactionQuotes: [
-        'What did you think?',
-        'Show some appreciation!',
-        'Your feedback matters!'
-      ],
       commentContent: '',
       media: ['facebook', 'twitter', 'email'],
       url: "",
@@ -234,17 +210,12 @@ export default {
       disabled: false,
       selected: null,
       donateOther: null,
-      hideSpinner:true
+      hideSpinner: true
     }
   },
-  head () {
+  head() {
     return {
       title: this.post.title
-    }
-  },
-  computed: {
-    reactionQuote() {
-      return this.reactionQuotes[Math.floor(Math.random() * this.reactionQuotes.length)];
     }
   },
   async mounted() {
@@ -350,7 +321,7 @@ export default {
 #clipboard-icon {
   margin-top: 0;
   height: initial !important;
-  color:var(--soft-primary-text);
+  color: var(--soft-primary-text);
 }
 
 #clipboard-icon:hover {

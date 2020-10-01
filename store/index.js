@@ -4,6 +4,24 @@ export const state = () => ({
   active: 'dashboard',
   users: [],
   options: ['hey', 'new', 'test'],
+  reactions: {
+    like: {
+      icon: 'thumbs-up',
+      enabled: false
+    },
+    love: {
+      icon: 'heart',
+      enabled: false
+    },
+    inspiring: {
+      icon: 'lightbulb',
+      enabled: false
+    },
+    laugh: {
+      icon: 'laugh-beam',
+      enabled: false
+    }
+  }
 });
 export const mutations = {
   SET_TOKEN(state, reset_token) {

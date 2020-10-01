@@ -17,8 +17,11 @@
           <div v-html="preview" />
         </div>
 
-        <post-footer :comments="comments" :reactions="reactions" :user="user"></post-footer>
-
+        <post-footer
+          :comments="comments"
+          :reactions="reactions"
+          :user="user"
+        />
       </div>
       <!-- </nuxt-link> -->
     </div>

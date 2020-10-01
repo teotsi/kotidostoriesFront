@@ -54,9 +54,10 @@
         </b-input-group>
 
         <category-dropdown
-          @input="disableByRef"
+          v-model="selectedCategory"
           :categories="categories"
-          v-model="selectedCategory"/>
+          @input="disableByRef"
+        />
 
         <b-dropdown
           id="popover-target-1"

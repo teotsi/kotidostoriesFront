@@ -10,7 +10,7 @@
       <b-dropdown
         text=" "
         variant="light-dropdown"
-        v-bind:value="value"
+        :value="value"
       >
         <b-dropdown-item
           v-for="(category, index) in categories"

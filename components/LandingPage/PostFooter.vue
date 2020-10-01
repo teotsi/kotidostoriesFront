@@ -9,22 +9,22 @@
         <span style="font-size: 16px;color: #fff;">{{ user }}</span>
       </div>
       <span class="pull-right">
-              <a
-                data-placement="left"
-                data-toggle="tooltip"
-                href="#"
-                title="Comments"
-              >
-                <font-awesome-icon :icon="['far', 'comments']"/>{{ comments }}</a>
-              <a
-                data-placement="right"
-                data-toggle="tooltip"
-                href="#"
-                title="Loved"
-              >
-                <font-awesome-icon :icon="['far', 'heart']"/>
-                {{ reactions }}</a>
-            </span>
+        <a
+          data-placement="left"
+          data-toggle="tooltip"
+          href="#"
+          title="Comments"
+        >
+          <font-awesome-icon :icon="['far', 'comments']" />{{ comments }}</a>
+        <a
+          data-placement="right"
+          data-toggle="tooltip"
+          href="#"
+          title="Loved"
+        >
+          <font-awesome-icon :icon="['far', 'heart']" />
+          {{ reactions }}</a>
+      </span>
     </div>
   </div>
 </template>
