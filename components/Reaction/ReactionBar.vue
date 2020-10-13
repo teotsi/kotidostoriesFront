@@ -15,7 +15,6 @@
         @input="toggleReaction"
       />
     </div>
-    {{ currentReactions }}
   </section>
 </template>
 

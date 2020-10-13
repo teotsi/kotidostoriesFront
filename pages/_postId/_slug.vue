@@ -70,76 +70,8 @@
         :existing-reaction="existingId"
         :post-id="post.id"
       />
-      <!--      <section class="reaction-section">-->
-      <!--        <h2 class="header">-->
-      <!--          {{ reactionQuote }}-->
-      <!--        </h2>-->
-      <!--        <div class="reaction-box">-->
-      <!--          <reaction-icon-->
-      <!--            v-for="(reaction,index) in reactions"-->
-      <!--            :key="index"-->
-      <!--            :ref="reaction[0]"-->
-      <!--            :enabled="reaction[1]"-->
-      <!--            :existing-id="existingId"-->
-      <!--            :icon="reaction[0]"-->
-      <!--            @toggle-reaction="toggleReaction(index,reaction[1])"-->
-      <!--          />-->
-      <!--        </div>-->
-      <!--      </section>-->
       <hr>
-
-      <section class="comment-section">
-        <h1 class="comments-header">
-          Comments
-        </h1>
-        <comment-editor
-          :value="commentContent"
-          @comment-input="storeComment"
-        />
-        <div
-          id="comment-button-container"
-          class="comment-buttons"
-        >
-          <Spinner
-            :hide-spinner="hideSpinner"
-            label="Posting comment..."
-          />
-
-          <b-button
-            :disabled="!this.$auth.loggedIn
-              ||commentContent.length===0 || commentContent==='<p></p>'"
-            variant="light"
-            @click="createComment"
-          >
-            Post Comment 💬
-          </b-button>
-          <b-popover
-            :disabled="this.$auth.loggedIn"
-            placement="right"
-            target="comment-button-container"
-            triggers="hover"
-          >
-            You need to be signed in!
-          </b-popover>
-        </div>
-        <transition-group
-          name="fade-out"
-          tag="div"
-        >
-          <comment
-            v-for="comment in post.comments"
-            :id="comment.id"
-            :key="comment.id"
-            :content="comment.content"
-            :date="comment.date"
-            :img="comment.user.img"
-            :post="post"
-            :user="comment.user.username"
-            class="comment-item"
-            @delete-comment="removeFromList"
-          />
-        </transition-group>
-      </section>
+      <comment-section :post="post"/>
     </div>
     <section class="sidebar-suggestions">
       <div class="side">
@@ -166,10 +98,12 @@ import ShareButton from "../../components/Share/ShareButton";
 import DonateModal from "../../components/Donate/DonateModal";
 import Spinner from "../../components/Spinner/Spinner";
 import ReactionBar from "@/components/Reaction/ReactionBar";
+import CommentSection from "~/components/Comment/CommentSection";
 
 export default {
   name: 'Index',
   components: {
+    CommentSection,
     ReactionBar,
     DonateModal,
     ShareButton,
@@ -203,7 +137,7 @@ export default {
   data() {
     return {
       editCommentContent: {},
-      commentContent: '',
+      commentContent: {value:''},
       media: ['facebook', 'twitter', 'email'],
       url: "",
       copyInfo: "Click to copy!",
@@ -231,29 +165,6 @@ export default {
       }
       this.$set(this.reactions[index], 1, !state);
 
-    },
-    createComment() {
-      this.hideSpinner = false;
-      this.$axios.$post(`user/${this.post.user.username}/posts/${this.post.id}/comments/`,
-        {"content": this.commentContent},
-        {withCredentials: true})
-        .then((response) => {
-          this.hideSpinner = true;
-          this.commentContent = '';
-          this.post.comments.push(response.comment)
-        })
-    },
-    storeComment(event) {
-      this.commentContent = event['value'];
-    },
-    removeFromList(event) {
-      console.log(this.post.comments.length)
-      this.post.comments.forEach((comment, index) => {
-        if (comment.id === event) {
-          this.post.comments.splice(index, 1);
-        }
-      })
-      console.log(this.post.comments.length)
     },
     copyToClipboard(event) {
       if (event.type === 'click') {
@@ -329,9 +240,6 @@ export default {
   color: #656565;
 }
 
-.comment-item {
-  transition: all 0.3s ease;
-}
 
 @media (min-width: 800px) {
   .grid-wrapper {
@@ -366,11 +274,6 @@ hr {
   margin-bottom: 20px;
 }
 
-.comment-buttons {
-  margin-bottom: 20px;
-  display: flex;
-  justify-content: flex-end;
-}
 
 
 </style>

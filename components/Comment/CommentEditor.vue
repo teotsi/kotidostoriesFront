@@ -2,6 +2,7 @@
   <div
     v-if="showy"
     class="editor"
+    :value="value"
   >
     <editor-menu-bar
       v-slot="{ commands, isActive }"
@@ -80,6 +81,10 @@
     },
     props: {
       value: {
+        type: Object,
+        default: {}
+      },
+      initialValue: {
         type: String,
         default: ''
       },
@@ -103,8 +108,9 @@
       }
     },
     watch: {
-      value(val) {
+      initialValue(val) {
         if (this.editor && !this.editorChange) {
+          console.log(val)
           this.editor.setContent(val, true);
         }
         this.editorChange = false;
@@ -128,11 +134,9 @@
         ],
         onUpdate: ({getHTML}) => {
           this.editorChange = true;
-          this.$emit(`${this.eventName}-input`, {"value": getHTML(), "id": this.id});
-          let vm = this.$parent;
-          vm.$emit(`${this.eventName}-input`, {"value": getHTML(), "id": this.id});
+          this.$emit(`input`, {"value": getHTML(), "id": this.id});
         },
-        content: this.value
+        content: this.initialValue
       });
       this.showy=true;
     }

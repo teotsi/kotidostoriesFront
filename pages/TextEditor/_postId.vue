@@ -99,7 +99,8 @@
 </template>
 
 <script>
-import UnfoldEditor from '@/components/UnfoldEditor';
+const UnfoldEditor = () => import("@/components/UnfoldEditor")
+// import UnfoldEditor from '@/components/UnfoldEditor';
 import CommentEditor from "@/components/Comment/CommentEditor";
 import ImageUpload from "@/components/UploadImage/ImageUpload";
 import Spinner from "@/components/Spinner/Spinner";
