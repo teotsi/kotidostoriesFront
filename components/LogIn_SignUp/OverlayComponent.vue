@@ -30,94 +30,97 @@
 </template>
 
 <script>
-    import ButtonComponent from "@/components/LogIn_SignUp/ButtonComponent";
+import ButtonComponent from "@/components/LogIn_SignUp/ButtonComponent";
 
-    export default {
-        name: "OverlayComponent",
-        components: {ButtonComponent}
-    }
+export default {
+  name: "OverlayComponent",
+  components: {ButtonComponent}
+}
 </script>
 
 <style scoped>
-    .overlay {
-        background: var(--gradient-soft);
-        background-repeat: no-repeat;
-        background-size: cover;
-        background-position: 0 0;
-        color: var(--bg);
-        position: relative;
-        left: -100%;
-        height: 100%;
-        width: 200%;
-        transform: translateX(0);
-        transition: transform 0.6s ease-in-out;
-    }
+.overlay {
+  background: var(--gradient-soft);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: 0 0;
+  color: var(--bg);
+  position: relative;
+  left: -100%;
+  height: 100%;
+  width: 200%;
+  transform: translateX(0);
+  transition: transform 0.6s ease-in-out;
+}
 
-    .overlay-container {
-        position: absolute;
-        top: 0;
-        left: 50%;
-        width: 50%;
-        height: 100%;
-        overflow: hidden;
-        transition: transform 0.6s ease-in-out;
-        z-index: 100;
-    }
+.overlay-container {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 50%;
+  height: 100%;
+  overflow: hidden;
+  transition: transform 0.6s ease-in-out;
+  z-index: 100;
+}
 
-    .container.right-panel-active .overlay-container {
-        transform: translateX(-100%);
-    }
+.container.right-panel-active .overlay-container {
+  transform: translateX(-100%);
+}
 
-    .overlay-panel {
-        position: absolute;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-direction: column;
-        padding: 60px;
-        text-align: center;
-        top: 0;
-        height: 100%;
-        width: 50%;
-        transform: translateX(0);
-        transition: transform 0.6s ease-in-out;
-    }
-    .overlay-panel h1{
-      font-weight: bold;
-      color: black;
-      margin: 0px;
-    }
-    .overlay-panel p{
-      font-size: 14px;
-      font-weight: 100;
-      line-height: 20px;
-      letter-spacing: 0.5px;
-      color: black;
-      margin: 20px 0px 30px;
-      padding: 25px;
-    }
-    .overlay-left {
-        transform: translateX(-20%);
+.overlay-panel {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 60px;
+  text-align: center;
+  top: 0;
+  height: 100%;
+  width: 50%;
+  transform: translateX(0);
+  transition: transform 0.6s ease-in-out;
+}
 
-    }
+.overlay-panel h1 {
+  font-weight: bold;
+  color: black;
+  margin: 0px;
+}
 
-    .overlay-right {
-        right: 0;
-        transform: translateX(0);
-    }
+.overlay-panel p {
+  font-size: 14px;
+  font-weight: 100;
+  line-height: 20px;
+  letter-spacing: 0.5px;
+  color: black;
+  margin: 20px 0px 30px;
+  padding: 25px;
+}
 
-    .container.right-panel-active .overlay {
-        transform: translateX(50%);
-    }
+.overlay-left {
+  transform: translateX(-20%);
+
+}
+
+.overlay-right {
+  right: 0;
+  transform: translateX(0);
+}
+
+.container.right-panel-active .overlay {
+  transform: translateX(50%);
+}
 
 
-    .container.right-panel-active .overlay-left {
-        transform: translateX(0);
-    }
+.container.right-panel-active .overlay-left {
+  transform: translateX(0);
+}
 
-    .container.right-panel-active .overlay-right {
-        transform: translateX(20%);
-    }
+.container.right-panel-active .overlay-right {
+  transform: translateX(20%);
+}
 
 
 </style>

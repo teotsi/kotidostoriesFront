@@ -9,10 +9,10 @@
     >
       <comment-editor
         :id="id"
+        v-model="editContent"
         :initial-value="content"
         event-message="Edit comment"
         event-name="comment-edit"
-        v-model="editContent"
       />
       <div class="save-button-container">
         <b-button

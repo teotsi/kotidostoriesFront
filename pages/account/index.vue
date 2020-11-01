@@ -90,7 +90,7 @@
         <label for="confirm-password">Confirm new password</label>
         <b-input
           id="confirm-password"
-          v-model="confirm_password"
+          v-model="confirmPassword"
           :state="matchingPass?null:false"
           class="account-input"
           placeholder="Confirm password"
@@ -101,7 +101,7 @@
     <div style="margin-top: 15px;">
       <b-button
         :disabled="!validInputs"
-        style="background-color: #950ca0"
+        variant="lilac"
         @click="submitForm"
       >
         Save settings
@@ -156,12 +156,12 @@ export default {
       },
       currentFeedback: null,
       new_password: null,
-      confirm_password: null
+      confirmPassword: null
     }
   },
   computed: {
     matchingPass() {
-      return this.form.password === this.confirm_password;
+      return this.form.password === this.confirmPassword;
     },
     validInputs() {
       console.log("input");

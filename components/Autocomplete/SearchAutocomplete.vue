@@ -4,6 +4,7 @@
       <b-form-input
         id="autocomplete-input"
         v-model="input"
+        autocomplete="off"
         @mouseup="toggleWidth"
         @blur="toggleWidth"
       />

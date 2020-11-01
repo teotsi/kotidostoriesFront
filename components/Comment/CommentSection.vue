@@ -4,8 +4,8 @@
       Comments
     </h1>
     <comment-editor
-      :initial-value="initialValue"
       v-model="commentContent"
+      :initial-value="initialValue"
     />
     <div
       id="comment-button-container"
@@ -18,7 +18,7 @@
 
       <b-button
         :disabled="!this.$auth.loggedIn
-              ||commentContent.value.length===0 || commentContent.value==='<p></p>'"
+          ||commentContent.value.length===0 || commentContent.value==='<p></p>'"
         variant="light"
         @click="createComment"
       >
@@ -62,9 +62,17 @@ export default {
   name: "CommentSection",
   components: {Spinner, Comment, CommentEditor},
   props: {
-    post: {
+    currentPost: {
       type: Object,
       required: true
+    }
+  },
+  data() {
+    return {
+      commentContent: {value: ''},
+      hideSpinner: true,
+      initialValue:'',
+      post: this.currentPost
     }
   },
   methods: {
@@ -89,13 +97,6 @@ export default {
       })
       console.log(this.post.comments.length)
     },
-  },
-  data() {
-    return {
-      commentContent: {value: ''},
-      hideSpinner: true,
-      initialValue:''
-    }
   }
 
 }

@@ -135,7 +135,7 @@ export default {
       user,
       image: $axios.defaults.baseURL + user.img,
       posts,
-      featuredPosts: featuredPosts.slice(0,3)
+      featuredPosts: featuredPosts.slice(0, 3)
     }
 
   },
@@ -149,12 +149,12 @@ export default {
       title: `${this.user.username}'${this.user.username.substr(-1) === 's' ? '' : 's'} profile`
     }
   },
-  computed:{
+  computed: {
     isFollowing() {
       return this.$auth.loggedIn && this.user.followers.includes(this.$auth.user.id);
     },
-    isOwnProfile(){
-      return this.$auth.loggedIn && this.$auth.user.username===this.user.username;
+    isOwnProfile() {
+      return this.$auth.loggedIn && this.$auth.user.username === this.user.username;
     }
   },
   mounted() {
@@ -165,14 +165,18 @@ export default {
   },
   methods: {
     async follow() {
-      const response = await this.$axios.get(`user/${this.user.username}/follow`, {withCredentials: true});
-      const userResponse = await this.$axios.get(`user/${this.user.username}/`, {withCredentials: true});
-      this.user = userResponse.data.user;
+      try {
+        const response = await this.$axios.get(`user/${this.user.username}/follow`, {withCredentials: true});
+        const userResponse = await this.$axios.$get(`user/${this.user.username}/`, {withCredentials: true});
+        this.user = userResponse.user;
+      } catch (e) {
+        await this.$router.push('/');
+      }
     },
     async unfollow() {
       const response = await this.$axios.delete(`user/${this.user.username}/follow`, {withCredentials: true});
-      const userResponse = await this.$axios.get(`user/${this.user.username}/`, {withCredentials: true});
-      this.user = userResponse.data.user;
+      const userResponse = await this.$axios.$get(`user/${this.user.username}/`, {withCredentials: true});
+      this.user = userResponse.user;
     },
     removeFromList(event) {
       this.posts.forEach((post, index) => {

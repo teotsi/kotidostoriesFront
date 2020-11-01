@@ -66,12 +66,12 @@
         </b-popover>
       </div>
       <reaction-bar
-        :reactions="reactions"
         :existing-reaction="existingId"
         :post-id="post.id"
+        :reactions="reactions"
       />
       <hr>
-      <comment-section :post="post"/>
+      <comment-section :current-post="post" />
     </div>
     <section class="sidebar-suggestions">
       <div class="side">
@@ -107,15 +107,11 @@ export default {
     ReactionBar,
     DonateModal,
     ShareButton,
-    CommentEditor,
     SidebarPost,
-    Comment,
-    ReactionIcon,
-    Spinner
   },
-  async asyncData({params: {postId}, $axios, store }) {
+  async asyncData({params: {postId}, $axios, store}) {
     const post = await $axios.$get(`post/${postId}/`)
-    const {reacted, reacted_id:reactedId} = post;
+    const {reacted, reacted_id: reactedId} = post;
     console.log(reactedId)
     const reactions = store.state.reactions
     if (reacted) {
@@ -137,7 +133,7 @@ export default {
   data() {
     return {
       editCommentContent: {},
-      commentContent: {value:''},
+      commentContent: {value: ''},
       media: ['facebook', 'twitter', 'email'],
       url: "",
       copyInfo: "Click to copy!",
@@ -273,7 +269,6 @@ hr {
   justify-content: space-between;
   margin-bottom: 20px;
 }
-
 
 
 </style>
