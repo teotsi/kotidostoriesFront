@@ -50,7 +50,6 @@ export default {
   ** Nuxt.js modules
   */
   modules: [
-    // Doc: https://bootstrap-vue.js.org
     'bootstrap-vue/nuxt',
     '@nuxtjs/auth',
     '@nuxtjs/axios',
@@ -110,5 +109,28 @@ export default {
         icons: ['fab']
       }
     ],
+  },
+  bootstrapVue: {
+    icons:false,
+    componentPlugins: [
+      'ButtonPlugin',
+      'PopoverPlugin',
+      'FormGroupPlugin',
+      'FormPlugin',
+      'FormCheckboxPlugin',
+      'FormFilePlugin',
+      'FormInputPlugin',
+      'FormRadioPlugin',
+      'AlertPlugin',
+      'ProgressPlugin',
+      'InputGroupPlugin',
+      'DropdownPlugin',
+      'ToastPlugin',
+      'ModalPlugin',
+      'ImagePlugin',
+      'SpinnerPlugin'
+    ],
+    directivePlugins: ['VBPopoverPlugin', 'VBTooltipPlugin']
   }
+
 }

@@ -90,13 +90,9 @@
 
 <script>
 import {addSlug, fadeSide} from "assets/js/utils";
-import ReactionIcon from "../../components/Reaction/ReactionIcon";
-import Comment from "../../components/Comment/Comment";
-import CommentEditor from "../../components/Comment/CommentEditor";
 import SidebarPost from "../../components/Sidebar/SidebarPost";
 import ShareButton from "../../components/Share/ShareButton";
 import DonateModal from "../../components/Donate/DonateModal";
-import Spinner from "../../components/Spinner/Spinner";
 import ReactionBar from "@/components/Reaction/ReactionBar";
 import CommentSection from "~/components/Comment/CommentSection";
 
@@ -110,17 +106,15 @@ export default {
     SidebarPost,
   },
   async asyncData({params: {postId}, $axios, store}) {
+    console.time('get post')
     const post = await $axios.$get(`post/${postId}/`)
     const {reacted, reacted_id: reactedId} = post;
-    console.log(reactedId)
+    console.timeEnd('get post')
     const reactions = store.state.reactions
     if (reacted) {
-      console.log(reactions)
       reactions[reacted].enabled = true
-      console.log(reactions)
     }
     const suggestions = await $axios.$get(`suggest/?pid=${postId}`)
-
     return {
       post,
       reactions,

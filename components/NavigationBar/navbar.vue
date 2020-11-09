@@ -6,11 +6,7 @@
       style="text-decoration:none"
       to="/"
     >
-      <h1
-        style="color: white; font-size: 40px; padding-left: 5px"
-      >
-        Unfold
-      </h1>
+      <h1 class="logo-header">Unfold</h1>
     </nuxt-link>
     <search-autocomplete :show="show" />
 
@@ -38,10 +34,12 @@
 
 <style scoped>
 
-  #search-button {
-    background-color: #3A3A3A;
+  .logo-header{
+    color: white;
+    font-size: 40px;
+    font-weight: bold;
+    padding-left: 5px
   }
-
   .navbar {
     padding: 0px;
     width: 100%;

@@ -10,6 +10,7 @@ import {faEnvelope} from "@fortawesome/free-solid-svg-icons/faEnvelope";
 import {faHeart} from "@fortawesome/free-solid-svg-icons/faHeart";
 import {faLightbulb} from "@fortawesome/free-solid-svg-icons/faLightbulb";
 import {faThumbsUp} from "@fortawesome/free-solid-svg-icons/faThumbsUp";
+import {faUser} from "@fortawesome/free-solid-svg-icons/faUser";
 import {faLaughBeam as farLaughBeam} from '@fortawesome/free-regular-svg-icons/faLaughBeam'
 import {faComments} from "@fortawesome/free-regular-svg-icons/faComments";
 import {faHeart as farHeart} from "@fortawesome/free-regular-svg-icons/faHeart";
@@ -22,7 +23,7 @@ config.autoAddCss = false
 
 // You can add your icons directly in this plugin. See other examples for how you
 // can add other styles or just individual icons.
-library.add(faMoon, faSun, faClipboard, faEnvelope, faHeart, faLightbulb, faThumbsUp, faLaughBeam, faSignOutAlt)
+library.add(faMoon, faSun, faClipboard, faEnvelope, faHeart, faLightbulb, faThumbsUp, faLaughBeam, faSignOutAlt, faUser)
 library.add(faComments, farHeart, farLightbulb, farThumbsUp, farLaughBeam)
 library.add(faFacebook, faTwitter)
 

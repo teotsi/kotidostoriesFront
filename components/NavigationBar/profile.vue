@@ -15,11 +15,8 @@
       variant="link"
     >
       <template #button-content>
-        <div id="icon-container">
-          <b-icon
-            id="icon"
-            icon="person"
-          />
+        <div class="icon-container">
+          <font-awesome-icon size="2x" :icon="['fas','user']"/>
         </div>
       </template>
       <div v-if="this.$auth.loggedIn">
@@ -45,10 +42,6 @@
 </template>
 
 <script>
-  import Vue from 'vue'
-  import {BootstrapVueIcons} from 'bootstrap-vue'
-
-  Vue.use(BootstrapVueIcons);
   export default {
     data() {
       return {
@@ -78,26 +71,15 @@
 
 <style scoped>
 
-  #icon {
-    color: #ffffff;
-    background-size: 938px 318px;
-    height: 50px;
-    width: 50px;
-  }
-
-  #icon-container {
-    width: 100%;
-    height: 100%;
-  }
-
   .dropprof {
     padding-right: 5px;
   }
 
   #theme-icon {
-    color: white;
     margin-bottom: -6px;
     transition: ease-in 0.5s;
   }
-
+  .icon-container, #theme-icon {
+    color:white;
+  }
 </style>

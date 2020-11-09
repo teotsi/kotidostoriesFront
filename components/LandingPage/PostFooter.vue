@@ -2,10 +2,7 @@
   <div class="footer-container">
     <div class="content-footer">
       <div class="user-info">
-        <b-icon
-          class="user-small-img"
-          icon="person-fill"
-        />
+        <font-awesome-icon :icon="['fas','user']"/>
         <span style="font-size: 16px;color: #fff;">{{ user }}</span>
       </div>
       <span class="pull-right">
