@@ -54,8 +54,6 @@ export default {
     'bootstrap-vue/nuxt',
     '@nuxtjs/auth',
     '@nuxtjs/axios',
-    'nuxt-fontawesome',
-
   ],
   axios: {
     baseURL: process.platform==='win32'? 'http://localhost:5000/':'http://ec2-34-201-242-135.compute-1.amazonaws.com:5000/',
