@@ -1,46 +1,37 @@
 <template>
   <ckeditor
     v-if="showy"
-    class="editor-fade"
     :config="editorConfig"
     :editor="editor"
-    :value="intro"
+    :value="value"
+    class="editor-fade"
     @input="ev => $emit('input', ev)"
   />
-  <spinner-placeholder v-else />
+  <spinner-placeholder v-else/>
 </template>
 
 <script>
-  import SpinnerPlaceholder from "../components/SpinnerPlaceholder/SpinnerPlaceholder";
+import SpinnerPlaceholder from "../components/SpinnerPlaceholder/SpinnerPlaceholder";
 
-  let UnfoldEditor;
-  let CKEditor;
-  if (process.client) {
-    UnfoldEditor = require('@teotsi/unfold-ckeditor');
-    CKEditor = require("@ckeditor/ckeditor5-vue");
-  } else {
-    CKEditor = { component: SpinnerPlaceholder};
-  }
+let UnfoldEditor;
+let CKEditor;
+if (process.client) {
+  UnfoldEditor = require('@teotsi/unfold-ckeditor');
+  CKEditor = require("@ckeditor/ckeditor5-vue");
+} else {
+  CKEditor = {component: SpinnerPlaceholder};
+}
 
-  export default {
-    name: 'UnfoldEditor',
-    components: {
-      SpinnerPlaceholder,
-      ckeditor: CKEditor.component
-    },
-    props: {
-      value: [String],
-      options: {
-        type: [Object],
-        default: () => {}
-      },
-      users:{
-        type:Array,
-        default:()=>[]
-      },
-      intro: {
-        type: String,
-        default: `
+export default {
+  name: 'UnfoldEditor',
+  components: {
+    SpinnerPlaceholder,
+    ckeditor: CKEditor.component
+  },
+  props: {
+    value: {
+      type: String,
+      default: `
           <h3>
             Hi there,
           </h3>
@@ -60,33 +51,40 @@
             <br />
             – Unfold Team
           </blockquote>
-        `,
-      }
+        `
     },
-    data() {
-      return {
-        editor: UnfoldEditor,
-        editorConfig: {
-          mention: {
-            feeds: [
-              {
-                marker: '@',
-                feed: this.users,
-                minimumCharacters: 1
-              }
-            ]
-          },
-          toolbar:['heading']
-        },
-        editorData: this.intro,
-        showy:false
-      }
+    defaultToolbar: {
+      type: Array,
     },
-    mounted() {
-      this.showy = true;
-      this.$emit('input', this.intro)
+    users: {
+      type: Array,
+      default: () => []
     }
+  },
+  data() {
+    return {
+      editor: UnfoldEditor,
+      editorConfig: {
+        mention: {
+          feeds: [
+            {
+              marker: '@',
+              feed: this.users,
+              minimumCharacters: 1
+            }
+          ]
+        },
+        toolbar: this.defaultToolbar
+      },
+      editorData: this.value,
+      showy: false
+    }
+  },
+  mounted() {
+    this.editorConfig.toolbar = (this.defaultToolbar || UnfoldEditor.defaultConfig)
+    this.showy = true;
   }
+}
 </script>
 
 <style scoped>

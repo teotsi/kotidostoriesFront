@@ -13,11 +13,9 @@
       </p>
 
       <image-upload
-        :image-url="imageUrl"
+        v-model="post.img"
         caption="Choose an image for your story!"
-        @image-upload="storeImage"
       />
-
       <div class="title">
         <b-input-group
           class="mt-3"
@@ -33,15 +31,20 @@
           />
         </b-input-group>
       </div>
-      <comment-editor
-        :value="previewInput"
-        event-name="preview"
-        @preview-input="storePreview"
-      />
       <unfold-editor
-        :intro="post.content"
+        v-model="post.preview"
+        :default-toolbar="[
+      'heading',
+      '|',
+			'bold',
+			'italic',
+			'bulletedList',
+			'|',
+			'undo',
+			'redo',]"/>
+      <unfold-editor
+        v-model="post.content"
         :users="users"
-        @input="store"
       />
       <div class="save-buttons">
         <b-input-group prepend="Featured?">
@@ -100,8 +103,6 @@
 
 <script>
 const UnfoldEditor = () => import("@/components/UnfoldEditor")
-// import UnfoldEditor from '@/components/UnfoldEditor';
-import CommentEditor from "@/components/Comment/CommentEditor";
 import ImageUpload from "@/components/UploadImage/ImageUpload";
 import Spinner from "@/components/Spinner/Spinner";
 import {fixMystery} from "assets/js/utils";
@@ -113,29 +114,28 @@ export default {
     CategoryDropdown,
     Spinner,
     ImageUpload,
-    UnfoldEditor,
-    CommentEditor
+    UnfoldEditor
   },
   middleware: ['auth', 'loadUsers'],
-  async asyncData({params,$axios}){
+  async asyncData({params, $axios}) {
     const {users} = await $axios.$get('user/')
-    if (params.postId){
-      const {content,title,preview,img,category, featured, published} = await $axios.$get(`post/${params.postId}/`)
+    if (params.postId) {
+      const {content, title, preview, img, category, featured, published} = await $axios.$get(`post/${params.postId}/`)
       return {
         users,
-        intro:content,
-        post:{
+        intro: content,
+        post: {
           title,
           content,
           preview,
           featured,
           published,
-          img:`${$axios.defaults.baseURL}/${img}`
+          img: `${$axios.defaults.baseURL}/${img}`
         },
-        selectedCategory:category,
-        disabled:true,
-        previewInput:preview,
-        imageUrl:`${$axios.defaults.baseURL}/${img}`
+        selectedCategory: category,
+        disabled: true,
+        previewInput: preview,
+        imageUrl: `${$axios.defaults.baseURL}/${img}`
       }
     }
     const intro = `
@@ -170,12 +170,13 @@ export default {
         img: null
       },
       intro,
-      previewInput:''
+      previewInput: ''
     }
   },
   data: function () {
     return {
-      testy:'old',
+      previewTest: '',
+      testy: 'old',
       hideSpinner: true,
       disabled: false,
       results: "",
@@ -213,21 +214,12 @@ export default {
     },
     disableByRef() {
       if (this.checkDisabled()) {
+        console.log('disabling')
         this.$refs.popover.$emit('disable')
       }
     },
     async back() {
       await this.$router.push('/');
-    },
-    store(event) {
-      this.post.content = event;
-    },
-    storePreview(event) {
-      this.post.preview = event.value;
-      this.checkDisabled();
-    },
-    storeImage(image) {
-      this.post.img = image;
     },
     publish() {
       this.hideSpinner = false;
@@ -264,7 +256,7 @@ export default {
 </script>
 
 <style scoped>
-.editor-fade{
+.editor-fade {
   transition: ease-in 1s;
 }
 

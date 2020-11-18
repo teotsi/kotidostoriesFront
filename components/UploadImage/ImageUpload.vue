@@ -31,7 +31,7 @@
   export default {
     name: "ImageUpload",
     props: {
-      imageUrl: {
+      value: {
         type: String,
         default: null
       },
@@ -42,7 +42,7 @@
     },
     data() {
       return {
-        imagePreviewUrl: this.imageUrl
+        imagePreviewUrl: this.value
       }
 
     },
@@ -56,7 +56,7 @@
         if (event.target.files[0]) {
           const file = event.target.files[0];
           this.imagePreviewUrl = URL.createObjectURL(file);
-          this.$emit('image-upload', file);
+          this.$emit('input', file);
         }
       }
     }
