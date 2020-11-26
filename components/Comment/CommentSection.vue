@@ -3,9 +3,18 @@
     <h1 class="comments-header">
       Comments
     </h1>
-    <comment-editor
+    <unfold-editor
       v-model="commentContent"
-      :initial-value="initialValue"
+      :default-toolbar="[
+      'heading',
+      '|',
+			'bold',
+			'italic',
+			'bulletedList',
+			'|',
+			'undo',
+			'redo',]"
+      class="comment-editor"
     />
     <div
       id="comment-button-container"
@@ -18,7 +27,7 @@
 
       <b-button
         :disabled="!this.$auth.loggedIn
-          ||commentContent.value.length===0 || commentContent.value==='<p></p>'"
+          ||commentContent.length===0 || commentContent==='<p></p>'||!hideSpinner"
         variant="light"
         @click="createComment"
       >
@@ -54,13 +63,13 @@
 </template>
 
 <script>
-import CommentEditor from "@/components/Comment/CommentEditor";
 import Comment from "@/components/Comment/Comment";
 import Spinner from "~/components/Spinner/Spinner";
+import UnfoldEditor from "@/components/UnfoldEditor";
 
 export default {
   name: "CommentSection",
-  components: {Spinner, Comment, CommentEditor},
+  components: {UnfoldEditor, Spinner, Comment},
   props: {
     currentPost: {
       type: Object,
@@ -69,9 +78,9 @@ export default {
   },
   data() {
     return {
-      commentContent: {value: ''},
+      commentContent: '',
       hideSpinner: true,
-      initialValue:'',
+      initialValue: '',
       post: this.currentPost
     }
   },
@@ -79,12 +88,12 @@ export default {
     createComment() {
       this.hideSpinner = false;
       this.$axios.$post(`user/${this.post.user.username}/posts/${this.post.id}/comments/`,
-        {"content": this.commentContent.value},
+        {"content": this.commentContent},
         {withCredentials: true})
         .then((response) => {
           this.hideSpinner = true;
           this.initialValue = '';
-          this.commentContent = {value: ''};
+          this.commentContent = '';
           this.post.comments.push(response.comment)
         })
     },
@@ -103,18 +112,22 @@ export default {
 </script>
 
 <style scoped>
-  .comments-header {
-    font-family: var(--title-font);
-    color: var(--soft-primary-text);
-  }
+.comments-header {
+  font-family: var(--title-font);
+  color: var(--soft-primary-text);
+}
 
-  .comment-buttons {
-    margin-bottom: 20px;
-    display: flex;
-    justify-content: flex-end;
-  }
+.comment-buttons {
+  margin: 1rem auto;
+  display: flex;
+  justify-content: flex-end;
+}
 
-  .comment-item {
-    transition: all 0.3s ease;
-  }
+.comment-item {
+  transition: all 0.3s ease;
+}
+
+.comment-editor {
+  margin-bottom: 1rem;
+}
 </style>

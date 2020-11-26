@@ -7,13 +7,18 @@
       v-if="edit"
       class="comment-edit"
     >
-      <comment-editor
-        :id="id"
+      <h4>Edit comment!</h4>
+      <unfold-editor
         v-model="editContent"
-        :initial-value="content"
-        event-message="Edit comment"
-        event-name="comment-edit"
-      />
+        :default-toolbar="[
+      'heading',
+      '|',
+			'bold',
+			'italic',
+			'bulletedList',
+			'|',
+			'undo',
+			'redo',]"/>
       <div class="save-button-container">
         <b-button
           size="sm"
@@ -23,7 +28,7 @@
           Cancel ❌
         </b-button>
         <b-button
-          :disabled="!editContent.value"
+          :disabled="editContent === content"
           class="save-button"
           size="sm"
           variant="contrast"
@@ -83,11 +88,11 @@
 </template>
 
 <script>
-import CommentEditor from "./CommentEditor";
+import UnfoldEditor from "@/components/UnfoldEditor";
 
 export default {
   name: "Comment",
-  components: {CommentEditor},
+  components: {UnfoldEditor},
   props: {
     user: {
       type: String,
@@ -121,7 +126,7 @@ export default {
       dateInfo: null,
       timeInfo: null,
       contentInfo: this.content,
-      editContent: {value:''},
+      editContent: this.content,
       edit: false
     }
   },
@@ -139,11 +144,11 @@ export default {
       }
     },
     async saveCommentEdit() {
+      this.edit = false;
       const editResponse = await this.$axios.patch(`user/${this.post.user.username}/posts/${this.post.id}/comments/${this.id}/`,
-        {'content': this.editContent.value}, {withCredentials: true});
+        {'content': this.editContent}, {withCredentials: true});
       if (editResponse.status === 200) {
-        this.contentInfo = this.editContent.value;
-        this.edit = false;
+        this.contentInfo = this.editContent;
       }
     }
   }

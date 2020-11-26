@@ -81,7 +81,7 @@ export default {
     }
   },
   mounted() {
-    this.editorConfig.toolbar = (this.defaultToolbar || UnfoldEditor.defaultConfig)
+    this.editorConfig.toolbar = this.defaultToolbar || UnfoldEditor.defaultConfig
     this.showy = true;
   }
 }
