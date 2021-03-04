@@ -1,8 +1,13 @@
 export const state = () => ({
-  reset_token: null,
-  valid_token: true,
   active: 'dashboard',
-  users: [],
+  categories: {
+    love: 'Love 💖',
+    funny: 'Funny 😂',
+    poem: 'Poem 🧾',
+    'sci-fi':'Sci-fi 👾',
+    horror: 'Horror 👻',
+    whodunit: 'Mystery 🕵️‍'
+  },
   options: ['hey', 'new', 'test'],
   reactions: {
     like: {
@@ -21,7 +26,10 @@ export const state = () => ({
       icon: 'laugh-beam',
       enabled: false
     }
-  }
+  },
+  reset_token: null,
+  users: [],
+  valid_token: true
 });
 export const mutations = {
   SET_TOKEN(state, reset_token) {

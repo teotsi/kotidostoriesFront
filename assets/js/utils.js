@@ -12,11 +12,13 @@ switch (category.toLowerCase()) {
   return category.toLowerCase() === "poems" ? "poem" : category.toLowerCase();
 }
 
-function fixMystery(category) {
-  if (category.startsWith("Mystery")) {
-    return 'whodunit 🕵️‍'
-  } else
-    return category
+const fixMystery = (category) => {
+  switch (category) {
+    case "mystery":
+      return "whodunit"
+    default:
+      return category
+  }
 }
 
 function normalizeReaction(reaction) {

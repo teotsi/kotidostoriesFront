@@ -2,21 +2,21 @@
   <b-input-group>
     <template #prepend>
       <b-input-group-text variant="light">
-        {{ `${value} ` }}
+        {{ displayValue }}
       </b-input-group-text>
     </template>
 
     <template #append>
       <b-dropdown
+        :value="value"
         text=" "
         variant="light-dropdown"
-        :value="value"
       >
         <b-dropdown-item
-          v-for="(category, index) in categories"
-          :key="`category-${index}`"
+          v-for="(category, name) in categories"
+          :key="`category-${name}`"
           href="#"
-          @click="$emit('input',category)"
+          @click="emitCategory(name)"
         >
           {{ category }}
         </b-dropdown-item>
@@ -28,17 +28,25 @@
 <script>
 export default {
   name: "CategoryDropdown",
-  props:{
+  props: {
     value: {
       type: String,
       default: ''
-    },
-    categories:{
-      type:Array,
-      required:true
+    }
+  },
+  methods: {
+    emitCategory(name) {
+      this.$emit('input', name);
+      this.displayValue = this.categories[name];
+    }
+  },
+  data() {
+    const categories = this.$store.state.categories
+    return {
+      categories,
+      displayValue: categories[this.value] ?? this.value
     }
   }
-
 }
 </script>
 

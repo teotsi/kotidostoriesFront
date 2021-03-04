@@ -31,17 +31,10 @@
           />
         </b-input-group>
       </div>
-      <unfold-editor
-        v-model="post.preview"
-        :default-toolbar="[
-      'heading',
-      '|',
-			'bold',
-			'italic',
-			'bulletedList',
-			'|',
-			'undo',
-			'redo',]"/>
+      <div class="preview-editor">
+        <comment-editor
+          v-model="post.preview"/>
+      </div>
       <unfold-editor
         v-model="post.content"
         :users="users"
@@ -58,7 +51,6 @@
 
         <category-dropdown
           v-model="selectedCategory"
-          :categories="categories"
           @input="disableByRef"
         />
 
@@ -102,6 +94,7 @@
 </template>
 
 <script>
+import CommentEditor from "../../components/Comment/CommentEditor";
 const UnfoldEditor = () => import("@/components/UnfoldEditor")
 import ImageUpload from "@/components/UploadImage/ImageUpload";
 import Spinner from "@/components/Spinner/Spinner";
@@ -111,6 +104,7 @@ import CategoryDropdown from "@/components/CategoryDropdown/CategoryDropdown";
 
 export default {
   components: {
+    CommentEditor,
     CategoryDropdown,
     Spinner,
     ImageUpload,
@@ -173,7 +167,7 @@ export default {
       previewInput: ''
     }
   },
-  data: function () {
+  data () {
     return {
       previewTest: '',
       testy: 'old',
@@ -182,14 +176,7 @@ export default {
       results: "",
       imageUrl: null,
       selectedCategory: "Select Category 📝",
-      categories: [
-        'Love 💖',
-        'Funny 😂',
-        'Poem 🧾',
-        'Sci-fi 👾',
-        'Horror 👻',
-        'Mystery 🕵️‍'
-      ],
+      categories: this.$store.state.categories,
       validTitle: null,
     }
   },
@@ -228,7 +215,7 @@ export default {
         title: this.post.title,
         content: this.post.content,
         preview: this.post.preview,
-        category: fixMystery(this.selectedCategory).split(" ")[0].toLowerCase().trim(),
+        category: fixMystery(this.selectedCategory),
         published: this.published,
         featured: this.post.featured
       };
@@ -301,6 +288,10 @@ export default {
 
 .save-buttons > div {
   margin: 0 10px;
+}
+
+.preview-editor {
+  margin-bottom: 10px;
 }
 
 .fade-enter-active, .fade-leave-active {
