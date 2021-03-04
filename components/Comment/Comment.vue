@@ -8,17 +8,7 @@
       class="comment-edit"
     >
       <h4>Edit comment!</h4>
-      <unfold-editor
-        v-model="editContent"
-        :default-toolbar="[
-      'heading',
-      '|',
-			'bold',
-			'italic',
-			'bulletedList',
-			'|',
-			'undo',
-			'redo',]"/>
+      <comment-editor v-model="editContent"/>
       <div class="save-button-container">
         <b-button
           size="sm"
@@ -89,10 +79,11 @@
 
 <script>
 import UnfoldEditor from "@/components/UnfoldEditor";
+import CommentEditor from "~/components/Comment/CommentEditor";
 
 export default {
   name: "Comment",
-  components: {UnfoldEditor},
+  components: {CommentEditor, UnfoldEditor},
   props: {
     user: {
       type: String,
@@ -211,6 +202,7 @@ export default {
 .save-button-container {
   display: flex;
   justify-content: flex-end;
+  margin-top:10px;
 }
 
 .date-info {

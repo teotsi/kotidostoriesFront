@@ -3,19 +3,7 @@
     <h1 class="comments-header">
       Comments
     </h1>
-    <unfold-editor
-      v-model="commentContent"
-      :default-toolbar="[
-      'heading',
-      '|',
-			'bold',
-			'italic',
-			'bulletedList',
-			'|',
-			'undo',
-			'redo',]"
-      class="comment-editor"
-    />
+    <comment-editor v-model="commentContent"/>
     <div
       id="comment-button-container"
       class="comment-buttons"
@@ -66,10 +54,11 @@
 import Comment from "@/components/Comment/Comment";
 import Spinner from "~/components/Spinner/Spinner";
 import UnfoldEditor from "@/components/UnfoldEditor";
+import CommentEditor from "@/components/Comment/CommentEditor";
 
 export default {
   name: "CommentSection",
-  components: {UnfoldEditor, Spinner, Comment},
+  components: {CommentEditor, UnfoldEditor, Spinner, Comment},
   props: {
     currentPost: {
       type: Object,
